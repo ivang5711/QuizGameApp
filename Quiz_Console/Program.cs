@@ -8,7 +8,6 @@ namespace Quiz_Console
     {
         static void Main(string[] args)
         {
-
             Console.Title = "Quiz";
             UserInterface.WelcomeScreen();
             Console.Beep();

@@ -11,10 +11,7 @@ namespace Quiz_Console
         public static void WelcomeScreen()
         {
             Console.Title = "Quiz - Welcome!";
-            //Console.WindowHeight = Console.LargestWindowHeight;
-            //Console.WindowWidth = Console.LargestWindowWidth;
-            //Console.BufferHeight = Console.LargestWindowHeight;
-            //Console.BufferWidth = Console.LargestWindowWidth;
+            Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             int windowWidth = Console.WindowWidth;
             int windowHeight = Console.WindowHeight;
             Console.Clear();
@@ -34,18 +31,16 @@ namespace Quiz_Console
 
         public static int Menu()
         {
+            Console.Clear();
+            Console.Title = "Quiz - Main menu";
             int windowWidth = Console.WindowWidth;
             int windowHeight = Console.WindowHeight;
             int leftMargin = windowWidth / 2 - 15;
-
-            Console.Title = "Quiz - Main menu";
             int menuNumber;
 
-            //Console.BackgroundColor = ConsoleColor.DarkGray;
 
-
-            Console.Clear();
-            Console.CursorSize = 100;
+            //Console.CursorSize = 100;
+            
 
             Console.CursorTop = windowHeight / 2 - 8;
             Console.CursorLeft = leftMargin;
@@ -83,6 +78,8 @@ namespace Quiz_Console
             {
                 return 0;
             }
+            Console.CursorLeft = 0;
+            Console.CursorTop = 0;
             Console.Clear();
             return menuNumber;
         }
