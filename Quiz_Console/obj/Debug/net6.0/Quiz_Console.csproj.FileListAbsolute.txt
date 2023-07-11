@@ -1,0 +1,15 @@
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\obj\Debug\net6.0\Quiz_Console.csproj.AssemblyReference.cache
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\obj\Debug\net6.0\Quiz_Console.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\obj\Debug\net6.0\Quiz_Console.AssemblyInfoInputs.cache
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\obj\Debug\net6.0\Quiz_Console.AssemblyInfo.cs
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\obj\Debug\net6.0\Quiz_Console.csproj.CoreCompileInputs.cache
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\bin\Debug\net6.0\Quiz_Console.exe
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\bin\Debug\net6.0\Quiz_Console.deps.json
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\bin\Debug\net6.0\Quiz_Console.runtimeconfig.json
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\bin\Debug\net6.0\Quiz_Console.dll
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\bin\Debug\net6.0\Quiz_Console.pdb
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\obj\Debug\net6.0\Quiz_Console.dll
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\obj\Debug\net6.0\refint\Quiz_Console.dll
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\obj\Debug\net6.0\Quiz_Console.pdb
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\obj\Debug\net6.0\Quiz_Console.genruntimeconfig.cache
+C:\Users\Smith\source\C#Projects\Bible\Quiz_Console_App\Quiz_Console\obj\Debug\net6.0\ref\Quiz_Console.dll
