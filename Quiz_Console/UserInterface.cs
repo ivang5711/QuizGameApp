@@ -49,7 +49,7 @@ namespace Quiz_Console
 
             Console.CursorTop = windowHeight / 2 - 8;
             Console.CursorLeft = leftMargin;
-            Console.WriteLine($"The \"Quiz\" menu:");
+            Console.WriteLine($"The \"Quiz2\" menu:");
             Console.CursorLeft = leftMargin;
             DrawLine();
             Console.CursorLeft = leftMargin;
