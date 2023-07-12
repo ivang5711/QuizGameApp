@@ -101,8 +101,6 @@ namespace Quiz_Console
                             break;
                         }
                 }
-
-
             }
 
             if (DataProcessing.WriteResults() == 0)
@@ -112,10 +110,9 @@ namespace Quiz_Console
 
             UserInterface.Goodbuy();
 
-            Console.ReadKey();
             Console.ResetColor();
             Console.Clear();
-
+            Environment.Exit(0);
         }
     }
 }

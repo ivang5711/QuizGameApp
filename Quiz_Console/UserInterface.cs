@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
+
 
 namespace Quiz_Console
 {
@@ -10,12 +12,12 @@ namespace Quiz_Console
     {
         public static void WelcomeScreen()
         {
+            Console.Clear();
             Console.Title = "Quiz - Welcome!";
             Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             int windowWidth = Console.WindowWidth;
             int windowHeight = Console.WindowHeight;
-            Console.Clear();
-            Console.WriteLine("Press <ALT + Enter> to toggle Full Screen mode");
+            Fullscreen();
             Console.CursorTop = windowHeight / 2 - 2;
             Console.CursorLeft = windowWidth / 2 - 15;
             Console.WriteLine("Hello and welcome to the \"Quiz\"");
@@ -24,8 +26,9 @@ namespace Quiz_Console
             DrawLine();
             Console.CursorTop = windowHeight / 2 + 1;
             Console.CursorLeft = windowWidth / 2 - 14;
-            Console.Write("Print any key to continue...");
-            Console.ReadKey();
+            AnyKey();
+            Console.ResetColor();
+            Console.Clear();
 
         }
 
@@ -40,11 +43,11 @@ namespace Quiz_Console
 
 
             //Console.CursorSize = 100;
-            
 
+            Fullscreen();
             Console.CursorTop = windowHeight / 2 - 8;
             Console.CursorLeft = leftMargin;
-            Console.WriteLine($"The \"Quiz2\" menu:");
+            Console.WriteLine($"The \"Quiz\" menu:");
             Console.CursorLeft = leftMargin;
             DrawLine();
             Console.CursorLeft = leftMargin;
@@ -69,7 +72,9 @@ namespace Quiz_Console
             DrawLine();
             Console.WriteLine();
             Console.CursorLeft = leftMargin;
-            Console.Write("enter a menu number: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("Enter menu number: ");
+            Console.ForegroundColor = ConsoleColor.White;
             try
             {
                 menuNumber = Convert.ToInt32(Console.ReadLine());
@@ -80,55 +85,67 @@ namespace Quiz_Console
             }
             Console.CursorLeft = 0;
             Console.CursorTop = 0;
+            Console.ResetColor();
             Console.Clear();
             return menuNumber;
         }
 
         public static void Credits()
         {
+            Console.Clear();
+            Console.Title = "Quiz - Credits";
             int windowWidth = Console.WindowWidth;
             int windowHeight = Console.WindowHeight;
+            int heightCenter = windowHeight / 2;
+            int leftMargin = windowWidth / 2 - 15;
 
-            Console.Title = "Quiz - Credits";
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
-            Console.Clear();
-
-            Console.CursorTop = windowHeight / 2 - 2;
-            Console.CursorLeft = windowWidth / 2 - 11;
+            Fullscreen();
+            Console.CursorTop = heightCenter - 8;
+            Console.CursorLeft = leftMargin;
             Console.WriteLine("Author is a genius :)");
-            Console.CursorTop = windowHeight / 2;
-            Console.CursorLeft = windowWidth / 2 - 13;
-            Console.Write("press any key to agree...");
-            Console.ReadKey();
-            Console.BackgroundColor = ConsoleColor.Black;
+            Console.CursorLeft = leftMargin;
+            DrawLine();
+            Console.CursorTop = heightCenter - 6;
+            Console.CursorLeft = leftMargin;
+            AnyKey();
+            
+            Console.ResetColor();
             Console.Clear();
         }
 
         public static void Goodbuy()
         {
-            int windowWidth = Console.WindowWidth;
-            int windowHeight = Console.WindowHeight;
-            Console.Clear();
-            Console.BackgroundColor = ConsoleColor.Black;
+
             Console.Clear();
             Console.Title = "Quiz - see you soon!";
-            Console.WriteLine("Press <ALT + Enter> to toggle Full Screen mode");
-            Console.CursorTop = windowHeight / 2 - 2;
-            Console.CursorLeft = windowWidth / 2 - 7;
-            Console.WriteLine("See you soon!");
-            Console.CursorTop = windowHeight / 2 - 1;
-            Console.CursorLeft = windowWidth / 2 - 15;
-            DrawLine();
-            Console.CursorTop = windowHeight / 2 + 1;
-            Console.CursorLeft = windowWidth / 2 - 13;
-            Console.Write("press any key to close...");
+            ConsoleKeyInfo c;
 
-            
+            do
+            {
+                int windowWidth = Console.WindowWidth;
+                int windowHeight = Console.WindowHeight;
+                Console.Clear();
+                Fullscreen();
+                Console.CursorTop = windowHeight / 2 - 2;
+                Console.CursorLeft = windowWidth / 2 - 14;
+                Console.WriteLine("This was Quiz. See you soon!");
+                Console.CursorTop = windowHeight / 2 - 1;
+                Console.CursorLeft = windowWidth / 2 - 15;
+                DrawLine();
+                Console.CursorTop = windowHeight / 2 + 1;
+                Console.CursorLeft = windowWidth / 2 - 13;
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write("press Esc key to close...");
+                Console.ForegroundColor = ConsoleColor.White;
+                c = Console.ReadKey(true);
+            } while (c.Key != ConsoleKey.Escape);
+
+            Console.ResetColor();
+            Console.Clear();
         }
 
         public static void DrawLine()
         {
-
             string tmp = new('-', 31);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine(tmp);
@@ -143,6 +160,21 @@ namespace Quiz_Console
             Console.Write(number);
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("]");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public static void Fullscreen()
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("Press <ALT + Enter> to toggle Full Screen mode");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public static void AnyKey()
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("Press any key to continue...");
+            Console.ReadKey();
             Console.ForegroundColor = ConsoleColor.White;
         }
     }
