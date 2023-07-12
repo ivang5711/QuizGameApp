@@ -12,7 +12,9 @@ namespace Quiz_Console
     {
         public static void WelcomeScreen()
         {
+
             Console.Clear();
+            
             Console.Title = "Quiz - Welcome!";
             Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             int windowWidth = Console.WindowWidth;
@@ -26,6 +28,10 @@ namespace Quiz_Console
             DrawLine();
             Console.CursorTop = windowHeight / 2 + 1;
             Console.CursorLeft = windowWidth / 2 - 14;
+            Console.Beep(200, 100);
+            Console.Beep(400, 100);
+            Console.Beep(800, 150);
+            Console.Beep(200, 100);
             AnyKey();
             Console.ResetColor();
             Console.Clear();
@@ -140,6 +146,11 @@ namespace Quiz_Console
                 c = Console.ReadKey(true);
             } while (c.Key != ConsoleKey.Escape);
 
+            Console.Beep(800, 150);
+            Console.Beep(400, 100);
+            Console.Beep(800, 150);
+            Console.Beep(400, 100);
+
             Console.ResetColor();
             Console.Clear();
         }
@@ -147,6 +158,24 @@ namespace Quiz_Console
         public static void DrawLine()
         {
             string tmp = new('-', 31);
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine(tmp);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public static void DrawLine(int? length)
+        {
+            int size;
+            if (length == null)
+            {
+                return;
+            }
+            else
+            {
+                size = Convert.ToInt32(length);
+            }
+
+            string tmp = new('-', size);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine(tmp);
             Console.ForegroundColor = ConsoleColor.White;

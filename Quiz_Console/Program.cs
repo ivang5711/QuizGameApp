@@ -11,7 +11,14 @@ namespace Quiz_Console
         {
             Console.Title = "Quiz";
             UserInterface.WelcomeScreen();
-            Console.Beep();
+            //Console.Beep();
+
+
+            //Console.Beep(100, 80);
+            //Thread.Sleep(100);
+            ////Console.Beep(200, 80);
+            //Thread.Sleep(100);
+            //Console.Beep(400, 80);
             bool exitFlag = false;
             ArrayList users = new ArrayList();
             ArrayList quizQuestions = new ArrayList();
@@ -47,38 +54,101 @@ namespace Quiz_Console
                     // Start quiz
                     case 3:
                         {
-                            
-                            int user = 0;
-                            for (int i = 0; i < quizQuestions.Count; i++)
-                            {
-                                Console.Clear();
-                                UserInterface.DrawLine();
-                                Console.WriteLine($"User {user + 1}: {users[user]}");
-                                UserInterface.DrawLine();
-                                Console.WriteLine();
-                                Console.WriteLine($"Question {i + 1}: {quizQuestions[i]}");
-                                Console.WriteLine();
-                                Console.WriteLine();
-                                Console.Write(">> press a key to go to the next question >>");
-                                Console.ReadKey();
-                                if (user % 2 == 0)
-                                {
-                                    user = 1;
-                                }
-                                else
-                                {
-                                    user = 0;
-                                }
-                            }
                             Console.Clear();
-                            UserInterface.DrawLine();
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("That's all questions! Thank you for the Quiz");
-                            Console.WriteLine();
-                            Console.Write("press any key to continue...");
-                            Console.ReadKey();
-                            break;
+                            Console.Title = "Quiz";
+
+                            int windowWidth = Console.WindowWidth;
+                            int windowHeight = Console.WindowHeight;
+                            int leftMargin = windowWidth / 2 - 15;
+                            if (users.Count > 0)
+                            {
+                                int user = 0;
+                                for (int i = 0; i < quizQuestions.Count; i++)
+                                {
+                                    windowWidth = Console.WindowWidth;
+                                    windowHeight = Console.WindowHeight;
+                                    leftMargin = windowWidth / 2 - 50;
+                                    Console.Clear();
+                                    UserInterface.Fullscreen();
+                                    Console.CursorTop = windowHeight / 2 - 6;
+                                    Console.CursorLeft = leftMargin;
+                                    Console.WriteLine("Answer the Quiz question:");
+                                    Console.CursorLeft = leftMargin;
+                                    UserInterface.DrawLine(100);
+                                    Console.CursorTop = windowHeight / 2 - 3;
+                                    Console.CursorLeft = leftMargin;
+                                    Console.WriteLine($"User {user + 1}: {users[user]}");
+                                    Console.CursorLeft = leftMargin;
+                                    UserInterface.DrawLine(users[user].ToString().Length + 9);
+                                    Console.CursorLeft = leftMargin;
+                                    Console.WriteLine();
+                                    Console.CursorLeft = leftMargin;
+                                    Console.WriteLine($"Question {i + 1}: {quizQuestions[i]}");
+                                    Console.CursorLeft = leftMargin;
+                                    Console.WriteLine();
+                                    Console.CursorLeft = leftMargin;
+                                    Console.WriteLine();
+                                    Console.CursorLeft = windowWidth / 2 - 21;
+                                    Console.Write("press a key to go to the next question >>");
+                                    Console.CursorLeft = leftMargin;
+                                    Console.CursorVisible = false;
+                                    Console.ReadKey();
+                                    Console.CursorVisible = true;
+                                    Console.CursorLeft = leftMargin;
+
+                                    if (user < users.Count - 1)
+                                    {
+                                        user++;
+                                    }
+                                    else
+                                    {
+                                        user = 0;
+                                    }
+                                }
+
+                                windowWidth = Console.WindowWidth;
+                                windowHeight = Console.WindowHeight;
+                                leftMargin = windowWidth / 2 - 15;
+                                Console.CursorLeft = leftMargin;
+                                Console.Clear();
+                                UserInterface.Fullscreen();
+                                Console.CursorTop = windowHeight / 2 - 3;
+                                Console.CursorLeft = windowWidth / 2 - 22;
+                                Console.WriteLine("That's all questions! Thank you for the Quiz");
+                                Console.CursorLeft = leftMargin - 7;
+                                UserInterface.DrawLine(44);
+                                Console.WriteLine();
+                                Console.CursorLeft = leftMargin;
+                                UserInterface.AnyKey();
+                                Console.CursorLeft = leftMargin;
+                                Console.ResetColor();
+                                Console.Clear();
+                                break;
+                            }
+                            else
+                            {
+
+                                windowWidth = Console.WindowWidth;
+                                windowHeight = Console.WindowHeight;
+                                leftMargin = windowWidth / 2 - 15;
+                                Console.CursorLeft = leftMargin;
+                                Console.Clear();
+                                UserInterface.Fullscreen();
+                                Console.CursorTop = windowHeight / 2 - 3;
+                                string message = "Oops... You need to add at least 1 user first";
+                                Console.CursorLeft = (windowWidth - message.Length) / 2;
+                                Console.WriteLine(message);
+                                Console.CursorLeft = (windowWidth - message.Length) / 2;
+                                UserInterface.DrawLine(message.Length);
+                                Console.WriteLine();
+                                Console.CursorLeft = leftMargin;
+                                UserInterface.AnyKey();
+                                Console.CursorLeft = leftMargin;
+                                Console.ResetColor();
+                                Console.Clear();
+                                break;
+                            }
+                            
                         }
 
                     // Credits

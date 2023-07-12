@@ -108,7 +108,6 @@ namespace Quiz_Console
                 UserInterface.DrawLine();
                 Console.WriteLine();
                 Console.CursorLeft = leftMargin;
-
                 c = Console.ReadKey();
                 if (c.Key == ConsoleKey.Escape)
                 {
@@ -116,9 +115,6 @@ namespace Quiz_Console
                 }
                 questions = Console.ReadLine()!.ToUpper();
                 questions = c.Key.ToString().ToUpper() + questions;
-
-                //questions = Console.ReadLine()!.ToUpper();
-
                 if (!string.IsNullOrEmpty(questions))
                 {
                     string[] questionsSplitted = questions.Split('?');
