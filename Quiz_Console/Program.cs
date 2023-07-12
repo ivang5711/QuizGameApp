@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 
 namespace Quiz_Console
 {
@@ -105,7 +106,7 @@ namespace Quiz_Console
 
             if (DataProcessing.WriteResults() == 0)
             {
-                Console.ReadKey();
+                UserInterface.AnyKey();
             }
 
             UserInterface.Goodbuy();
