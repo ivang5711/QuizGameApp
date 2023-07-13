@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 
 namespace Quiz_Console
 {
-    internal class DataProcessing
+    public static class DataProcessing
     {
-        static ArrayList users = new();
-        static ArrayList quizQuestions = new ArrayList();
+        static readonly ArrayList users = new();
+        static readonly ArrayList quizQuestions = new();
 
         public static ArrayList AddUsers()
         {
@@ -25,14 +18,14 @@ namespace Quiz_Console
                 while (true)
                 {
                     GetUsers();
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write("New user's name: ");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    string text = "New user's name: ";
+                    UserInterface.PrintGrey(text);
                     c = Console.ReadKey();
                     if (c.Key == ConsoleKey.Escape)
                     {
                         break;
                     }
+
                     string ans = Console.ReadLine()!.ToUpper();
                     ans = c.Key.ToString() + ans;
                     if (!string.IsNullOrEmpty(ans))
@@ -40,21 +33,18 @@ namespace Quiz_Console
                         users.Add(ans);
                         break;
                     }
-                    
                 }
 
                 while (true)
                 {
                     GetUsers();
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write("Do you want to add new user?[Y/n] ");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    string text = "Do you want to add new user?[Y/n] ";
+                    UserInterface.PrintGrey(text);
                     c = Console.ReadKey(true);
                     if (c.Key == ConsoleKey.Y || c.Key == ConsoleKey.Enter)
                     {
                         break;
                     }
-                    
                     else if (c.Key == ConsoleKey.Escape || c.Key == ConsoleKey.N)
                     {
                         exitCode = false;
@@ -78,29 +68,25 @@ namespace Quiz_Console
             int heightCenter = windowHeight / 2;
             int leftMargin = windowWidth / 2 - 15;
             ConsoleKeyInfo c;
-
             while (questions.Length == 0)
             {
                 Console.Clear();
                 UserInterface.Fullscreen();
                 Console.CursorTop = heightCenter - (4 + quizQuestions.Count / 2);
-
                 if (quizQuestions.Count != 0)
                 {
                     Console.CursorLeft = leftMargin;
                     Console.WriteLine("Quiz questions");
                     Console.CursorLeft = leftMargin;
                     UserInterface.DrawLine();
-                    Console.CursorLeft = leftMargin;
                     Console.WriteLine();
                     Console.CursorLeft = leftMargin;
                     PrintQuestions();
-                    Console.CursorLeft = leftMargin;
                     Console.WriteLine();
                     Console.CursorLeft = leftMargin;
                     UserInterface.DrawLine();
                 }
-                Console.CursorLeft = leftMargin;
+
                 Console.WriteLine();
                 Console.CursorLeft = leftMargin;
                 Console.WriteLine("Enter questions: ");
@@ -113,6 +99,7 @@ namespace Quiz_Console
                 {
                     break;
                 }
+
                 questions = Console.ReadLine()!.ToUpper();
                 questions = c.Key.ToString().ToUpper() + questions;
                 if (!string.IsNullOrEmpty(questions))
@@ -135,14 +122,12 @@ namespace Quiz_Console
                     UserInterface.DrawLine();
                     Console.WriteLine();
                     PrintQuestions();
-                    Console.CursorLeft = leftMargin;
                     Console.WriteLine();
                     Console.CursorLeft = leftMargin;
                     UserInterface.DrawLine();
                     Console.CursorLeft = leftMargin;
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write("Enter any key to exit... ");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    string text = "Enter any key to exit... ";
+                    UserInterface.PrintGrey(text);
                     Console.ReadKey(true);
                     break;
                 }
@@ -163,7 +148,6 @@ namespace Quiz_Console
             UserInterface.Fullscreen();
             Console.CursorTop = heightCenter - 8;
             Console.CursorLeft = leftMargin;
-
             if (users.Count != 0 && quizQuestions.Count != 0)
             {
                 Console.CursorLeft = leftMargin;
@@ -187,7 +171,6 @@ namespace Quiz_Console
                 return 1;
             }
         }
-
         public static void GetUsers()
         {
             Console.Clear();
@@ -195,7 +178,6 @@ namespace Quiz_Console
             int windowHeight = Console.WindowHeight;
             int heightCenter = windowHeight / 2;
             int leftMargin = windowWidth / 2 - 15;
-
             UserInterface.Fullscreen();
             Console.CursorTop = heightCenter - (4 + users.Count / 2);
             Console.CursorLeft = leftMargin;
@@ -206,14 +188,13 @@ namespace Quiz_Console
             Console.CursorLeft = leftMargin;
             if (users.Count != 0)
             {
-                //Console.WriteLine();
                 Console.CursorLeft = leftMargin;
                 PrintUsers();
-                Console.CursorLeft = leftMargin;
                 Console.WriteLine();
                 Console.CursorLeft = leftMargin;
                 UserInterface.DrawLine();
             }
+
             Console.CursorLeft = leftMargin;
         }
 
@@ -221,7 +202,6 @@ namespace Quiz_Console
         {
             int windowWidth = Console.WindowWidth;
             int leftMargin = windowWidth / 2 - 15;
-
             if (users.Count != 0)
             {
                 int counter = 0;
@@ -234,6 +214,7 @@ namespace Quiz_Console
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine($"{user}");
                 }
+
                 Console.CursorLeft = leftMargin;
             }
         }
@@ -243,7 +224,6 @@ namespace Quiz_Console
             int windowWidth = Console.WindowWidth;
             int leftMargin = windowWidth / 2 - 15;
             Console.CursorLeft = leftMargin;
-
             int count = 0;
             foreach (var s in quizQuestions)
             {
