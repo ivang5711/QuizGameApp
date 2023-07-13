@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Smith\\source\\C#Projects\\Bible\\Quiz_Console_App\\Quiz_Console\\Quiz_Console.csproj",
+      "projectUniqueName": "C:\\Users\\Smith\\source\\repos\\pet_projects\\Quiz_Console_App\\Quiz_Console\\Quiz_Console.csproj",
       "projectName": "Quiz_Console",
-      "projectPath": "C:\\Users\\Smith\\source\\C#Projects\\Bible\\Quiz_Console_App\\Quiz_Console\\Quiz_Console.csproj",
+      "projectPath": "C:\\Users\\Smith\\source\\repos\\pet_projects\\Quiz_Console_App\\Quiz_Console\\Quiz_Console.csproj",
       "packagesPath": "C:\\Users\\Smith\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Smith\\source\\C#Projects\\Bible\\Quiz_Console_App\\Quiz_Console\\obj\\",
+      "outputPath": "C:\\Users\\Smith\\source\\repos\\pet_projects\\Quiz_Console_App\\Quiz_Console\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
