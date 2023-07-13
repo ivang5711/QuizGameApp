@@ -165,6 +165,7 @@ namespace Quiz_Console
 
             if (DataProcessing.WriteResults() == 0)
             {
+<<<<<<< HEAD
                 //if (args is null)
                 //{
                 //    Console.WriteLine("no arguments provided");
@@ -176,6 +177,19 @@ namespace Quiz_Console
                 //        Console.WriteLine($"{i}: {args[i]}");
                 //    }
                 //}
+=======
+                if (args is null)
+                {
+                    Console.WriteLine("no arguments provided");
+                }
+                else
+                {
+                    for (int i = 0; i < args.Length; i++)
+                    {
+                        Console.WriteLine($"{i}: {args[i]}");
+                    }
+                }
+>>>>>>> c10e864f95402334065d1a103f90b1c2fa44468f
 
                 UserInterface.AnyKey();
             }
