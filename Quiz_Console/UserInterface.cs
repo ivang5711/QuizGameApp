@@ -92,7 +92,7 @@
             Fullscreen();
             Console.CursorTop = heightCenter - 8;
             Console.CursorLeft = leftMargin;
-            Console.WriteLine("Author is a genius :)");
+            Console.WriteLine("This app designed to automate the quiz game. You can add as many users as you want and as many questions as you want. You can add questions as plain text. The program will automatically convert it into separate questions. Make sure each question ends with a question mark. Have a nice Quiz!");
             Console.CursorLeft = leftMargin;
             DrawLine();
             Console.CursorTop = heightCenter - 6;
