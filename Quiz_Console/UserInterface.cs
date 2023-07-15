@@ -54,7 +54,7 @@
             Console.WriteLine(" Start quiz");
             Console.CursorLeft = leftMargin;
             MenuItem(4);
-            Console.WriteLine(" Credits");
+            Console.WriteLine(" About");
             Console.CursorLeft = leftMargin;
             MenuItem(5);
             Console.WriteLine(" To welcome screen");
@@ -84,18 +84,29 @@
         public static void Credits()
         {
             Console.Clear();
-            Console.Title = "Quiz - Credits";
+            Console.Title = "Quiz - About";
             int windowWidth = Console.WindowWidth;
             int windowHeight = Console.WindowHeight;
             int heightCenter = windowHeight / 2;
-            int leftMargin = windowWidth / 2 - 15;
+            int leftMargin = windowWidth / 2 - 36;
             Fullscreen();
             Console.CursorTop = heightCenter - 8;
             Console.CursorLeft = leftMargin;
-            Console.WriteLine("This app designed to automate the quiz game. You can add as many users as you want and as many questions as you want. You can add questions as plain text. The program will automatically convert it into separate questions. Make sure each question ends with a question mark. Have a nice Quiz!");
+            Console.WriteLine("This app designed to automate the quiz game.");
             Console.CursorLeft = leftMargin;
-            DrawLine();
-            Console.CursorTop = heightCenter - 6;
+            Console.WriteLine("You can add as many users as you want and as many questions as you want.");
+            Console.CursorLeft = leftMargin;
+            Console.WriteLine("You can add questions as plain text.");
+            Console.CursorLeft = leftMargin;
+            Console.WriteLine("The program will automatically convert it into separate questions.");
+            Console.CursorLeft = leftMargin;
+            Console.WriteLine("Make sure each question ends with a question mark.");
+            Console.CursorLeft = leftMargin;
+            Console.WriteLine("Have a nice Quiz!");
+            Console.CursorLeft = leftMargin;
+            DrawLine(72);
+            Console.CursorTop = heightCenter - 1;
+            leftMargin = windowWidth / 2 - 15;
             Console.CursorLeft = leftMargin;
             AnyKey();
             Console.ResetColor();
