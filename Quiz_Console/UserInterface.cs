@@ -1,8 +1,8 @@
 ﻿namespace Quiz_Console
 {
-    public static class UserInterface
+    public class UserInterface
     {
-        public static void WelcomeScreen()
+        public void WelcomeScreen()
         {
             Console.Clear();
             Console.Title = "Quiz - Welcome!";
@@ -29,7 +29,7 @@
             Console.Clear();
         }
 
-        public static int Menu()
+        public int Menu()
         {
             Console.Clear();
             Console.Title = "Quiz - Main menu";
@@ -81,7 +81,7 @@
             return menuNumber;
         }
 
-        public static void Credits()
+        public void Credits()
         {
             Console.Clear();
             Console.Title = "Quiz - About";
@@ -113,7 +113,7 @@
             Console.Clear();
         }
 
-        public static void Goodbuy()
+        public void Goodbuy()
         {
             Console.Clear();
             Console.Title = "Quiz - see you soon!";
@@ -142,7 +142,7 @@
             Console.Clear();
         }
 
-        public static void DrawLine()
+        public void DrawLine()
         {
             string tmp = new('-', 31);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -150,7 +150,7 @@
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public static void DrawLine(int? length)
+        public void DrawLine(int? length)
         {
             int size;
             if (length == null)
@@ -168,7 +168,7 @@
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public static void MenuItem(int number)
+        public void MenuItem(int number)
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("[");
@@ -179,20 +179,20 @@
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public static void Fullscreen()
+        public void Fullscreen()
         {
             string text = "Press <ALT + Enter> to toggle Full Screen mode";
             PrintGrey(text);
         }
 
-        public static void AnyKey()
+        public void AnyKey()
         {
             string text = "Press any key to continue...";
             PrintGrey(text);
             Console.ReadKey();
         }
 
-        public static void PrintGrey(string text)
+        public void PrintGrey(string text)
         {
             if (string.IsNullOrWhiteSpace(text))
             {
@@ -203,7 +203,7 @@
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public static void HelloBeep()
+        public void HelloBeep()
         {
             if (OperatingSystem.IsWindows())
             {
@@ -214,7 +214,7 @@
             }
         }
 
-        public static void BuyBeep()
+        public void BuyBeep()
         {
             if (OperatingSystem.IsWindows())
             {

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.Intrinsics.Arm;
 
 namespace Quiz_Console
 {
@@ -7,19 +8,22 @@ namespace Quiz_Console
         static void Main(string[] args)
         {
             Console.Title = "Quiz";
-            UserInterface.WelcomeScreen();
+            UserInterface ui;
+            ui = new UserInterface();
+            ui.WelcomeScreen();
             bool exitFlag = false;
+            DataProcessing dp = new DataProcessing();
             ArrayList users = new();
             ArrayList quizQuestions = new();
             while (!exitFlag)
             {
-                int menuNumber = UserInterface.Menu();
+                int menuNumber = ui.Menu();
                 switch (menuNumber)
                 {
                     // Enter users
                     case 1:
                         {
-                            var a = DataProcessing.AddUsers();
+                            var a = dp.AddUsers();
                             foreach (string s in a)
                             {
                                 users.Add(s);
@@ -32,7 +36,7 @@ namespace Quiz_Console
                     // Enter questions
                     case 2:
                         {
-                            var a = DataProcessing.AddQuestions();
+                            var a = dp.AddQuestions();
                             foreach (string s in a)
                             {
                                 quizQuestions.Add(s);
@@ -58,29 +62,29 @@ namespace Quiz_Console
                                     windowHeight = Console.WindowHeight;
                                     leftMargin = windowWidth / 2 - 50;
                                     Console.Clear();
-                                    UserInterface.Fullscreen();
+                                    ui.Fullscreen();
                                     Console.CursorTop = windowHeight / 2 - 6;
                                     Console.CursorLeft = leftMargin;
                                     Console.WriteLine("Answer the Quiz question:");
                                     Console.CursorLeft = leftMargin;
-                                    UserInterface.DrawLine(100);
+                                    ui.DrawLine(100);
                                     Console.CursorTop = windowHeight / 2 - 3;
                                     Console.CursorLeft = leftMargin;
                                     string text = $"User {user + 1}: ";
-                                    UserInterface.PrintGrey(text);
+                                    ui.PrintGrey(text);
                                     Console.WriteLine($"{users[user]}");
                                     Console.CursorLeft = leftMargin;
-                                    UserInterface.DrawLine(users[user]!.ToString()!.Length + 9);
+                                    ui.DrawLine(users[user]!.ToString()!.Length + 9);
                                     Console.WriteLine();
                                     Console.CursorLeft = leftMargin;
                                     text = $"Question {i + 1}: ";
-                                    UserInterface.PrintGrey(text);
+                                    ui.PrintGrey(text);
                                     Console.WriteLine($"{quizQuestions[i]}");
                                     Console.WriteLine();
                                     Console.WriteLine();
                                     Console.CursorLeft = windowWidth / 2 - 21;
                                     text = "press a key to go to the next question >>";
-                                    UserInterface.PrintGrey(text);
+                                    ui.PrintGrey(text);
                                     Console.CursorLeft = leftMargin;
                                     Console.CursorVisible = false;
                                     Console.ReadKey();
@@ -102,15 +106,15 @@ namespace Quiz_Console
                                 leftMargin = windowWidth / 2 - 15;
                                 Console.CursorLeft = leftMargin;
                                 Console.Clear();
-                                UserInterface.Fullscreen();
+                                ui.Fullscreen();
                                 Console.CursorTop = windowHeight / 2 - 3;
                                 Console.CursorLeft = windowWidth / 2 - 22;
                                 Console.WriteLine("That's all questions! Thank you for the Quiz");
                                 Console.CursorLeft = leftMargin - 7;
-                                UserInterface.DrawLine(44);
+                                ui.DrawLine(44);
                                 Console.WriteLine();
                                 Console.CursorLeft = leftMargin;
-                                UserInterface.AnyKey();
+                                ui.AnyKey();
                                 Console.CursorLeft = leftMargin;
                                 Console.ResetColor();
                                 Console.Clear();
@@ -123,16 +127,16 @@ namespace Quiz_Console
                                 leftMargin = windowWidth / 2 - 15;
                                 Console.CursorLeft = leftMargin;
                                 Console.Clear();
-                                UserInterface.Fullscreen();
+                                ui.Fullscreen();
                                 Console.CursorTop = windowHeight / 2 - 3;
                                 string message = "Oops... You need to add at least 1 user first";
                                 Console.CursorLeft = (windowWidth - message.Length) / 2;
                                 Console.WriteLine(message);
                                 Console.CursorLeft = (windowWidth - message.Length) / 2;
-                                UserInterface.DrawLine(message.Length);
+                                ui.DrawLine(message.Length);
                                 Console.WriteLine();
                                 Console.CursorLeft = leftMargin;
-                                UserInterface.AnyKey();
+                                ui.AnyKey();
                                 Console.CursorLeft = leftMargin;
                                 Console.ResetColor();
                                 Console.Clear();
@@ -143,14 +147,14 @@ namespace Quiz_Console
                     // Credits
                     case 4:
                         {
-                            UserInterface.Credits();
+                            ui.Credits();
                             break;
                         }
 
                     // To welcome screen
                     case 5:
                         {
-                            UserInterface.WelcomeScreen();
+                            ui.WelcomeScreen();
                             break;
                         }
 
@@ -163,7 +167,7 @@ namespace Quiz_Console
                 }
             }
 
-            if (DataProcessing.WriteResults() == 0)
+            if (dp.WriteResults() == 0)
             {
 
                 if (args is null)
@@ -178,10 +182,10 @@ namespace Quiz_Console
                     }
                 }
 
-                UserInterface.AnyKey();
+                ui.AnyKey();
             }
 
-            UserInterface.Goodbuy();
+            ui.Goodbuy();
             Console.ResetColor();
             Console.Clear();
             Environment.Exit(0);

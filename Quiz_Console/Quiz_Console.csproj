@@ -5,11 +5,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <ApplicationIcon>favicon(2).ico</ApplicationIcon>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="favicon(2).ico" />
+    <Content Include="favicon.ico" />
   </ItemGroup>
 
   <ItemGroup>
