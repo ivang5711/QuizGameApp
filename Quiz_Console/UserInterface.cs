@@ -142,7 +142,7 @@
             Console.Clear();
         }
 
-        public void DrawLine()
+        public static void DrawLine()
         {
             string tmp = new('-', 31);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -150,7 +150,7 @@
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public void DrawLine(int? length)
+        public static void DrawLine(int? length)
         {
             int size;
             if (length == null)
@@ -172,8 +172,7 @@
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("[");
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write(number);
+            PrintGrey(number.ToString());
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("]");
             Console.ForegroundColor = ConsoleColor.White;
