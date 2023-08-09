@@ -7,9 +7,7 @@ namespace Quiz_Console
     {
         int WindowWidth { get; set; }
         int WindowHeight { get; set; }
-
         int WindowWidthCenter { get { return WindowWidth / 2; } }
-
         int WindowHeightCenter { get { return WindowHeight / 2; } }
 
         readonly QuizUsers users = new QuizUsers();
@@ -23,7 +21,6 @@ namespace Quiz_Console
         {
             Console.Clear();
             Console.Title = "Quiz - Welcome!";
-
             if (OperatingSystem.IsWindows())
             {
                 Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
@@ -32,9 +29,7 @@ namespace Quiz_Console
 
             WindowWidth = Console.WindowWidth;
             WindowHeight = Console.WindowHeight;
-
             printTools.Fullscreen();
-
             Console.CursorTop = WindowHeightCenter - 2;
             Console.CursorLeft = WindowWidthCenter - 15;
             Console.WriteLine("Hello and welcome to the \"Quiz\"");
@@ -57,15 +52,11 @@ namespace Quiz_Console
         {
             Console.Clear();
             Console.Title = "Quiz - Main menu";
-
             WindowWidth = Console.WindowWidth;
             WindowHeight = Console.WindowHeight;
-
             int leftMargin = WindowWidthCenter - 15;
             int menuNumber;
-
             printTools.Fullscreen();
-
             Console.CursorTop = WindowHeightCenter - 8;
             Console.CursorLeft = leftMargin;
             Console.WriteLine($"The \"Quiz\" menu:");
@@ -116,14 +107,10 @@ namespace Quiz_Console
         {
             Console.Clear();
             Console.Title = "Quiz - About";
-
             WindowWidth = Console.WindowWidth;
             WindowHeight = Console.WindowHeight;
-
             int leftMargin = WindowWidthCenter - 36;
-
             printTools.Fullscreen();
-
             Console.CursorTop = WindowHeightCenter - 8;
             Console.CursorLeft = leftMargin;
             Console.WriteLine("This app designed to automate the quiz game.");
@@ -159,10 +146,8 @@ namespace Quiz_Console
             {
                 WindowWidth = Console.WindowWidth;
                 WindowHeight = Console.WindowHeight;
-
                 Console.Clear();
                 printTools.Fullscreen();
-
                 Console.CursorTop = WindowHeightCenter - 2;
                 Console.CursorLeft = WindowWidthCenter - 14;
                 Console.WriteLine("This was Quiz. See you soon!");
@@ -187,13 +172,10 @@ namespace Quiz_Console
         public void GetUsers()
         {
             Console.Clear();
-
             WindowWidth = Console.WindowWidth;
             WindowHeight = Console.WindowHeight;
-
             int leftMargin = WindowWidthCenter - 15;
             printTools.Fullscreen();
-
             Console.CursorTop = WindowHeightCenter - (4 + users.GetUsersCount() / 2);
             Console.CursorLeft = leftMargin;
             Console.WriteLine("Enter users: ");
@@ -220,7 +202,6 @@ namespace Quiz_Console
         public void PrintArgs(string[] args)
         {
             WindowWidth = Console.WindowWidth;
-
             int leftMargin = WindowWidthCenter - 15;
             if (args.Length == 0 && WriteResults() == 1)
             {
@@ -249,7 +230,6 @@ namespace Quiz_Console
         public void PrintUsers()
         {
             int windowWidth = Console.WindowWidth;
-
             int leftMargin = windowWidth / 2 - 15;
             if (users.GetUsersCount() != 0)
             {
@@ -298,10 +278,10 @@ namespace Quiz_Console
             Console.Clear();
             Console.Title = "Quiz - Add questions";
             string questionsString = string.Empty;
+            string answerString = string.Empty;
 
             WindowWidth = Console.WindowWidth;
             WindowHeight = Console.WindowHeight;
-
             int leftMargin = WindowWidthCenter - 15;
             ConsoleKeyInfo c;
             while (questionsString.Length == 0)
@@ -325,7 +305,7 @@ namespace Quiz_Console
 
                 Console.WriteLine();
                 Console.CursorLeft = leftMargin;
-                Console.WriteLine("Enter questions: ");
+                Console.WriteLine("Enter a question: ");
                 Console.CursorLeft = leftMargin;
                 printTools.DrawLine();
                 Console.WriteLine();
@@ -338,15 +318,35 @@ namespace Quiz_Console
 
                 questionsString = Console.ReadLine()!.ToUpper();
                 questionsString = c.Key.ToString().ToUpper() + questionsString;
+
                 if (!string.IsNullOrEmpty(questionsString))
                 {
-                    string[] questionsSplitted = questionsString.Split('?');
-                    for (int i = 0; i < questionsSplitted.Length - 1; i++)
+                    WindowWidth = Console.WindowWidth;
+                    WindowHeight = Console.WindowHeight;
+                    leftMargin = WindowWidthCenter - 15;
+                    while (answerString.Length == 0)
                     {
-                        string temp = string.Concat(questionsSplitted[i], "?");
-                        questions.AddQuestion(temp.Trim());
+                        Console.Clear();
+                        printTools.Fullscreen();
+                        Console.CursorTop = WindowHeightCenter - 4;
+                        Console.WriteLine();
+                        Console.CursorLeft = leftMargin;
+                        Console.WriteLine("Enter an answer: ");
+                        Console.CursorLeft = leftMargin;
+                        printTools.DrawLine();
+                        Console.WriteLine();
+                        Console.CursorLeft = leftMargin;
+                        c = Console.ReadKey();
+                        if (c.Key == ConsoleKey.Escape)
+                        {
+                            break;
+                        }
+
+                        answerString = Console.ReadLine()!.ToUpper();
+                        answerString = c.Key.ToString().ToUpper() + answerString;
                     }
 
+                    questions.AddQuestionAndAnswer(questionsString.Trim(), answerString.Trim());
                     Console.Clear();
                     printTools.Fullscreen();
                     Console.CursorTop = WindowHeightCenter - (8 + questions.GetQuestionsCount() / 2);
@@ -455,6 +455,9 @@ namespace Quiz_Console
                     printTools.PrintGrey(text);
                     Console.WriteLine($"{users.GetUsers()[user]}");
                     Console.CursorLeft = leftMargin;
+                    string temp = users.GetScore(user).ToString();
+                    Console.WriteLine("Current user score is: " + temp);
+                    Console.CursorLeft = leftMargin;
                     printTools.DrawLine(users.GetUsers()[user]!.ToString()!.Length + 9);
                     Console.WriteLine();
                     Console.CursorLeft = leftMargin;
@@ -463,15 +466,36 @@ namespace Quiz_Console
                     Console.WriteLine($"{questions.GetQuestions()[i]}");
                     Console.WriteLine();
                     Console.WriteLine();
-                    Console.CursorLeft = WindowWidthCenter - 21;
-                    text = "press a key to go to the next question >>";
+                    Console.CursorLeft = WindowWidthCenter - 15;
+                    text = "Enter your answer: ";
                     printTools.PrintGrey(text);
-                    Console.CursorLeft = leftMargin;
-                    Console.CursorVisible = false;
+                    string? input = Console.ReadLine();
+                    while (string.IsNullOrWhiteSpace(input))
+                    {
+                        input = Console.ReadLine();
+                    }
+
+                    Console.CursorTop = WindowHeightCenter + 3;
+                    string tmp = new string(' ', WindowWidth);
+                    Console.WriteLine(tmp);
+                    Console.CursorTop = WindowHeightCenter + 3;
+                    Console.CursorLeft = WindowWidthCenter - 9 - (input.Length / 2);
+                    Console.WriteLine($"Your answer is: \"{input}\"");
+                    bool k = questions.AnswerCheck(questions.GetQuestions()[i], input);
+                    Console.CursorTop = WindowHeightCenter + 4;
+                    Console.WriteLine(tmp);
+                    Console.CursorLeft = WindowWidthCenter - 3;
+                    Console.WriteLine(k);
+                    if (k)
+                    {
+                        users.AddScores(user);
+                    }
+                    Console.WriteLine();
+                    Console.CursorLeft = WindowWidthCenter - 14;
+                    printTools.PrintGrey("Press any key to continue...");
                     Console.ReadKey();
                     Console.CursorVisible = true;
                     Console.CursorLeft = leftMargin;
-
                     if (user < users.GetUsersCount() - 1)
                     {
                         user++;
@@ -489,6 +513,9 @@ namespace Quiz_Console
                 Console.Clear();
                 printTools.Fullscreen();
                 Console.CursorTop = WindowHeightCenter - 3;
+                Console.CursorLeft = WindowWidthCenter - 22;
+                string winner = users.GetWinner();
+                Console.WriteLine($"THE WINNER IS {winner}. Congrats!");
                 Console.CursorLeft = WindowWidthCenter - 22;
                 Console.WriteLine("That's all questions! Thank you for the Quiz");
                 Console.CursorLeft = leftMargin - 7;
