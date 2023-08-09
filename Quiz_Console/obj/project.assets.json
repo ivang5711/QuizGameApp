@@ -1,11 +1,46 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "ConsoleUIHelpers/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/ConsoleUIHelpers.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ConsoleUIHelpers.dll": {}
+        }
+      },
+      "QuizLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/QuizLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/QuizLibrary.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "ConsoleUIHelpers/1.0.0": {
+      "type": "project",
+      "path": "../ConsoleUIHelpers/ConsoleUIHelpers.csproj",
+      "msbuildProject": "../ConsoleUIHelpers/ConsoleUIHelpers.csproj"
+    },
+    "QuizLibrary/1.0.0": {
+      "type": "project",
+      "path": "../QuizLibrary/QuizLibrary.csproj",
+      "msbuildProject": "../QuizLibrary/QuizLibrary.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "ConsoleUIHelpers >= 1.0.0",
+      "QuizLibrary >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Smith\\.nuget\\packages\\": {},
@@ -39,7 +74,14 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Smith\\source\\repos\\pet_projects\\Quiz_Console_App\\ConsoleUIHelpers\\ConsoleUIHelpers.csproj": {
+              "projectPath": "C:\\Users\\Smith\\source\\repos\\pet_projects\\Quiz_Console_App\\ConsoleUIHelpers\\ConsoleUIHelpers.csproj"
+            },
+            "C:\\Users\\Smith\\source\\repos\\pet_projects\\Quiz_Console_App\\QuizLibrary\\QuizLibrary.csproj": {
+              "projectPath": "C:\\Users\\Smith\\source\\repos\\pet_projects\\Quiz_Console_App\\QuizLibrary\\QuizLibrary.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

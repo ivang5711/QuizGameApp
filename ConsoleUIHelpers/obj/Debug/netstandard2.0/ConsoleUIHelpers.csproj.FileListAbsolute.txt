@@ -1,0 +1,10 @@
+C:\Users\Smith\source\repos\pet_projects\Quiz_Console_App\ConsoleUIHelpers\bin\Debug\netstandard2.0\ConsoleUIHelpers.deps.json
+C:\Users\Smith\source\repos\pet_projects\Quiz_Console_App\ConsoleUIHelpers\bin\Debug\netstandard2.0\ConsoleUIHelpers.dll
+C:\Users\Smith\source\repos\pet_projects\Quiz_Console_App\ConsoleUIHelpers\bin\Debug\netstandard2.0\ConsoleUIHelpers.pdb
+C:\Users\Smith\source\repos\pet_projects\Quiz_Console_App\ConsoleUIHelpers\obj\Debug\netstandard2.0\ConsoleUIHelpers.csproj.AssemblyReference.cache
+C:\Users\Smith\source\repos\pet_projects\Quiz_Console_App\ConsoleUIHelpers\obj\Debug\netstandard2.0\ConsoleUIHelpers.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Smith\source\repos\pet_projects\Quiz_Console_App\ConsoleUIHelpers\obj\Debug\netstandard2.0\ConsoleUIHelpers.AssemblyInfoInputs.cache
+C:\Users\Smith\source\repos\pet_projects\Quiz_Console_App\ConsoleUIHelpers\obj\Debug\netstandard2.0\ConsoleUIHelpers.AssemblyInfo.cs
+C:\Users\Smith\source\repos\pet_projects\Quiz_Console_App\ConsoleUIHelpers\obj\Debug\netstandard2.0\ConsoleUIHelpers.csproj.CoreCompileInputs.cache
+C:\Users\Smith\source\repos\pet_projects\Quiz_Console_App\ConsoleUIHelpers\obj\Debug\netstandard2.0\ConsoleUIHelpers.dll
+C:\Users\Smith\source\repos\pet_projects\Quiz_Console_App\ConsoleUIHelpers\obj\Debug\netstandard2.0\ConsoleUIHelpers.pdb

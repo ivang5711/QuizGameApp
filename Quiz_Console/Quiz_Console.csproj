@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -14,6 +14,11 @@
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConsoleUIHelpers\ConsoleUIHelpers.csproj" />
+    <ProjectReference Include="..\QuizLibrary\QuizLibrary.csproj" />
   </ItemGroup>
 
 </Project>

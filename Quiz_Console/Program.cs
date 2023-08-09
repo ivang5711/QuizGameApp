@@ -4,10 +4,13 @@
     {
         public static void Main(string[] args)
         {
-            UserInterface ui = new();
-            DataProcessing dp = new();
             Console.Title = "Quiz";
+            Console.ResetColor();
+            Console.Clear();
+            UserInterface ui = new();
+
             ui.WelcomeScreen();
+
             bool exitFlag = false;
             while (!exitFlag)
             {
@@ -17,21 +20,21 @@
                     // Enter users
                     case 1:
                         {
-                            dp.AddUsers();
+                            ui.AddUsers();
                             break;
                         }
 
                     // Enter questions
                     case 2:
                         {
-                            dp.AddQuestions();
+                            ui.AddQuestions();
                             break;
                         }
 
                     // Start quiz
                     case 3:
                         {
-                            DataProcessing.StartQuiz();
+                            ui.StartQuiz();
                             break;
                         }
 
@@ -58,7 +61,7 @@
                 }
             }
 
-            dp.PrintArgs(args);
+            ui.PrintArgs(args);
             ui.Goodbuy();
             Console.ResetColor();
             Console.Clear();
