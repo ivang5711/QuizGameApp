@@ -4,15 +4,11 @@ namespace QuizLibrary
 {
     public class QuizQuestions
     {
-        readonly List<string> questions;
-        readonly List<string> answers;
-        readonly Dictionary<string, string> questionsAndAnswers;
+        readonly List<QuestionWithAnswer> questionsList;
 
         public QuizQuestions()
         {
-            questions = new List<string>();
-            answers = new List<string>();
-            questionsAndAnswers = new Dictionary<string, string>();
+            questionsList = new List<QuestionWithAnswer>();
         }
 
         /// <summary>
@@ -21,10 +17,10 @@ namespace QuizLibrary
         /// <returns>Returns Questions List</returns>
         public List<string> GetQuestions()
         {
-            questions.Clear();
-            foreach (KeyValuePair<string, string> pair in questionsAndAnswers)
+            List<string> questions = new List<string>();
+            foreach (QuestionWithAnswer item in questionsList)
             {
-                questions.Add(pair.Key);
+                questions.Add(item.GetQuestion());
             }
 
             return questions;
@@ -36,6 +32,12 @@ namespace QuizLibrary
         /// <returns>Returns a list of answers for all questions.</returns>
         public List<string> GetAnswers()
         {
+            List<string> answers = new List<string>();
+            foreach (QuestionWithAnswer item in questionsList)
+            {
+                answers.Add(item.GetAnswer());
+            }
+
             return answers;
         }
 
@@ -57,7 +59,7 @@ namespace QuizLibrary
                 throw new ArgumentException(answer, nameof(answer));
             }
 
-            questionsAndAnswers.Add(question, answer);
+            questionsList.Add(new QuestionWithAnswer(question, answer));
         }
 
         /// <summary>
@@ -66,8 +68,7 @@ namespace QuizLibrary
         /// <returns>returns an int with Questions prperty count.</returns>
         public int GetQuestionsCount()
         {
-
-            return questionsAndAnswers.Count;
+            return questionsList.Count;
         }
 
         /// <summary>
@@ -89,14 +90,15 @@ namespace QuizLibrary
                 throw new ArgumentException(question, nameof(question));
             }
 
-            if (answer == questionsAndAnswers[$"{question}"])
+            foreach (QuestionWithAnswer item in questionsList)
             {
-                return true;
+                if (question == item.GetQuestion() && answer == item.GetAnswer())
+                {
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
     }
 }

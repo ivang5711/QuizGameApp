@@ -6,12 +6,10 @@ namespace QuizLibrary
 {
     public class QuizUsers
     {
-        private readonly List<string> users;
-        private readonly List<int> scores;
+        private readonly List<User> usersList;
         public QuizUsers()
         {
-            users = new List<string>();
-            scores = new List<int>();
+            usersList = new List<User>();
         }
 
         /// <summary>
@@ -26,8 +24,7 @@ namespace QuizLibrary
                 throw new ArgumentException(user, nameof(user));
             }
 
-            users.Add(user);
-            scores.Add(0);
+            usersList.Add(new User($"{user}", 0));
         }
 
         /// <summary>
@@ -36,7 +33,13 @@ namespace QuizLibrary
         /// <returns>Return Users List.</returns>
         public List<string> GetUsers()
         {
-            return users;
+            List<string> usersTemp = new List<string>();
+            foreach (User item in usersList)
+            {
+                usersTemp.Add(item.GetUserName());
+            }
+
+            return usersTemp;
         }
 
         /// <summary>
@@ -46,7 +49,13 @@ namespace QuizLibrary
 
         public List<int> GetScores()
         {
-            return scores;
+            List<int> usersScores = new List<int>();
+            foreach (User item in usersList)
+            {
+                usersScores.Add(item.GetUserScore());
+            }
+
+            return usersScores;
         }
 
         /// <summary>
@@ -56,12 +65,12 @@ namespace QuizLibrary
         /// <exception cref="ArgumentOutOfRangeException">Checks if an index of a given user is within range and throws an exception otherwise.</exception>
         public void AddScores(int index)
         {
-            if (index < 0 || index >= scores.Count)
+            if (index < 0 || index >= usersList.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            scores[index]++;
+            usersList[index].IncrementScore();
         }
 
         /// <summary>
@@ -72,12 +81,12 @@ namespace QuizLibrary
         /// <exception cref="ArgumentOutOfRangeException">Checks if an index of a given user is within range and throws an exception otherwise.</exception>
         public int GetScore(int index)
         {
-            if (index < 0 || index >= scores.Count)
+            if (index < 0 || index >= usersList.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            return scores[index];
+            return usersList[index].GetUserScore();
         }
 
         /// <summary>
@@ -86,7 +95,7 @@ namespace QuizLibrary
         /// <returns>Return Users count.</returns>
         public int GetUsersCount()
         {
-            return users.Count;
+            return usersList.Count;
         }
 
         /// <summary>
@@ -95,21 +104,38 @@ namespace QuizLibrary
         /// <returns>Returns a string with the name of the winner or "no winner" string if there is no game being played yet.</returns>
         public string GetWinner()
         {
-            if (scores.Count == 0)
+            List<int> usersScores = new List<int>();
+            foreach (User item in usersList)
+            {
+                usersScores.Add(item.GetUserScore());
+            }
+
+            if (usersScores.Count == 0)
             {
                 return "no winner";
             }
-            int maximum = scores.Max();
+
+            int maximum = usersScores.Max();
             int i;
-            for (i = 0; i < scores.Count; i++)
+            for (i = 0; i < usersScores.Count; i++)
             {
-                if (scores[i] == maximum)
+                if (usersScores[i] == maximum)
                 {
                     break;
                 }
             }
 
-            return users[i];
+            return usersList[i].GetUserName();
+        }
+
+        /// <summary>
+        /// Gets a Users object from the usersList.
+        /// </summary>
+        /// <param name="index">integer index of a particular user.</param>
+        /// <returns>returns an object of type User.</returns>
+        public User GetUserObject(int index)
+        {
+            return usersList[index];
         }
     }
 }

@@ -431,6 +431,8 @@ namespace Quiz_Console
         /// </summary>
         public void StartQuiz()
         {
+            users.GetUserObject(0);
+            users.GetUserObject(1);
             Console.Clear();
             Console.Title = "Quiz";
             int leftMargin;
