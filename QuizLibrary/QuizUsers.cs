@@ -31,7 +31,7 @@ namespace QuizLibrary
         /// Gets Users List from the Users property.
         /// </summary>
         /// <returns>Return Users List.</returns>
-        public List<string> GetUsers()
+        public List<string> GetUserNames()
         {
             List<string> usersTemp = new List<string>();
             foreach (User item in usersList)
@@ -136,6 +136,11 @@ namespace QuizLibrary
         public User GetUserObject(int index)
         {
             return usersList[index];
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return usersList;
         }
     }
 }

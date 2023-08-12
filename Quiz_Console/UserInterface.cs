@@ -1,5 +1,7 @@
 ﻿using ConsoleUIHelpers;
 using QuizLibrary;
+using System.IO;
+using System.Text;
 
 namespace Quiz_Console
 {
@@ -234,7 +236,7 @@ namespace Quiz_Console
             if (users.GetUsersCount() != 0)
             {
                 int counter = 0;
-                foreach (var user in users.GetUsers())
+                foreach (var user in users.GetUserNames())
                 {
                     counter++;
                     Console.CursorLeft = leftMargin;
@@ -455,12 +457,12 @@ namespace Quiz_Console
                     Console.CursorLeft = leftMargin;
                     string text = $"User {user + 1}: ";
                     printTools.PrintGrey(text);
-                    Console.WriteLine($"{users.GetUsers()[user]}");
+                    Console.WriteLine($"{users.GetUserNames()[user]}");
                     Console.CursorLeft = leftMargin;
                     string temp = users.GetScore(user).ToString();
                     Console.WriteLine("Current user score is: " + temp);
                     Console.CursorLeft = leftMargin;
-                    printTools.DrawLine(users.GetUsers()[user]!.ToString()!.Length + 9);
+                    printTools.DrawLine(users.GetUserNames()[user]!.ToString()!.Length + 9);
                     Console.WriteLine();
                     Console.CursorLeft = leftMargin;
                     text = $"Question {i + 1}: ";
@@ -550,6 +552,39 @@ namespace Quiz_Console
                 Console.ResetColor();
                 Console.Clear();
             }
+
+            SaveRoundToDisk();
+        }
+
+        /// <summary>
+        /// Saves Users and Questions data as well as winner and score to CSV file.
+        /// </summary>
+        public void SaveRoundToDisk()
+        {
+            var records = users.GetAllUsers();
+            string file = @"..\\output.csv";
+            string separator = ",";
+            StringBuilder output = new StringBuilder();
+            string[] headings = { "name", "score" };
+            output.AppendLine(string.Join(separator, headings));
+
+            foreach (User user in records)
+            {
+                string[] newLine = { user.GetUserName(), user.GetUserScore().ToString() };
+                output.AppendLine(string.Join(separator, newLine));
+            }
+
+            try
+            {
+                File.AppendAllText(file, output.ToString());
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Data could not be written to the CSV file.");
+            }
+
+            Console.WriteLine("The data has been successfully saved to the CSV file");
+
         }
 
         public int WriteResults()

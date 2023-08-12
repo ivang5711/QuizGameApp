@@ -27,6 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ConsoleUIHelpers\ConsoleUIHelpers.csproj" />
     <ProjectReference Include="..\QuizLibrary\QuizLibrary.csproj" />
   </ItemGroup>
