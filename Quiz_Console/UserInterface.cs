@@ -554,15 +554,16 @@ namespace Quiz_Console
             }
 
             SaveRoundToDisk();
+            SaveQuestionsToDisk();
         }
 
         /// <summary>
-        /// Saves Users and Questions data as well as winner and score to CSV file.
+        /// Saves Users and score to CSV file.
         /// </summary>
         public void SaveRoundToDisk()
         {
             var records = users.GetAllUsers();
-            string file = @"..\\output.csv";
+            string file = @"..\\user-score.csv";
             string separator = ",";
             StringBuilder output = new StringBuilder();
             string[] headings = { "name", "score" };
@@ -571,6 +572,37 @@ namespace Quiz_Console
             foreach (User user in records)
             {
                 string[] newLine = { user.GetUserName(), user.GetUserScore().ToString() };
+                output.AppendLine(string.Join(separator, newLine));
+            }
+
+            try
+            {
+                File.AppendAllText(file, output.ToString());
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Data could not be written to the CSV file.");
+            }
+
+            Console.WriteLine("The data has been successfully saved to the CSV file");
+
+        }
+
+        /// <summary>
+        /// Saves Questions data to CSV file.
+        /// </summary>
+        public void SaveQuestionsToDisk()
+        {
+            var records = questions.GetQuestionWithAnswers();
+            string file = @"..\\questions.csv";
+            string separator = ",";
+            StringBuilder output = new StringBuilder();
+            string[] headings = { "question", "answer" };
+            output.AppendLine(string.Join(separator, headings));
+
+            foreach (QuestionWithAnswer item in records)
+            {
+                string[] newLine = { item.GetQuestion(), item.GetAnswer() };
                 output.AppendLine(string.Join(separator, newLine));
             }
 

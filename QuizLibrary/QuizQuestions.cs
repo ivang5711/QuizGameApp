@@ -100,5 +100,10 @@ namespace QuizLibrary
 
             return false;
         }
+
+        public List<QuestionWithAnswer> GetQuestionWithAnswers()
+        {
+            return questionsList;
+        }
     }
 }
