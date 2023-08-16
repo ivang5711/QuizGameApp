@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace QuizLibrary
 {
@@ -25,6 +27,16 @@ namespace QuizLibrary
             }
 
             usersList.Add(new User($"{user}", 0));
+        }
+
+        public void AddUser(string user, int index)
+        {
+            if (string.IsNullOrWhiteSpace(user))
+            {
+                throw new ArgumentException(user, nameof(user));
+            }
+
+            usersList.Add(new User($"{user}", 0, index));
         }
 
         /// <summary>
@@ -74,6 +86,21 @@ namespace QuizLibrary
         }
 
         /// <summary>
+        /// Increments the winsTotal of a user by 1.
+        /// </summary>
+        /// <param name="index">An index of a given user in the List of Users.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Checks if an index of a given user is within range and throws an exception otherwise.</exception>
+        public void AddWin(int index)
+        {
+            if (index < 0 || index >= usersList.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            usersList[index].IncrementWinsTotal();
+        }
+
+        /// <summary>
         /// Gets the score of a user.
         /// </summary>
         /// <param name="index">An index of a given user in the List of Users.</param>
@@ -102,7 +129,7 @@ namespace QuizLibrary
         /// Gets winner of a game.
         /// </summary>
         /// <returns>Returns a string with the name of the winner or "no winner" string if there is no game being played yet.</returns>
-        public string GetWinner()
+        public int GetWinner()
         {
             List<int> usersScores = new List<int>();
             foreach (User item in usersList)
@@ -112,20 +139,32 @@ namespace QuizLibrary
 
             if (usersScores.Count == 0)
             {
-                return "no winner";
+                return -1;
             }
 
             int maximum = usersScores.Max();
             int i;
+<<<<<<< HEAD
+            int a = -1;
+            int counter = 0;
+=======
+            int a;
+            int counter;
+>>>>>>> a980eeb4012f47fe890cdd76fb482ea54dc7c669
             for (i = 0; i < usersScores.Count; i++)
             {
                 if (usersScores[i] == maximum)
                 {
-                    break;
+                    a = i;
+                    counter++;
                 }
             }
 
-            return usersList[i].GetUserName();
+<<<<<<< HEAD
+            return a;
+=======
+            return i;
+>>>>>>> a980eeb4012f47fe890cdd76fb482ea54dc7c669
         }
 
         /// <summary>
@@ -141,6 +180,46 @@ namespace QuizLibrary
         public List<User> GetAllUsers()
         {
             return usersList;
+        }
+
+        /// <summary>
+        /// Saves users and score to CSV file.
+        /// </summary>
+        public void SaveToCSV(QuizUsers userInstance)
+        {
+            var records = userInstance.GetAllUsers();
+            string file = $@"..\\user-score.csv";
+            string separator = ",";
+            StringBuilder output = new StringBuilder();
+            string[] headings = { "name", "winsTotal" };
+            output.AppendLine(string.Join(separator, headings));
+            foreach (User user in records)
+            {
+                string[] newLine = { user.GetUserName(), user.GetWinsTotal().ToString() };
+                output.AppendLine(string.Join(separator, newLine));
+            }
+
+            try
+            {
+                File.WriteAllText(file, output.ToString());
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Data could not be written to the CSV file.");
+            }
+
+            Console.WriteLine("The data has been successfully saved to the CSV file");
+<<<<<<< HEAD
+
+
+            string a = $"\\\"";
+
+            int a1;
+
+
+
+=======
+>>>>>>> a980eeb4012f47fe890cdd76fb482ea54dc7c669
         }
     }
 }

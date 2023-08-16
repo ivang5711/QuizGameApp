@@ -1,7 +1,5 @@
 ﻿using ConsoleUIHelpers;
 using QuizLibrary;
-using System.IO;
-using System.Text;
 
 namespace Quiz_Console
 {
@@ -15,7 +13,7 @@ namespace Quiz_Console
         readonly QuizUsers users = new QuizUsers();
         readonly QuizQuestions questions = new QuizQuestions();
         readonly PrintTools printTools = new PrintTools();
-
+        RoundUsers roundUsers = new RoundUsers();
         /// <summary>
         /// Prints out the welcome screen with welcome message.
         /// </summary>
@@ -45,7 +43,6 @@ namespace Quiz_Console
             Console.ResetColor();
             Console.Clear();
         }
-
         /// <summary>
         /// Prints out the menu screen with options to choose from and waits for the user input. 
         /// </summary>
@@ -72,15 +69,18 @@ namespace Quiz_Console
             Console.WriteLine(" Enter questions");
             Console.CursorLeft = leftMargin;
             printTools.MenuItem(3);
-            Console.WriteLine(" Start quiz");
+            Console.WriteLine(" Pick user");
             Console.CursorLeft = leftMargin;
             printTools.MenuItem(4);
-            Console.WriteLine(" About");
+            Console.WriteLine(" Start quiz");
             Console.CursorLeft = leftMargin;
             printTools.MenuItem(5);
-            Console.WriteLine(" To welcome screen");
+            Console.WriteLine(" About");
             Console.CursorLeft = leftMargin;
             printTools.MenuItem(6);
+            Console.WriteLine(" To welcome screen");
+            Console.CursorLeft = leftMargin;
+            printTools.MenuItem(7);
             Console.WriteLine(" Exit");
             Console.CursorLeft = leftMargin;
             printTools.DrawLine();
@@ -101,7 +101,6 @@ namespace Quiz_Console
             Console.Clear();
             return menuNumber;
         }
-
         /// <summary>
         /// Prints out credits page with some information about the app and authors.
         /// </summary>
@@ -135,7 +134,6 @@ namespace Quiz_Console
             Console.ResetColor();
             Console.Clear();
         }
-
         /// <summary>
         /// Prints out the Goodbuy screen.
         /// </summary>
@@ -166,8 +164,8 @@ namespace Quiz_Console
             printTools.BuyBeep();
             Console.ResetColor();
             Console.Clear();
-        }
 
+        }
         /// <summary>
         /// Prints out the GetUsers screen and collects user input.
         /// </summary>
@@ -196,7 +194,6 @@ namespace Quiz_Console
 
             Console.CursorLeft = leftMargin;
         }
-
         /// <summary>
         /// Prints out the args parameters provided by the user via cli at startup (if any). Otherwise prints out "no "arguments provided" message
         /// </summary>
@@ -225,7 +222,6 @@ namespace Quiz_Console
                 printTools.AnyKey();
             }
         }
-
         /// <summary>
         /// Prints out the list of Users with their sequence numbers.
         /// </summary>
@@ -249,7 +245,31 @@ namespace Quiz_Console
                 Console.CursorLeft = leftMargin;
             }
         }
+        /// <summary>
+        /// Prints out the list of Users with their High Scores.
+        /// </summary>
+        public void PrintUsersWithScores()
+        {
+            int windowWidth = Console.WindowWidth;
+            int leftMargin = windowWidth / 2 - 15;
+            if (users.GetUsersCount() != 0)
+            {
+                int counter = 0;
+                foreach (var item in users.GetAllUsers())
+                {
+                    counter++;
+                    Console.CursorLeft = leftMargin;
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write($"User {counter}: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write($"{item.GetUserName()}");
+                    Console.CursorLeft = (windowWidth / 2) + 2;
+                    Console.WriteLine($"{item.GetWinsTotal()}");
+                }
 
+                Console.CursorLeft = leftMargin;
+            }
+        }
         /// <summary>
         /// Prints out the list of Questions with their sequence numbers.
         /// </summary>
@@ -271,7 +291,6 @@ namespace Quiz_Console
 
             Console.CursorLeft = leftMargin;
         }
-
         /// <summary>
         /// Prints out the Add questions screen and collects user's input.
         /// </summary>
@@ -374,7 +393,6 @@ namespace Quiz_Console
             Console.ResetColor();
             Console.Clear();
         }
-
         /// <summary>
         /// Prints out the Add User screen and collects user's input.
         /// </summary>
@@ -427,18 +445,15 @@ namespace Quiz_Console
             Console.ResetColor();
             Console.Clear();
         }
-
         /// <summary>
         /// Prints out the quiz screen with username and corresponding question.
         /// </summary>
         public void StartQuiz()
         {
-            users.GetUserObject(0);
-            users.GetUserObject(1);
             Console.Clear();
             Console.Title = "Quiz";
             int leftMargin;
-            if (users.GetUsersCount() > 0)
+            if (roundUsers.GetUsersCount() > 0 && questions.GetQuestionsCount() > 0)
             {
                 int user = 0;
                 for (int i = 0; i < questions.GetQuestionsCount(); i++)
@@ -457,12 +472,12 @@ namespace Quiz_Console
                     Console.CursorLeft = leftMargin;
                     string text = $"User {user + 1}: ";
                     printTools.PrintGrey(text);
-                    Console.WriteLine($"{users.GetUserNames()[user]}");
+                    Console.WriteLine($"{roundUsers.GetUserNames()[user]}");
                     Console.CursorLeft = leftMargin;
-                    string temp = users.GetScore(user).ToString();
+                    string temp = roundUsers.GetScore(user).ToString();
                     Console.WriteLine("Current user score is: " + temp);
                     Console.CursorLeft = leftMargin;
-                    printTools.DrawLine(users.GetUserNames()[user]!.ToString()!.Length + 9);
+                    printTools.DrawLine(roundUsers.GetUserNames()[user]!.ToString()!.Length + 9);
                     Console.WriteLine();
                     Console.CursorLeft = leftMargin;
                     text = $"Question {i + 1}: ";
@@ -492,7 +507,7 @@ namespace Quiz_Console
                     Console.WriteLine(k);
                     if (k)
                     {
-                        users.AddScores(user);
+                        roundUsers.AddScores(user);
                     }
                     Console.WriteLine();
                     Console.CursorLeft = WindowWidthCenter - 14;
@@ -500,7 +515,7 @@ namespace Quiz_Console
                     Console.ReadKey();
                     Console.CursorVisible = true;
                     Console.CursorLeft = leftMargin;
-                    if (user < users.GetUsersCount() - 1)
+                    if (user < roundUsers.GetUsersCount() - 1)
                     {
                         user++;
                     }
@@ -518,7 +533,9 @@ namespace Quiz_Console
                 printTools.Fullscreen();
                 Console.CursorTop = WindowHeightCenter - 3;
                 Console.CursorLeft = WindowWidthCenter - 22;
-                string winner = users.GetWinner();
+                string winner = roundUsers.GetUserNames()[roundUsers.GetWinner()];
+                int userIndex = roundUsers.GetAllUsers()[roundUsers.GetWinner()].GetIndex();
+                users.AddWin(userIndex);
                 Console.WriteLine($"THE WINNER IS {winner}. Congrats!");
                 Console.CursorLeft = WindowWidthCenter - 22;
                 Console.WriteLine("That's all questions! Thank you for the Quiz");
@@ -530,6 +547,7 @@ namespace Quiz_Console
                 Console.CursorLeft = leftMargin;
                 Console.ResetColor();
                 Console.Clear();
+                roundUsers = new RoundUsers();
             }
             else
             {
@@ -540,7 +558,16 @@ namespace Quiz_Console
                 Console.Clear();
                 printTools.Fullscreen();
                 Console.CursorTop = WindowHeightCenter - 3;
-                string message = "Oops... You need to add at least 1 user first";
+                string message;
+                if (users.GetUsersCount() == 0 )
+                {
+                    message = "Oops... You need to pick at least 1 user first";
+                }
+                else
+                {
+                    message = "Oops... You need to add at least 1 question first";
+                }
+
                 Console.CursorLeft = (WindowWidth - message.Length) / 2;
                 Console.WriteLine(message);
                 Console.CursorLeft = (WindowWidth - message.Length) / 2;
@@ -552,73 +579,11 @@ namespace Quiz_Console
                 Console.ResetColor();
                 Console.Clear();
             }
-
-            SaveRoundToDisk();
-            SaveQuestionsToDisk();
         }
-
         /// <summary>
-        /// Saves Users and score to CSV file.
+        /// Prints out a chart with users ans highscores.
         /// </summary>
-        public void SaveRoundToDisk()
-        {
-            var records = users.GetAllUsers();
-            string file = @"..\\user-score.csv";
-            string separator = ",";
-            StringBuilder output = new StringBuilder();
-            string[] headings = { "name", "score" };
-            output.AppendLine(string.Join(separator, headings));
-
-            foreach (User user in records)
-            {
-                string[] newLine = { user.GetUserName(), user.GetUserScore().ToString() };
-                output.AppendLine(string.Join(separator, newLine));
-            }
-
-            try
-            {
-                File.AppendAllText(file, output.ToString());
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Data could not be written to the CSV file.");
-            }
-
-            Console.WriteLine("The data has been successfully saved to the CSV file");
-
-        }
-
-        /// <summary>
-        /// Saves Questions data to CSV file.
-        /// </summary>
-        public void SaveQuestionsToDisk()
-        {
-            var records = questions.GetQuestionWithAnswers();
-            string file = @"..\\questions.csv";
-            string separator = ",";
-            StringBuilder output = new StringBuilder();
-            string[] headings = { "question", "answer" };
-            output.AppendLine(string.Join(separator, headings));
-
-            foreach (QuestionWithAnswer item in records)
-            {
-                string[] newLine = { item.GetQuestion(), item.GetAnswer() };
-                output.AppendLine(string.Join(separator, newLine));
-            }
-
-            try
-            {
-                File.AppendAllText(file, output.ToString());
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Data could not be written to the CSV file.");
-            }
-
-            Console.WriteLine("The data has been successfully saved to the CSV file");
-
-        }
-
+        /// <returns>returns 0 if results present and any other value otherwise.</returns>
         public int WriteResults()
         {
             Console.Clear();
@@ -632,17 +597,11 @@ namespace Quiz_Console
             if (users.GetUsersCount() != 0 && questions.GetQuestionsCount() != 0)
             {
                 Console.CursorLeft = leftMargin;
-                Console.WriteLine("Players:");
+                Console.WriteLine("High scores:");
                 Console.CursorLeft = leftMargin;
                 printTools.DrawLine();
-                PrintUsers();
+                PrintUsersWithScores();
                 Console.CursorLeft = leftMargin;
-                printTools.DrawLine();
-                Console.CursorLeft = leftMargin;
-                Console.WriteLine("Questions:");
-                Console.CursorLeft = leftMargin;
-                printTools.DrawLine();
-                PrintQuestions();
                 printTools.DrawLine();
                 Console.CursorLeft = leftMargin;
                 return 0;
@@ -651,6 +610,70 @@ namespace Quiz_Console
             {
                 return 1;
             }
+        }
+        /// <summary>
+        /// Allows user to pick users for a new game round.
+        /// </summary>
+        public void PickUsers()
+        {
+            Console.Clear();
+            Console.Title = "Quiz - Pick users";
+            bool exitCode = true;
+            while (exitCode)
+            {
+                ConsoleKeyInfo c;
+                while (true)
+                {
+                    GetUsers();
+                    string text = "Pick a user for the game: ";
+                    printTools.PrintGrey(text);
+                    c = Console.ReadKey();
+
+                    if (c.Key == ConsoleKey.Escape)
+                    {
+                        break;
+                    }
+
+                    string ans = c.KeyChar.ToString();
+                    if (!string.IsNullOrEmpty(ans) && int.TryParse(ans, out int _))
+                    {
+                        int index = Convert.ToInt32(ans) - 1;
+                        roundUsers.AddUser(users.GetUserNames()[index], index);
+                        Console.CursorLeft = WindowWidthCenter - 30;
+                        Console.Write($"You have entered {users.GetUserNames()[index]}. Press any key to continue...");
+                        Console.ReadKey();
+                        break;
+                    }
+                }
+
+                while (true)
+                {
+                    GetUsers();
+                    string text = "Do you want to add new user?[Y/n] ";
+                    printTools.PrintGrey(text);
+                    c = Console.ReadKey(true);
+                    if (c.Key == ConsoleKey.Y || c.Key == ConsoleKey.Enter)
+                    {
+                        break;
+                    }
+                    else if (c.Key == ConsoleKey.Escape || c.Key == ConsoleKey.N)
+                    {
+                        exitCode = false;
+                        break;
+                    }
+                }
+            }
+
+            Console.ResetColor();
+            Console.Clear();
+        }
+        /// <summary>
+        /// Saves Questions and Answers as well as Users and High Scores to corresponding CSV files
+        /// </summary>
+        public void SaveData()
+        {
+            questions.SaveQuestionsToCSV(questions);
+            users.SaveToCSV(users);
         }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+
 namespace QuizLibrary
 {
     public class QuizQuestions
@@ -104,6 +107,36 @@ namespace QuizLibrary
         public List<QuestionWithAnswer> GetQuestionWithAnswers()
         {
             return questionsList;
+        }
+
+        /// <summary>
+        /// Saves questions with answers to CSV file.
+        /// </summary>
+        public void SaveQuestionsToCSV(QuizQuestions questionsInstance)
+        {
+            var records = questionsInstance.GetQuestionWithAnswers();
+            string file = $@"..\\questions.csv";
+            string separator = ",";
+            StringBuilder output = new StringBuilder();
+            string[] headings = { "question", "answer" };
+            output.AppendLine(string.Join(separator, headings));
+            foreach (QuestionWithAnswer item in records)
+            {
+                string[] newLine = { item.GetQuestion(), item.GetAnswer() };
+                output.AppendLine(string.Join(separator, newLine));
+            }
+
+            try
+            {
+                File.WriteAllText(file, output.ToString());
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Data could not be written to the CSV file.");
+            }
+
+            Console.WriteLine("The data has been successfully saved to the CSV file");
+
         }
     }
 }
