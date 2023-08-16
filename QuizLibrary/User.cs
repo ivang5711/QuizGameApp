@@ -1,15 +1,18 @@
-﻿
-namespace QuizLibrary
+﻿namespace QuizLibrary
 {
     public class User
     {
         private readonly string name;
         private int score;
+        private int index;
+        private int winsTotal;
 
         public User()
         {
             name = string.Empty;
             score = 0;
+            index = -1;
+            winsTotal = 0;
         }
 
         /// <summary>
@@ -22,15 +25,23 @@ namespace QuizLibrary
         }
 
         /// <summary>
-        /// Creates a new User and sets a score specified.
+        /// Creates a new User and sets a winsTotal specified.
         /// </summary>
         /// <param name="name">string representing name.</param>
-        /// <param name="score">integer represents initial score.</param>
-        public User(string name, int score)
+        /// <param name="score">integer represents initial winsTotal.</param>
+        public User(string name, int winsTotal)
         {
             this.name = name;
-            this.score = score;
-        }   
+            this.winsTotal = winsTotal;
+        }
+
+        public User(string name, int winsTotal, int index)
+        {
+            this.name = name;
+            this.index = index;
+        }
+
+
 
         /// <summary>
         /// Gets user name.
@@ -56,6 +67,26 @@ namespace QuizLibrary
         public void IncrementScore()
         {
             score++;
+        }
+
+        public void IncrementWinsTotal()
+        {
+            winsTotal++;
+        }
+
+        public int GetWinsTotal()
+        {
+            return winsTotal;
+        }
+
+        public void SetIndex(int index)
+        {
+            this.index = index;
+        }
+
+        public int GetIndex()
+        {
+            return index;
         }
     }
 }

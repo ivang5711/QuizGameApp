@@ -29,23 +29,29 @@
 
                     case 3:
                         {
-                            ui.StartQuiz();
+                            ui.PickUsers();
                             break;
                         }
 
                     case 4:
                         {
-                            ui.Credits();
+                            ui.StartQuiz();
                             break;
                         }
 
                     case 5:
                         {
-                            ui.WelcomeScreen();
+                            ui.Credits();
                             break;
                         }
 
                     case 6:
+                        {
+                            ui.WelcomeScreen();
+                            break;
+                        }
+
+                    case 7:
                         {
                             exitFlag = true;
                             break;
@@ -55,6 +61,7 @@
 
             ui.PrintArgs(args);
             ui.Goodbuy();
+            ui.SaveData();
             Console.ResetColor();
             Console.Clear();
             Environment.Exit(0);
