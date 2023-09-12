@@ -104,6 +104,10 @@ namespace QuizLibrary
             return false;
         }
 
+        /// <summary>
+        /// Returns all questions with answers
+        /// </summary>
+        /// <returns>Questions List with Answers</returns>
         public List<QuestionWithAnswer> GetQuestionWithAnswers()
         {
             return questionsList;
@@ -112,15 +116,14 @@ namespace QuizLibrary
         /// <summary>
         /// Saves questions with answers to CSV file.
         /// </summary>
-        public void SaveQuestionsToCSV(QuizQuestions questionsInstance)
+        public void SaveQuestionsToCSV()
         {
-            var records = questionsInstance.GetQuestionWithAnswers();
             string file = $@"..\\questions.csv";
             string separator = ",";
             StringBuilder output = new StringBuilder();
             string[] headings = { "question", "answer" };
             output.AppendLine(string.Join(separator, headings));
-            foreach (QuestionWithAnswer item in records)
+            foreach (QuestionWithAnswer item in questionsList)
             {
                 string[] newLine = { item.GetQuestion(), item.GetAnswer() };
                 output.AppendLine(string.Join(separator, newLine));

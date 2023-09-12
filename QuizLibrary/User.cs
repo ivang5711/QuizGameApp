@@ -28,13 +28,20 @@
         /// Creates a new User and sets a winsTotal specified.
         /// </summary>
         /// <param name="name">string representing name.</param>
-        /// <param name="score">integer represents initial winsTotal.</param>
+        /// <param name="winsTotal">integer represents initial winsTotal.</param>
         public User(string name, int winsTotal)
         {
             this.name = name;
             this.winsTotal = winsTotal;
         }
 
+
+        /// <summary>
+        /// Creates a new User and sets a winsTotal and index picked as specified.
+        /// </summary>
+        /// <param name="name">string representing name.</param>
+        /// <param name="winsTotal">integer represents initial winsTotal.</param>
+        /// <param name="index">integer represents index picked</param>
         public User(string name, int winsTotal, int index)
         {
             this.name = name;
@@ -68,21 +75,33 @@
             score++;
         }
 
+        /// <summary>
+        /// Increments Wins total
+        /// </summary>
         public void IncrementWinsTotal()
         {
             winsTotal++;
         }
 
+        /// <summary>
+        /// Gets user's wins total
+        /// </summary>
         public int GetWinsTotal()
         {
             return winsTotal;
         }
 
+        /// <summary>
+        /// Sets user's index
+        /// </summary>
         public void SetIndex(int index)
         {
             this.index = index;
         }
 
+        /// <summary>
+        /// Returns user's index
+        /// </summary>
         public int GetIndex()
         {
             return index;

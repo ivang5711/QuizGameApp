@@ -30,6 +30,12 @@ namespace QuizLibrary
             usersList.Add(new User($"{user}", 0));
         }
 
+        /// <summary>
+        /// Adds a user at a picked index
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="index"></param>
+        /// <exception cref="ArgumentException"></exception>
         public void AddUser(string user, int index)
         {
             if (string.IsNullOrWhiteSpace(user))
@@ -59,7 +65,6 @@ namespace QuizLibrary
         /// Gets the list of scores of all users.
         /// </summary>
         /// <returns>Returns a list of integers.</returns>
-
         public List<int> GetScores()
         {
             List<int> usersScores = new List<int>();
@@ -174,6 +179,10 @@ namespace QuizLibrary
             return usersList[index];
         }
 
+        /// <summary>
+        /// Returns all users
+        /// </summary>
+        /// <returns>Returns a list of Users</returns>
         public List<User> GetAllUsers()
         {
             return usersList;
@@ -182,15 +191,14 @@ namespace QuizLibrary
         /// <summary>
         /// Saves users and score to CSV file.
         /// </summary>
-        public void SaveToCSV(QuizUsers userInstance)
+        public void SaveToCSV()
         {
-            var records = userInstance.GetAllUsers();
             string file = $@"..\\user-score.csv";
             string separator = ",";
             StringBuilder output = new StringBuilder();
             string[] headings = { "name", "winsTotal" };
             output.AppendLine(string.Join(separator, headings));
-            foreach (User user in records)
+            foreach (User user in usersList)
             {
                 string[] newLine = { user.GetUserName(), user.GetWinsTotal().ToString() };
                 output.AppendLine(string.Join(separator, newLine));

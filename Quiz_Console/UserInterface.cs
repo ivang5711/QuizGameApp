@@ -726,8 +726,8 @@ namespace Quiz_Console
         /// </summary>
         public void SaveData()
         {
-            questions.SaveQuestionsToCSV(questions);
-            users.SaveToCSV(users);
+            questions.SaveQuestionsToCSV();
+            users.SaveToCSV();
         }
     }
 }
