@@ -1,5 +1,4 @@
-﻿
-namespace QuizLibrary
+﻿namespace QuizLibrary
 {
     public class QuestionWithAnswer
     {

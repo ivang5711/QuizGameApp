@@ -5,7 +5,7 @@ namespace ConsoleUIHelpers
     public class PrintTools
     {
         /// <summary>
-        /// Draws a line of dash symbols of length 31. 
+        /// Draws a line of dash symbols of length 31.
         /// </summary>
         public void DrawLine()
         {

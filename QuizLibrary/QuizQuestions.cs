@@ -7,7 +7,7 @@ namespace QuizLibrary
 {
     public class QuizQuestions
     {
-        readonly List<QuestionWithAnswer> questionsList;
+        private readonly List<QuestionWithAnswer> questionsList;
 
         public QuizQuestions()
         {
@@ -95,7 +95,7 @@ namespace QuizLibrary
 
             foreach (QuestionWithAnswer item in questionsList)
             {
-                if (question == item.GetQuestion() && answer == item.GetAnswer())
+                if (question.ToUpper() == item.GetQuestion().ToUpper() && answer.ToUpper() == item.GetAnswer().ToUpper())
                 {
                     return true;
                 }
@@ -136,7 +136,6 @@ namespace QuizLibrary
             }
 
             Console.WriteLine("The data has been successfully saved to the CSV file");
-
         }
     }
 }

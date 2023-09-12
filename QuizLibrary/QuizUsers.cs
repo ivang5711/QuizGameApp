@@ -9,6 +9,7 @@ namespace QuizLibrary
     public class QuizUsers
     {
         private readonly List<User> usersList;
+
         public QuizUsers()
         {
             usersList = new List<User>();
@@ -128,7 +129,7 @@ namespace QuizLibrary
         /// <summary>
         /// Gets winner of a game.
         /// </summary>
-        /// <returns>Returns a string with the name of the winner or "no winner" string if there is no game being played yet.</returns>
+        /// <returns>Returns an int with the index of the winner or -1 if there is no game being played yet or if there are more than 1 winner detected.</returns>
         public int GetWinner()
         {
             List<int> usersScores = new List<int>();
@@ -144,13 +145,8 @@ namespace QuizLibrary
 
             int maximum = usersScores.Max();
             int i;
-<<<<<<< HEAD
             int a = -1;
             int counter = 0;
-=======
-            int a;
-            int counter;
->>>>>>> a980eeb4012f47fe890cdd76fb482ea54dc7c669
             for (i = 0; i < usersScores.Count; i++)
             {
                 if (usersScores[i] == maximum)
@@ -160,11 +156,12 @@ namespace QuizLibrary
                 }
             }
 
-<<<<<<< HEAD
+            if (counter > 1)
+            {
+                a = -1;
+            }
+
             return a;
-=======
-            return i;
->>>>>>> a980eeb4012f47fe890cdd76fb482ea54dc7c669
         }
 
         /// <summary>
@@ -209,17 +206,6 @@ namespace QuizLibrary
             }
 
             Console.WriteLine("The data has been successfully saved to the CSV file");
-<<<<<<< HEAD
-
-
-            string a = $"\\\"";
-
-            int a1;
-
-
-
-=======
->>>>>>> a980eeb4012f47fe890cdd76fb482ea54dc7c669
         }
     }
 }

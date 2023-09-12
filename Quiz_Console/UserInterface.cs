@@ -1,19 +1,23 @@
 ﻿using ConsoleUIHelpers;
 using QuizLibrary;
+using System.Text;
 
 namespace Quiz_Console
 {
     public class UserInterface
     {
-        int WindowWidth { get; set; }
-        int WindowHeight { get; set; }
-        int WindowWidthCenter { get { return WindowWidth / 2; } }
-        int WindowHeightCenter { get { return WindowHeight / 2; } }
+        private int WindowWidth { get; set; }
+        private int WindowHeight { get; set; }
+        private int WindowWidthCenter
+        { get { return WindowWidth / 2; } }
+        private int WindowHeightCenter
+        { get { return WindowHeight / 2; } }
 
-        readonly QuizUsers users = new QuizUsers();
-        readonly QuizQuestions questions = new QuizQuestions();
-        readonly PrintTools printTools = new PrintTools();
-        RoundUsers roundUsers = new RoundUsers();
+        private readonly QuizUsers users = new();
+        private readonly QuizQuestions questions = new();
+        private readonly PrintTools printTools = new();
+        private QuizUsers roundUsers = new();
+
         /// <summary>
         /// Prints out the welcome screen with welcome message.
         /// </summary>
@@ -43,8 +47,9 @@ namespace Quiz_Console
             Console.ResetColor();
             Console.Clear();
         }
+
         /// <summary>
-        /// Prints out the menu screen with options to choose from and waits for the user input. 
+        /// Prints out the menu screen with options to choose from and waits for the user input.
         /// </summary>
         /// <returns>Returns user's menu item choice as an integer value.</returns>
         public int Menu()
@@ -101,6 +106,7 @@ namespace Quiz_Console
             Console.Clear();
             return menuNumber;
         }
+
         /// <summary>
         /// Prints out credits page with some information about the app and authors.
         /// </summary>
@@ -134,6 +140,7 @@ namespace Quiz_Console
             Console.ResetColor();
             Console.Clear();
         }
+
         /// <summary>
         /// Prints out the Goodbuy screen.
         /// </summary>
@@ -164,8 +171,8 @@ namespace Quiz_Console
             printTools.BuyBeep();
             Console.ResetColor();
             Console.Clear();
-
         }
+
         /// <summary>
         /// Prints out the GetUsers screen and collects user input.
         /// </summary>
@@ -194,6 +201,7 @@ namespace Quiz_Console
 
             Console.CursorLeft = leftMargin;
         }
+
         /// <summary>
         /// Prints out the args parameters provided by the user via cli at startup (if any). Otherwise prints out "no "arguments provided" message
         /// </summary>
@@ -222,6 +230,7 @@ namespace Quiz_Console
                 printTools.AnyKey();
             }
         }
+
         /// <summary>
         /// Prints out the list of Users with their sequence numbers.
         /// </summary>
@@ -245,6 +254,7 @@ namespace Quiz_Console
                 Console.CursorLeft = leftMargin;
             }
         }
+
         /// <summary>
         /// Prints out the list of Users with their High Scores.
         /// </summary>
@@ -270,6 +280,7 @@ namespace Quiz_Console
                 Console.CursorLeft = leftMargin;
             }
         }
+
         /// <summary>
         /// Prints out the list of Questions with their sequence numbers.
         /// </summary>
@@ -291,6 +302,7 @@ namespace Quiz_Console
 
             Console.CursorLeft = leftMargin;
         }
+
         /// <summary>
         /// Prints out the Add questions screen and collects user's input.
         /// </summary>
@@ -338,8 +350,10 @@ namespace Quiz_Console
                 }
 
                 questionsString = Console.ReadLine()!.ToUpper();
-                questionsString = c.Key.ToString().ToUpper() + questionsString;
-
+                StringBuilder stringBuilder1 = new();
+                stringBuilder1.Append(c.Key.ToString().ToUpper());
+                stringBuilder1.Append(questionsString);
+                questionsString = stringBuilder1.ToString();
                 if (!string.IsNullOrEmpty(questionsString))
                 {
                     WindowWidth = Console.WindowWidth;
@@ -364,7 +378,10 @@ namespace Quiz_Console
                         }
 
                         answerString = Console.ReadLine()!.ToUpper();
-                        answerString = c.Key.ToString().ToUpper() + answerString;
+                        StringBuilder stringBuilder = new();
+                        stringBuilder.Append(c.Key.ToString().ToUpper());
+                        stringBuilder.Append(answerString);
+                        answerString = stringBuilder.ToString();
                     }
 
                     questions.AddQuestionAndAnswer(questionsString.Trim(), answerString.Trim());
@@ -393,6 +410,7 @@ namespace Quiz_Console
             Console.ResetColor();
             Console.Clear();
         }
+
         /// <summary>
         /// Prints out the Add User screen and collects user's input.
         /// </summary>
@@ -445,6 +463,7 @@ namespace Quiz_Console
             Console.ResetColor();
             Console.Clear();
         }
+
         /// <summary>
         /// Prints out the quiz screen with username and corresponding question.
         /// </summary>
@@ -453,7 +472,7 @@ namespace Quiz_Console
             Console.Clear();
             Console.Title = "Quiz";
             int leftMargin;
-            if (roundUsers.GetUsersCount() > 0 && questions.GetQuestionsCount() > 0)
+            if (users.GetUsersCount() > 0 && questions.GetQuestionsCount() > 0 && roundUsers.GetUsersCount() > 0)
             {
                 int user = 0;
                 for (int i = 0; i < questions.GetQuestionsCount(); i++)
@@ -495,7 +514,7 @@ namespace Quiz_Console
                     }
 
                     Console.CursorTop = WindowHeightCenter + 3;
-                    string tmp = new string(' ', WindowWidth);
+                    string tmp = new(' ', WindowWidth);
                     Console.WriteLine(tmp);
                     Console.CursorTop = WindowHeightCenter + 3;
                     Console.CursorLeft = WindowWidthCenter - 9 - (input.Length / 2);
@@ -533,10 +552,18 @@ namespace Quiz_Console
                 printTools.Fullscreen();
                 Console.CursorTop = WindowHeightCenter - 3;
                 Console.CursorLeft = WindowWidthCenter - 22;
-                string winner = roundUsers.GetUserNames()[roundUsers.GetWinner()];
-                int userIndex = roundUsers.GetAllUsers()[roundUsers.GetWinner()].GetIndex();
-                users.AddWin(userIndex);
-                Console.WriteLine($"THE WINNER IS {winner}. Congrats!");
+                if (roundUsers.GetWinner() >= 0)
+                {
+                    string winner = roundUsers.GetUserNames()[roundUsers.GetWinner()];
+                    int userIndex = roundUsers.GetAllUsers()[roundUsers.GetWinner()].GetIndex();
+                    users.AddWin(userIndex);
+                    Console.WriteLine($"THE WINNER IS {winner}. Congrats!");
+                }
+                else
+                {
+                    Console.WriteLine("There is no winner this time. Try again");
+                }
+
                 Console.CursorLeft = WindowWidthCenter - 22;
                 Console.WriteLine("That's all questions! Thank you for the Quiz");
                 Console.CursorLeft = leftMargin - 7;
@@ -547,7 +574,7 @@ namespace Quiz_Console
                 Console.CursorLeft = leftMargin;
                 Console.ResetColor();
                 Console.Clear();
-                roundUsers = new RoundUsers();
+                roundUsers = new QuizUsers();
             }
             else
             {
@@ -558,14 +585,14 @@ namespace Quiz_Console
                 Console.Clear();
                 printTools.Fullscreen();
                 Console.CursorTop = WindowHeightCenter - 3;
-                string message;
-                if (users.GetUsersCount() == 0 )
-                {
-                    message = "Oops... You need to pick at least 1 user first";
-                }
-                else
+                string message = string.Empty;
+                if (questions.GetQuestionsCount() == 0)
                 {
                     message = "Oops... You need to add at least 1 question first";
+                }
+                else if (roundUsers.GetUsersCount() == 0)
+                {
+                    message = "Oops... You need to pick at least 1 user first";
                 }
 
                 Console.CursorLeft = (WindowWidth - message.Length) / 2;
@@ -580,6 +607,7 @@ namespace Quiz_Console
                 Console.Clear();
             }
         }
+
         /// <summary>
         /// Prints out a chart with users ans highscores.
         /// </summary>
@@ -611,6 +639,7 @@ namespace Quiz_Console
                 return 1;
             }
         }
+
         /// <summary>
         /// Allows user to pick users for a new game round.
         /// </summary>
@@ -619,6 +648,30 @@ namespace Quiz_Console
             Console.Clear();
             Console.Title = "Quiz - Pick users";
             bool exitCode = true;
+
+            if (users.GetUsersCount() == 0)
+            {
+                WindowWidth = Console.WindowWidth;
+                WindowHeight = Console.WindowHeight;
+                int leftMargin = WindowWidthCenter - 15;
+                Console.CursorLeft = leftMargin;
+                Console.Clear();
+                printTools.Fullscreen();
+                Console.CursorTop = WindowHeightCenter - 3;
+                string message = "You need to add at least 1 user first... ";
+                Console.CursorLeft = (WindowWidth - message.Length) / 2;
+                Console.WriteLine(message);
+                Console.CursorLeft = (WindowWidth - message.Length) / 2;
+                printTools.DrawLine(message.Length);
+                Console.WriteLine();
+                Console.CursorLeft = leftMargin;
+                printTools.AnyKey();
+                Console.CursorLeft = leftMargin;
+                Console.ResetColor();
+                Console.Clear();
+                return;
+            }
+
             while (exitCode)
             {
                 ConsoleKeyInfo c;
@@ -667,6 +720,7 @@ namespace Quiz_Console
             Console.ResetColor();
             Console.Clear();
         }
+
         /// <summary>
         /// Saves Questions and Answers as well as Users and High Scores to corresponding CSV files
         /// </summary>

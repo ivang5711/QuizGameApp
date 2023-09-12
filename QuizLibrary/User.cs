@@ -39,9 +39,8 @@
         {
             this.name = name;
             this.index = index;
+            this.winsTotal = winsTotal;
         }
-
-
 
         /// <summary>
         /// Gets user name.
