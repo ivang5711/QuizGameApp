@@ -8,8 +8,10 @@ namespace Quiz_Console
     {
         private int WindowWidth { get; set; }
         private int WindowHeight { get; set; }
+
         private int WindowWidthCenter
         { get { return WindowWidth / 2; } }
+
         private int WindowHeightCenter
         { get { return WindowHeight / 2; } }
 
@@ -728,6 +730,12 @@ namespace Quiz_Console
         {
             questions.SaveQuestionsToCSV();
             users.SaveToCSV();
+        }
+
+        public void LoadData()
+        {
+            questions.ReadQuestionsFromCSV();
+            users.ReadFromCSV();
         }
     }
 }

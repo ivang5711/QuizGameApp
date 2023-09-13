@@ -9,6 +9,12 @@
             Console.Clear();
             UserInterface ui = new();
             ui.WelcomeScreen();
+
+            if (args.Length > 0 && args[0] == "-p")
+            {
+                ui.LoadData();
+            }
+
             bool exitFlag = false;
             while (!exitFlag)
             {
@@ -61,7 +67,11 @@
 
             ui.PrintArgs(args);
             ui.Goodbuy();
-            ui.SaveData();
+            if (args.Length > 0 && args[0] == "-p")
+            {
+                ui.SaveData();
+            }
+
             Console.ResetColor();
             Console.Clear();
             Environment.Exit(0);

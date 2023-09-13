@@ -18,7 +18,6 @@ namespace QuizTest
 
             Assert.AreEqual(expected, actual, true, "Question is incorrect");
         }
-        
 
         [TestMethod]
         public void GetAnswer()
@@ -35,6 +34,5 @@ namespace QuizTest
             // Assert
             Assert.AreEqual(expected, actual, true, "Answer is incorrect");
         }
-
     }
 }

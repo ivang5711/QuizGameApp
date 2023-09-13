@@ -215,5 +215,36 @@ namespace QuizLibrary
 
             Console.WriteLine("The data has been successfully saved to the CSV file");
         }
+
+        /// <summary>
+        /// Reads data from csv file and loads it to the memory
+        /// </summary>
+        public void ReadFromCSV()
+        {
+            string file = $@"..\\user-score.csv";
+            if (File.Exists(Path.Combine(file)))
+            {
+                List<string> listA = new List<string>();
+                List<string> listB = new List<string>();
+                using (var reader = new StreamReader(file))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        var values = line.Split(',');
+                        listA.Add(values[0]);
+                        listB.Add(values[1]);
+                    }
+                }
+
+                if (listA.Count > 1)
+                {
+                    for (int i = 1; i < listA.Count; i++)
+                    {
+                        usersList.Add(new User(listA[i], int.Parse(listB[i])));
+                    }
+                }
+            }
+        }
     }
 }

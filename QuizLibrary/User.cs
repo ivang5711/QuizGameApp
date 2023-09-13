@@ -3,9 +3,9 @@
     public class User
     {
         private readonly string name;
-        private int score;
-        private int index;
         private int winsTotal;
+        private int index;
+        private int score;
 
         public User()
         {
@@ -35,7 +35,6 @@
             this.winsTotal = winsTotal;
         }
 
-
         /// <summary>
         /// Creates a new User and sets a winsTotal and index picked as specified.
         /// </summary>
@@ -59,20 +58,28 @@
         }
 
         /// <summary>
+        /// Gets user's wins total
+        /// </summary>
+        public int GetWinsTotal()
+        {
+            return winsTotal;
+        }
+
+        /// <summary>
+        /// Returns user's index
+        /// </summary>
+        public int GetIndex()
+        {
+            return index;
+        }
+
+        /// <summary>
         /// Gets user score.
         /// </summary>
         /// <returns>returns an integer with user score.</returns>
         public int GetUserScore()
         {
             return score;
-        }
-
-        /// <summary>
-        /// Increments user score
-        /// </summary>
-        public void IncrementScore()
-        {
-            score++;
         }
 
         /// <summary>
@@ -84,14 +91,6 @@
         }
 
         /// <summary>
-        /// Gets user's wins total
-        /// </summary>
-        public int GetWinsTotal()
-        {
-            return winsTotal;
-        }
-
-        /// <summary>
         /// Sets user's index
         /// </summary>
         public void SetIndex(int index)
@@ -100,11 +99,11 @@
         }
 
         /// <summary>
-        /// Returns user's index
+        /// Increments user score
         /// </summary>
-        public int GetIndex()
+        public void IncrementScore()
         {
-            return index;
+            score++;
         }
     }
 }

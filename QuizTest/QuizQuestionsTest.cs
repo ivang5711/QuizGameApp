@@ -118,7 +118,6 @@ namespace QuizTest
             int expected = 3;
             int actual = quizQuestions.GetQuestionsCount();
             Assert.AreEqual(expected, actual, "The output is incorrect");
-
         }
 
         [TestMethod]
@@ -184,70 +183,67 @@ namespace QuizTest
         [TestMethod]
         public void SaveQuestionsToCSVTest()
         {
-            QuizQuestions quizQuestions = new();
-            quizQuestions.AddQuestionAndAnswer("How many bits in a Byte?", "8");
-            quizQuestions.AddQuestionAndAnswer("The capital of France?", "Paris");
-            quizQuestions.AddQuestionAndAnswer("The capital of Canada?", "Ottawa");
-
-            string file = $@"..\\questions.csv";
-
+            QuizQuestions initial = new();
+            initial.AddQuestionAndAnswer("How?", "somehow");
+            initial.AddQuestionAndAnswer("When?", "then");
+            List<QuestionWithAnswer> expectedList = initial.GetQuestionWithAnswers();
             try
             {
-                quizQuestions.SaveQuestionsToCSV();
+                initial.SaveQuestionsToCSV();
             }
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
             }
 
-            bool expected = true;
-            bool actual = false;
-            if (File.Exists(Path.Combine(file)))
+            QuizQuestions temp = new();
+            temp.ReadQuestionsFromCSV();
+            List<QuestionWithAnswer> actualList = temp.GetQuestionWithAnswers();
+            if (expectedList.Count != actualList.Count)
             {
-                actual = true;
+                Assert.Fail();
             }
 
-
-            List<string> listA = new();
-            List<string> listB = new();
-            using (var reader = new StreamReader(file))
+            for (int i = 0; i < expectedList.Count; i++)
             {
-                while (!reader.EndOfStream)
+                if (expectedList[i].GetQuestion() != actualList[i].GetQuestion() || expectedList[i].GetAnswer() != actualList[i].GetAnswer())
                 {
-                    var line = reader.ReadLine();
-                    var values = line.Split(',');
-
-                    listA.Add(values[0]);
-                    listB.Add(values[1]);
+                    Assert.Fail();
                 }
             }
-
-            int expectedCount = 4;
-            int listACount = listA.Count;
-            int listBCount = listB.Count;
-
-            if (expectedCount != listACount || listBCount != expectedCount)
-            {
-                actual = false;
-            }
-
-            if (listA[0] != "question" || listB[0] != "answer")
-            {
-                actual = false;
-            }
-
-            if (listA[1] != "How many bits in a Byte?" || listA[2] != "The capital of France?" || listA[3] != "The capital of Canada?")
-            {
-                actual = false;
-            }
-
-            if (listB[1] != "8" || listB[2] != "Paris" || listB[3] != "Ottawa")
-            {
-                actual = false;
-            }
-
-            Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod]
+        public void ReadQuestionsFromCSV()
+        {
+            QuizQuestions initial = new();
+            initial.AddQuestionAndAnswer("What?", "nothing");
+            initial.AddQuestionAndAnswer("Who?", "someone");
+            List<QuestionWithAnswer> expectedList = initial.GetQuestionWithAnswers();
+            initial.SaveQuestionsToCSV();
+            QuizQuestions temp = new();
+            try
+            {
+                temp.ReadQuestionsFromCSV();
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+
+            List<QuestionWithAnswer> actualList = temp.GetQuestionWithAnswers();
+            if (expectedList.Count != actualList.Count)
+            {
+                Assert.Fail();
+            }
+
+            for (int i = 0; i < expectedList.Count; i++)
+            {
+                if (expectedList[i].GetQuestion() != actualList[i].GetQuestion() || expectedList[i].GetAnswer() != actualList[i].GetAnswer())
+                {
+                    Assert.Fail();
+                }
+            }
+        }
     }
 }

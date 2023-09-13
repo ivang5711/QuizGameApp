@@ -61,11 +61,29 @@ namespace QuizTest
         public void GetUserNamesTest()
         {
             QuizUsers users = new();
-            string user = "Adam";
-            users.AddUser(user);
-            string expected = user;
-            string actual = users.GetUserObject(0).GetUserName();
-            Assert.AreEqual(expected, actual);
+            users.AddUser("Adam");
+            users.AddUser("Eve");
+            users.AddUser("Mark");
+
+            List<string> expected = new() { "Adam", "Eve", "Mark" };
+            List<string> actual = users.GetUserNames();
+            bool check = true;
+            if (actual.Count != expected.Count)
+            {
+                check = false;
+            }
+            else
+            {
+                for (int i = 0; i < actual.Count; i++)
+                {
+                    if (actual[i] != expected[i])
+                    {
+                        check = false;
+                    }
+                }
+            }
+
+            Assert.IsTrue(check);
         }
 
         [TestMethod]
@@ -101,9 +119,9 @@ namespace QuizTest
             users.AddUser("Mark");
             try
             {
-                users.GetUserObject(0).IncrementScore();
-                users.GetUserObject(2).IncrementScore();
-                users.GetUserObject(2).IncrementScore();
+                users.AddScore(0);
+                users.AddScore(2);
+                users.AddScore(2);
             }
             catch (Exception ex)
             {
@@ -122,8 +140,6 @@ namespace QuizTest
             users.AddUser("Adam");
             users.AddUser("Eve");
             users.AddUser("Mark");
-
-
 
             List<int> expectedList = new() { 2, 0, 1 };
             List<int> result = new();
@@ -299,7 +315,6 @@ namespace QuizTest
                 actual = true;
             }
 
-
             List<string> listA = new();
             List<string> listB = new();
             using (var reader = new StreamReader(file))
@@ -307,7 +322,7 @@ namespace QuizTest
                 while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();
-                    var values = line.Split(',');
+                    var values = line!.Split(',');
 
                     listA.Add(values[0]);
                     listB.Add(values[1]);
@@ -339,6 +354,39 @@ namespace QuizTest
             }
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ReadFromCSVTest()
+        {
+            QuizUsers initial = new();
+            initial.AddUser("Tom");
+            initial.AddUser("Bob");
+            List<User> expectedList = initial.GetAllUsers();
+            initial.SaveToCSV();
+            QuizUsers temp = new();
+            try
+            {
+                temp.ReadFromCSV();
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+
+            List<User> actualList = temp.GetAllUsers();
+            if (expectedList.Count != actualList.Count)
+            {
+                Assert.Fail();
+            }
+
+            for (int i = 0; i < expectedList.Count; i++)
+            {
+                if (expectedList[i].GetUserName() != actualList[i].GetUserName() || expectedList[i].GetWinsTotal() != actualList[i].GetWinsTotal())
+                {
+                    Assert.Fail();
+                }
+            }
         }
     }
 }
