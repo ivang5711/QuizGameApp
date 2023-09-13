@@ -81,7 +81,7 @@ namespace QuizLibrary
         /// </summary>
         /// <param name="index">An index of a given user in the List of Users.</param>
         /// <exception cref="ArgumentOutOfRangeException">Checks if an index of a given user is within range and throws an exception otherwise.</exception>
-        public void AddScores(int index)
+        public void AddScore(int index)
         {
             if (index < 0 || index >= usersList.Count)
             {

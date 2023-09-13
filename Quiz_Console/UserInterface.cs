@@ -526,7 +526,7 @@ namespace Quiz_Console
                     Console.WriteLine(k);
                     if (k)
                     {
-                        roundUsers.AddScores(user);
+                        roundUsers.AddScore(user);
                     }
                     Console.WriteLine();
                     Console.CursorLeft = WindowWidthCenter - 14;
