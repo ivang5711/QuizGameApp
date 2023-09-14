@@ -24,9 +24,9 @@ namespace QuizTest
 
             List<string> expected = new()
             {
-                "How many bits in a Byte?",
-                "The capital of France?",
-                "The capital of Canada?"
+                "How many bits in a Byte?".Trim().ToUpperInvariant(),
+                "The capital of France?".Trim().ToUpperInvariant(),
+                "The capital of Canada?".Trim().ToUpperInvariant()
             };
 
             List<string> actual = quizQuestions.GetQuestions();
@@ -53,8 +53,8 @@ namespace QuizTest
             List<string> expected = new()
             {
                 "8",
-                "Paris",
-                "Ottawa"
+                "PARIS",
+                "OTTAWA"
             };
 
             List<string> actual = quizQuestions.GetAnswers();
@@ -189,7 +189,7 @@ namespace QuizTest
             List<QuestionWithAnswer> expectedList = initial.GetQuestionWithAnswers();
             try
             {
-                initial.SaveQuestionsToCSV();
+                initial.SaveQuestionsToCSV("questionsTest.csv");
             }
             catch (Exception ex)
             {
@@ -197,7 +197,7 @@ namespace QuizTest
             }
 
             QuizQuestions temp = new();
-            temp.ReadQuestionsFromCSV();
+            temp.ReadQuestionsFromCSV("questionsTest.csv");
             List<QuestionWithAnswer> actualList = temp.GetQuestionWithAnswers();
             if (expectedList.Count != actualList.Count)
             {
@@ -220,11 +220,11 @@ namespace QuizTest
             initial.AddQuestionAndAnswer("What?", "nothing");
             initial.AddQuestionAndAnswer("Who?", "someone");
             List<QuestionWithAnswer> expectedList = initial.GetQuestionWithAnswers();
-            initial.SaveQuestionsToCSV();
+            initial.SaveQuestionsToCSV("questionsTest.csv");
             QuizQuestions temp = new();
             try
             {
-                temp.ReadQuestionsFromCSV();
+                temp.ReadQuestionsFromCSV("questionsTest.csv");
             }
             catch (Exception ex)
             {

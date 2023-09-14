@@ -7,8 +7,8 @@
 
         public QuestionWithAnswer(string question, string answer)
         {
-            this.question = question;
-            this.answer = answer;
+            this.question = question.Trim().ToUpperInvariant();
+            this.answer = answer.Trim().ToUpperInvariant();
         }
 
         /// <summary>

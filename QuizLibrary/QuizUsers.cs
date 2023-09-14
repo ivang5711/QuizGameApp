@@ -191,9 +191,10 @@ namespace QuizLibrary
         /// <summary>
         /// Saves users and score to CSV file.
         /// </summary>
-        public void SaveToCSV()
+        /// <param name="fileName">Provide a file name to store users data to. I.e. "users.csv"</param>
+        public void SaveToCSV(string fileName)
         {
-            string file = $@"..\\user-score.csv";
+            string file = fileName;
             string separator = ",";
             StringBuilder output = new StringBuilder();
             string[] headings = { "name", "winsTotal" };
@@ -219,9 +220,10 @@ namespace QuizLibrary
         /// <summary>
         /// Reads data from csv file and loads it to the memory
         /// </summary>
-        public void ReadFromCSV()
+        /// <param name="fileName">Provide a file name to read users data from. I.e. "users.csv"</param>
+        public void ReadFromCSV(string fileName)
         {
-            string file = $@"..\\user-score.csv";
+            string file = fileName;
             if (File.Exists(Path.Combine(file)))
             {
                 List<string> listA = new List<string>();

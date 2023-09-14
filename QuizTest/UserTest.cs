@@ -9,7 +9,7 @@ namespace QuizTest
         public void GetUserNameTest()
         {
             User user = new("Adam");
-            string expected = "Adam";
+            string expected = "ADAM";
             string actual = user.GetUserName();
             Assert.AreEqual(expected, actual);
         }

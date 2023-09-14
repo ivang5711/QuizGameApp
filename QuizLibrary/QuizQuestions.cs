@@ -95,7 +95,7 @@ namespace QuizLibrary
 
             foreach (QuestionWithAnswer item in questionsList)
             {
-                if (question.ToUpper() == item.GetQuestion().ToUpper() && answer.ToUpper() == item.GetAnswer().ToUpper())
+                if (question.Trim().ToUpperInvariant() == item.GetQuestion() && answer.Trim().ToUpperInvariant() == item.GetAnswer())
                 {
                     return true;
                 }
@@ -116,9 +116,10 @@ namespace QuizLibrary
         /// <summary>
         /// Saves questions with answers to CSV file.
         /// </summary>
-        public void SaveQuestionsToCSV()
+        /// <param name="fileName">Provide a valid file name to store the data to. I.e. "data.csv"</param>
+        public void SaveQuestionsToCSV(string fileName)
         {
-            string file = $@"..\\questions.csv";
+            string file = fileName;
             string separator = ",";
             StringBuilder output = new StringBuilder();
             string[] headings = { "question", "answer" };
@@ -144,9 +145,10 @@ namespace QuizLibrary
         /// <summary>
         /// Reads questions and answers from CSV file and loades them into memory
         /// </summary>
-        public void ReadQuestionsFromCSV()
+        /// <param name="fileName">Provide a file name to read the data from. I.e. "data.csv"</param>
+        public void ReadQuestionsFromCSV(string fileName)
         {
-            string file = $@"..\\questions.csv";
+            string file = fileName;
             if (File.Exists(Path.Combine(file)))
             {
                 List<string> listA = new List<string>();

@@ -21,7 +21,7 @@
         /// <param name="name">string representing name.</param>
         public User(string name)
         {
-            this.name = name;
+            this.name = name.Trim().ToUpperInvariant();
         }
 
         /// <summary>
@@ -31,7 +31,7 @@
         /// <param name="winsTotal">integer represents initial winsTotal.</param>
         public User(string name, int winsTotal)
         {
-            this.name = name;
+            this.name = name.Trim().ToUpperInvariant();
             this.winsTotal = winsTotal;
         }
 
@@ -43,7 +43,7 @@
         /// <param name="index">integer represents index picked</param>
         public User(string name, int winsTotal, int index)
         {
-            this.name = name;
+            this.name = name.Trim().ToUpperInvariant();
             this.index = index;
             this.winsTotal = winsTotal;
         }

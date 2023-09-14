@@ -1,5 +1,8 @@
 ﻿using ConsoleUIHelpers;
 using QuizLibrary;
+using System.Numerics;
+using System.Reflection;
+using System;
 using System.Text;
 
 namespace Quiz_Console
@@ -122,20 +125,20 @@ namespace Quiz_Console
             printTools.Fullscreen();
             Console.CursorTop = WindowHeightCenter - 8;
             Console.CursorLeft = leftMargin;
-            Console.WriteLine("This app designed to automate the quiz game.");
+            Console.WriteLine("This app designed to automate the quiz game.\n");
             Console.CursorLeft = leftMargin;
-            Console.WriteLine("You can add as many users as you want and as many questions as you want.");
+            Console.WriteLine("You can add as many users and questions as you want.\n");
             Console.CursorLeft = leftMargin;
-            Console.WriteLine("You can add questions as plain text.");
+            Console.WriteLine("The app defines a winner by comparing the overall score of each player.\n");
             Console.CursorLeft = leftMargin;
-            Console.WriteLine("The program will automatically convert it into separate questions.");
+            Console.WriteLine("To load and save your game results as well as users and questions ");
             Console.CursorLeft = leftMargin;
-            Console.WriteLine("Make sure each question ends with a question mark.");
+            Console.WriteLine("you can use persistent mode by providing \"-p\" command line argument on start.\n\n");
             Console.CursorLeft = leftMargin;
             Console.WriteLine("Have a nice Quiz!");
             Console.CursorLeft = leftMargin;
-            printTools.DrawLine(72);
-            Console.CursorTop = WindowHeightCenter - 1;
+            printTools.DrawLine(77);
+            Console.CursorTop = WindowHeightCenter + 6;
             leftMargin = WindowWidthCenter - 15;
             Console.CursorLeft = leftMargin;
             printTools.AnyKey();
@@ -690,7 +693,7 @@ namespace Quiz_Console
                     }
 
                     string ans = c.KeyChar.ToString();
-                    if (!string.IsNullOrEmpty(ans) && int.TryParse(ans, out int _))
+                    if (!string.IsNullOrEmpty(ans) && int.TryParse(ans, out int _) && users.GetUsersCount() >= int.Parse(ans))
                     {
                         int index = Convert.ToInt32(ans) - 1;
                         roundUsers.AddUser(users.GetUserNames()[index], index);
@@ -728,14 +731,17 @@ namespace Quiz_Console
         /// </summary>
         public void SaveData()
         {
-            questions.SaveQuestionsToCSV();
-            users.SaveToCSV();
+            questions.SaveQuestionsToCSV("questions.csv");
+            users.SaveToCSV("user-score.csv");
         }
 
+        /// <summary>
+        /// Loads Questions and Answers as well as Users and High Scores from corresponding CSV files
+        /// </summary>
         public void LoadData()
         {
-            questions.ReadQuestionsFromCSV();
-            users.ReadFromCSV();
+            questions.ReadQuestionsFromCSV("questions.csv");
+            users.ReadFromCSV("user-score.csv");
         }
     }
 }

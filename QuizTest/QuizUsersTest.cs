@@ -49,7 +49,7 @@ namespace QuizTest
             bool expected = true;
             bool actual = true;
             User user1 = users.GetUserObject(0);
-            if (user1.GetUserName() != user || user1.GetWinsTotal() != 0 || user1.GetIndex() != index)
+            if (user1.GetUserName() != user.Trim().ToUpperInvariant() || user1.GetWinsTotal() != 0 || user1.GetIndex() != index)
             {
                 actual = false;
             }
@@ -65,7 +65,7 @@ namespace QuizTest
             users.AddUser("Eve");
             users.AddUser("Mark");
 
-            List<string> expected = new() { "Adam", "Eve", "Mark" };
+            List<string> expected = new() { "ADAM", "EVE", "MARK" };
             List<string> actual = users.GetUserNames();
             bool check = true;
             if (actual.Count != expected.Count)
@@ -297,11 +297,11 @@ namespace QuizTest
             users.AddUser("Eve");
             users.AddUser("Mark");
 
-            string file = $@"..\\user-score.csv";
+            string file = "user-score-test.csv";
 
             try
             {
-                users.SaveToCSV();
+                users.SaveToCSV("user-score-test.csv");
             }
             catch (Exception ex)
             {
@@ -343,7 +343,7 @@ namespace QuizTest
                 actual = false;
             }
 
-            if (listA[1] != "Adam" || listA[2] != "Eve" || listA[3] != "Mark")
+            if (listA[1] != "ADAM" || listA[2] != "EVE" || listA[3] != "MARK")
             {
                 actual = false;
             }
@@ -363,11 +363,11 @@ namespace QuizTest
             initial.AddUser("Tom");
             initial.AddUser("Bob");
             List<User> expectedList = initial.GetAllUsers();
-            initial.SaveToCSV();
+            initial.SaveToCSV("user-score-test.csv");
             QuizUsers temp = new();
             try
             {
-                temp.ReadFromCSV();
+                temp.ReadFromCSV("user-score-test.csv");
             }
             catch (Exception ex)
             {
