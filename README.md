@@ -32,3 +32,13 @@ All the data and data related logic contained in the QuizLibrary whereas all the
 
 ## Tests
 All the Quiz library classes have full unit test coverage with MSTest.
+
+## How to run
+1. In your terminal window go the the source code folder containing the project
+2. Type "dotnet run" to run the console app
+3. (Optional) you can use "-p" console argument to enable persistent data mode
+ 
+## Dependencies
+
+- the QuizLibrary targets .Net Standard 2.0 and requires any version of framework supported by this specification
+- The Quiz Console App targets .NET7 and requires .NET7 runtime to run the app
