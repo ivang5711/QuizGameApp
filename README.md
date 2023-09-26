@@ -2,7 +2,18 @@
 
 ![Static Badge](https://img.shields.io/badge/dotnet-stanatd%202.0-blue) ![Static Badge](https://img.shields.io/badge/platform-Linux%20%2F%20Windows%20%2F%20MacOS-green) <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" alt="maintained" height="20px">
 
-<img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white" alt="c#" height="30px"> <img src="https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white" alt=".NET" height="30px"> 
+[![Badge License]][License] <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white" alt="c#" height="28px"> <img src="https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white" alt=".NET" height="28px"> 
+
+
+<!----------------------------------{ Licenses }------------------------------->
+
+[License]: https://en.wikipedia.org/wiki/MIT_License
+
+
+<!----------------------------------{ Badges }--------------------------------->
+
+[Badge License]: https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge
+
 
 The "Quiz" app allows users to play a quiz game and\
 determine a winner based on a high score.\
