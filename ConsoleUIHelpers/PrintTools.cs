@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace ConsoleUIHelpers
 {
@@ -9,8 +10,20 @@ namespace ConsoleUIHelpers
         /// </summary>
         public void DrawLine()
         {
-            string tmp = new string('-', 31);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                Process p = Process.GetCurrentProcess();
+                PerformanceCounter parent = new PerformanceCounter("Process", "Creating Process ID", p.ProcessName);
+                int ppid = (int)parent.NextValue();
+
+                if (Process.GetProcessById(ppid).ProcessName == "powershell")
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+            }
+
+            string tmp = new string('-', 31);
             Console.WriteLine(tmp);
             Console.ForegroundColor = ConsoleColor.White;
         }
@@ -33,6 +46,18 @@ namespace ConsoleUIHelpers
 
             string tmp = new string('-', size);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                Process p = Process.GetCurrentProcess();
+                PerformanceCounter parent = new PerformanceCounter("Process", "Creating Process ID", p.ProcessName);
+                int ppid = (int)parent.NextValue();
+
+                if (Process.GetProcessById(ppid).ProcessName == "powershell")
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+            }
+
             Console.WriteLine(tmp);
             Console.ForegroundColor = ConsoleColor.White;
         }
@@ -56,7 +81,7 @@ namespace ConsoleUIHelpers
         /// </summary>
         public void Fullscreen()
         {
-            string text = string.Empty;
+            string text;
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
                 text = "Press <ALT + Enter> to toggle Full Screen mode";
