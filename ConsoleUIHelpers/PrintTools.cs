@@ -56,7 +56,16 @@ namespace ConsoleUIHelpers
         /// </summary>
         public void Fullscreen()
         {
-            string text = "Press <ALT + Enter> to toggle Full Screen mode or F11 if you're on Linux";
+            string text = string.Empty;
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                text = "Press <ALT + Enter> to toggle Full Screen mode";
+            }
+            else
+            {
+                text = "Press F11 to toggle Full Screen mode";
+            }
+
             PrintGrey(text);
         }
 
@@ -90,10 +99,13 @@ namespace ConsoleUIHelpers
         /// </summary>
         public void HelloBeep()
         {
-            Console.Beep(200, 100);
-            Console.Beep(400, 100);
-            Console.Beep(800, 150);
-            Console.Beep(200, 100);
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                Console.Beep(200, 100);
+                Console.Beep(400, 100);
+                Console.Beep(800, 150);
+                Console.Beep(200, 100);
+            }
         }
 
         /// <summary>
@@ -101,10 +113,13 @@ namespace ConsoleUIHelpers
         /// </summary>
         public void BuyBeep()
         {
-            Console.Beep(800, 150);
-            Console.Beep(400, 100);
-            Console.Beep(800, 150);
-            Console.Beep(400, 100);
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                Console.Beep(800, 150);
+                Console.Beep(400, 100);
+                Console.Beep(800, 150);
+                Console.Beep(400, 100);
+            }
         }
     }
 }

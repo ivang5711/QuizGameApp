@@ -10,11 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizLibrary", "QuizLibrary\QuizLibrary.csproj", "{5966B8D1-158A-4D44-9DB1-4166E661C70A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "QuizLibrary\Models.csproj", "{5966B8D1-158A-4D44-9DB1-4166E661C70A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUIHelpers", "ConsoleUIHelpers\ConsoleUIHelpers.csproj", "{B5C7FE82-284E-4E1A-9566-AD67088D12E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIHelpers", "ConsoleUIHelpers\UIHelpers.csproj", "{B5C7FE82-284E-4E1A-9566-AD67088D12E0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizLibraryTest", "QuizTest\QuizLibraryTest.csproj", "{A62CE0A9-9E4A-4E1F-949A-6DB5E4BE5E14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelsTest", "QuizTest\ModelsTest.csproj", "{A62CE0A9-9E4A-4E1F-949A-6DB5E4BE5E14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

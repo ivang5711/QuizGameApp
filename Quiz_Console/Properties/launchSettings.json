@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Quiz_Console": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "-p"
     }
   }
 }

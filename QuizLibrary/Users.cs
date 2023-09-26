@@ -6,11 +6,11 @@ using System.Text;
 
 namespace QuizLibrary
 {
-    public class QuizUsers
+    public class Users
     {
         private readonly List<User> usersList;
 
-        public QuizUsers()
+        public Users()
         {
             usersList = new List<User>();
         }

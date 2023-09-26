@@ -5,11 +5,11 @@ using System.Text;
 
 namespace QuizLibrary
 {
-    public class QuizQuestions
+    public class Questions
     {
         private readonly List<QuestionWithAnswer> questionsList;
 
-        public QuizQuestions()
+        public Questions()
         {
             questionsList = new List<QuestionWithAnswer>();
         }

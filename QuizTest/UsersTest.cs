@@ -3,12 +3,12 @@
 namespace QuizTest
 {
     [TestClass]
-    public class QuizUsersTest
+    public class UsersTest
     {
         [TestMethod]
         public void AddUserTest()
         {
-            QuizUsers users = new();
+            Users users = new();
             string user = "Adam";
             try
             {
@@ -27,7 +27,7 @@ namespace QuizTest
         [TestMethod]
         public void AddUserPickTest()
         {
-            QuizUsers users = new();
+            Users users = new();
             string user = "Adam";
             int index = 5;
             try
@@ -60,7 +60,7 @@ namespace QuizTest
         [TestMethod]
         public void GetUserNamesTest()
         {
-            QuizUsers users = new();
+            Users users = new();
             users.AddUser("Adam");
             users.AddUser("Eve");
             users.AddUser("Mark");
@@ -89,7 +89,7 @@ namespace QuizTest
         [TestMethod]
         public void GetScoresTest()
         {
-            QuizUsers users = new();
+            Users users = new();
             users.AddUser("Adam");
             users.AddUser("Eve");
             users.AddUser("Mark");
@@ -113,7 +113,7 @@ namespace QuizTest
         [TestMethod]
         public void AddScoreTest()
         {
-            QuizUsers users = new();
+            Users users = new();
             users.AddUser("Adam");
             users.AddUser("Eve");
             users.AddUser("Mark");
@@ -136,7 +136,7 @@ namespace QuizTest
         [TestMethod]
         public void AddWinTest()
         {
-            QuizUsers users = new();
+            Users users = new();
             users.AddUser("Adam");
             users.AddUser("Eve");
             users.AddUser("Mark");
@@ -166,7 +166,7 @@ namespace QuizTest
         [TestMethod]
         public void GetScoreTest()
         {
-            QuizUsers users = new();
+            Users users = new();
             users.AddUser("Adam");
             users.AddUser("Eve");
             users.AddUser("Mark");
@@ -189,7 +189,7 @@ namespace QuizTest
         [TestMethod]
         public void GetUsersCountTest()
         {
-            QuizUsers users = new();
+            Users users = new();
             users.AddUser("Adam");
             users.AddUser("Eve");
             users.AddUser("Mark");
@@ -201,7 +201,7 @@ namespace QuizTest
         [TestMethod]
         public void GetWinnerNoWinnerTest()
         {
-            QuizUsers users = new();
+            Users users = new();
             users.AddUser("Adam");
             users.AddUser("Eve");
             users.AddUser("Mark");
@@ -213,7 +213,7 @@ namespace QuizTest
         [TestMethod]
         public void GetWinnerTest()
         {
-            QuizUsers users = new();
+            Users users = new();
             users.AddUser("Adam");
             users.AddUser("Eve");
             users.AddUser("Mark");
@@ -226,7 +226,7 @@ namespace QuizTest
         [TestMethod]
         public void GetUserObjectTest()
         {
-            QuizUsers users = new();
+            Users users = new();
             users.AddUser("Adam");
             users.AddUser("Eve");
             users.AddUser("Mark");
@@ -255,7 +255,7 @@ namespace QuizTest
         [TestMethod]
         public void GetAllUsersTest()
         {
-            QuizUsers users = new();
+            Users users = new();
             users.AddUser("Adam");
             users.AddUser("Eve");
             users.AddUser("Mark");
@@ -292,7 +292,7 @@ namespace QuizTest
         [TestMethod]
         public void SaveToCSVTest()
         {
-            QuizUsers users = new();
+            Users users = new();
             users.AddUser("Adam");
             users.AddUser("Eve");
             users.AddUser("Mark");
@@ -359,12 +359,12 @@ namespace QuizTest
         [TestMethod]
         public void ReadFromCSVTest()
         {
-            QuizUsers initial = new();
+            Users initial = new();
             initial.AddUser("Tom");
             initial.AddUser("Bob");
             List<User> expectedList = initial.GetAllUsers();
             initial.SaveToCSV("user-score-test.csv");
-            QuizUsers temp = new();
+            Users temp = new();
             try
             {
                 temp.ReadFromCSV("user-score-test.csv");

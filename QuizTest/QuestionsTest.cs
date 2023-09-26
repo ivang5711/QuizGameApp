@@ -3,12 +3,12 @@
 namespace QuizTest
 {
     [TestClass]
-    public class QuizQuestionsTest
+    public class QuestionsTest
     {
         [TestMethod]
         public void GetQuestionsEmptyTest()
         {
-            QuizQuestions quizQuestions = new();
+            Questions quizQuestions = new();
             List<string> expected = new();
             List<string> actual = quizQuestions.GetQuestions();
             CollectionAssert.AreEqual(expected, actual, "The output is incorrect");
@@ -17,7 +17,7 @@ namespace QuizTest
         [TestMethod]
         public void GetQuestionsTest()
         {
-            QuizQuestions quizQuestions = new();
+            Questions quizQuestions = new();
             quizQuestions.AddQuestionAndAnswer("How many bits in a Byte?", "8");
             quizQuestions.AddQuestionAndAnswer("The capital of France?", "Paris");
             quizQuestions.AddQuestionAndAnswer("The capital of Canada?", "Ottawa");
@@ -36,7 +36,7 @@ namespace QuizTest
         [TestMethod]
         public void GetAnswersEmptyTest()
         {
-            QuizQuestions quizQuestions = new();
+            Questions quizQuestions = new();
             List<string> expected = new();
             List<string> actual = quizQuestions.GetAnswers();
             CollectionAssert.AreEqual(expected, actual, "The output is incorrect");
@@ -45,7 +45,7 @@ namespace QuizTest
         [TestMethod]
         public void GetAnswersTest()
         {
-            QuizQuestions quizQuestions = new();
+            Questions quizQuestions = new();
             quizQuestions.AddQuestionAndAnswer("How many bits in a Byte?", "8");
             quizQuestions.AddQuestionAndAnswer("The capital of France?", "Paris");
             quizQuestions.AddQuestionAndAnswer("The capital of Canada?", "Ottawa");
@@ -64,7 +64,7 @@ namespace QuizTest
         [TestMethod]
         public void AddQuestionAndAnswerTest()
         {
-            QuizQuestions quizQuestions = new();
+            Questions quizQuestions = new();
             try
             {
                 quizQuestions.AddQuestionAndAnswer("How many bits in a Byte?", "8");
@@ -84,7 +84,7 @@ namespace QuizTest
         [TestMethod]
         public void GetQuestionsCountEmptyTest()
         {
-            QuizQuestions quizQuestions = new();
+            Questions quizQuestions = new();
             try
             {
                 quizQuestions.GetQuestionsCount();
@@ -102,7 +102,7 @@ namespace QuizTest
         [TestMethod]
         public void GetQuestionsCountTest()
         {
-            QuizQuestions quizQuestions = new();
+            Questions quizQuestions = new();
             quizQuestions.AddQuestionAndAnswer("How many bits in a Byte?", "8");
             quizQuestions.AddQuestionAndAnswer("The capital of France?", "Paris");
             quizQuestions.AddQuestionAndAnswer("The capital of Canada?", "Ottawa");
@@ -123,7 +123,7 @@ namespace QuizTest
         [TestMethod]
         public void AnswerCheckCorrectTest()
         {
-            QuizQuestions quizQuestions = new();
+            Questions quizQuestions = new();
             quizQuestions.AddQuestionAndAnswer("How many bits in a Byte?", "8");
             quizQuestions.AddQuestionAndAnswer("The capital of France?", "Paris");
             quizQuestions.AddQuestionAndAnswer("The capital of Canada?", "Ottawa");
@@ -135,7 +135,7 @@ namespace QuizTest
         [TestMethod]
         public void AnswerCheckIncorrectQuestionAnswerPairTest()
         {
-            QuizQuestions quizQuestions = new();
+            Questions quizQuestions = new();
             quizQuestions.AddQuestionAndAnswer("How many bits in a Byte?", "8");
             quizQuestions.AddQuestionAndAnswer("The capital of France?", "Paris");
             quizQuestions.AddQuestionAndAnswer("The capital of Canada?", "Ottawa");
@@ -147,7 +147,7 @@ namespace QuizTest
         [TestMethod]
         public void AnswerCheckIncorrectAnswerTest()
         {
-            QuizQuestions quizQuestions = new();
+            Questions quizQuestions = new();
             quizQuestions.AddQuestionAndAnswer("How many bits in a Byte?", "8");
             quizQuestions.AddQuestionAndAnswer("The capital of France?", "Paris");
             quizQuestions.AddQuestionAndAnswer("The capital of Canada?", "Ottawa");
@@ -159,7 +159,7 @@ namespace QuizTest
         [TestMethod]
         public void AnswerCheckIncorrectQuestionTest()
         {
-            QuizQuestions quizQuestions = new();
+            Questions quizQuestions = new();
             quizQuestions.AddQuestionAndAnswer("How many bits in a Byte?", "8");
             quizQuestions.AddQuestionAndAnswer("The capital of France?", "Paris");
             quizQuestions.AddQuestionAndAnswer("The capital of Canada?", "Ottawa");
@@ -171,7 +171,7 @@ namespace QuizTest
         [TestMethod]
         public void GetQuestionWithAnswersTest()
         {
-            QuizQuestions quizQuestions = new();
+            Questions quizQuestions = new();
             quizQuestions.AddQuestionAndAnswer("How many bits in a Byte?", "8");
             quizQuestions.AddQuestionAndAnswer("The capital of France?", "Paris");
             quizQuestions.AddQuestionAndAnswer("The capital of Canada?", "Ottawa");
@@ -183,7 +183,7 @@ namespace QuizTest
         [TestMethod]
         public void SaveQuestionsToCSVTest()
         {
-            QuizQuestions initial = new();
+            Questions initial = new();
             initial.AddQuestionAndAnswer("How?", "somehow");
             initial.AddQuestionAndAnswer("When?", "then");
             List<QuestionWithAnswer> expectedList = initial.GetQuestionWithAnswers();
@@ -196,7 +196,7 @@ namespace QuizTest
                 Assert.Fail(ex.Message);
             }
 
-            QuizQuestions temp = new();
+            Questions temp = new();
             temp.ReadQuestionsFromCSV("questionsTest.csv");
             List<QuestionWithAnswer> actualList = temp.GetQuestionWithAnswers();
             if (expectedList.Count != actualList.Count)
@@ -216,12 +216,12 @@ namespace QuizTest
         [TestMethod]
         public void ReadQuestionsFromCSV()
         {
-            QuizQuestions initial = new();
+            Questions initial = new();
             initial.AddQuestionAndAnswer("What?", "nothing");
             initial.AddQuestionAndAnswer("Who?", "someone");
             List<QuestionWithAnswer> expectedList = initial.GetQuestionWithAnswers();
             initial.SaveQuestionsToCSV("questionsTest.csv");
-            QuizQuestions temp = new();
+            Questions temp = new();
             try
             {
                 temp.ReadQuestionsFromCSV("questionsTest.csv");
