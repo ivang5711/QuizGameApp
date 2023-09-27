@@ -189,7 +189,7 @@ namespace QuizTest
             List<QuestionWithAnswer> expectedList = initial.GetQuestionWithAnswers();
             try
             {
-                initial.SaveQuestionsToCSV("questionsTest.csv");
+                initial.SaveToCSV("questionsTest.csv");
             }
             catch (Exception ex)
             {
@@ -197,7 +197,7 @@ namespace QuizTest
             }
 
             Questions temp = new();
-            temp.ReadQuestionsFromCSV("questionsTest.csv");
+            temp.ReadFromCSV("questionsTest.csv");
             List<QuestionWithAnswer> actualList = temp.GetQuestionWithAnswers();
             if (expectedList.Count != actualList.Count)
             {
@@ -220,11 +220,11 @@ namespace QuizTest
             initial.AddQuestionAndAnswer("What?", "nothing");
             initial.AddQuestionAndAnswer("Who?", "someone");
             List<QuestionWithAnswer> expectedList = initial.GetQuestionWithAnswers();
-            initial.SaveQuestionsToCSV("questionsTest.csv");
+            initial.SaveToCSV("questionsTest.csv");
             Questions temp = new();
             try
             {
-                temp.ReadQuestionsFromCSV("questionsTest.csv");
+                temp.ReadFromCSV("questionsTest.csv");
             }
             catch (Exception ex)
             {

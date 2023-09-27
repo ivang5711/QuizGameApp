@@ -117,7 +117,7 @@ namespace QuizLibrary
         /// Saves questions with answers to CSV file.
         /// </summary>
         /// <param name="fileName">Provide a valid file name to store the data to. I.e. "data.csv"</param>
-        public void SaveQuestionsToCSV(string fileName)
+        public void SaveToCSV(string fileName)
         {
             string file = fileName;
             string separator = ",";
@@ -146,7 +146,7 @@ namespace QuizLibrary
         /// Reads questions and answers from CSV file and loades them into memory
         /// </summary>
         /// <param name="fileName">Provide a file name to read the data from. I.e. "data.csv"</param>
-        public void ReadQuestionsFromCSV(string fileName)
+        public void ReadFromCSV(string fileName)
         {
             if (File.Exists(Path.Combine(fileName)))
             {

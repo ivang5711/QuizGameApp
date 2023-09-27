@@ -159,7 +159,7 @@ namespace QuizLibrary
                 }
             }
 
-            if (counter > 1)
+            if (counter > 1 || usersScores.Count == 1)
             {
                 a = -1;
             }

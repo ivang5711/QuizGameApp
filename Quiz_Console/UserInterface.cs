@@ -40,7 +40,7 @@ namespace Quiz_Console
             Console.CursorTop = WindowHeightCenter - 1;
             if (message.Length > welcome.Length)
             {
-                Console.CursorLeft = leftMargin;
+                Console.CursorLeft = WindowWidthCenter - message.Length / 2;
                 printTools.DrawLine(message.Length);
             }
             else
@@ -49,7 +49,7 @@ namespace Quiz_Console
                 printTools.DrawLine(30);
             }
 
-            Console.CursorLeft = leftMargin;
+            Console.CursorLeft = WindowWidthCenter - message.Length / 2;
             Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.WriteLine(message);
             Console.ResetColor();
@@ -392,7 +392,7 @@ namespace Quiz_Console
                     {
                         AskForAnswer(length, leftMargin);
                         answerString = Console.ReadLine()!.ToUpper();
-                        if (string.IsNullOrWhiteSpace(answerString) && EnterAtLeastSomething(leftMargin))
+                        if (string.IsNullOrWhiteSpace(answerString) && PrintEnterAtLeastSomething(leftMargin))
                         {
                             break;
                         }
@@ -401,11 +401,11 @@ namespace Quiz_Console
                     if (questionsString.Length > 0 && answerString.Length > 0)
                     {
                         questions.AddQuestionAndAnswer(questionsString.Trim(), answerString.Trim());
-                        YourInputRecieved(length, leftMargin);
+                        PrintInputRecieved(questions.GetQuestions().Max()!.Length, leftMargin);
                         break;
                     }
                 }
-                else if (EnterAtLeastSomething(leftMargin))
+                else if (PrintEnterAtLeastSomething(leftMargin))
                 {
                     break;
                 }
@@ -435,24 +435,23 @@ namespace Quiz_Console
         /// </summary>
         /// <param name="length">length of the longest question</param>
         /// <param name="leftMargin">Cursor Left position</param>
-        public void YourInputRecieved(int length, int leftMargin)
+        public void PrintInputRecieved(int length, int leftMargin)
         {
             length += 14;
             Console.Clear();
             printTools.Fullscreen();
             Console.CursorTop = WindowHeightCenter - (8 + questions.GetQuestionsCount() / 2);
-            Console.CursorLeft = leftMargin;
-            printTools.DrawLine(length);
-            Console.CursorLeft = leftMargin;
+            Console.CursorLeft = WindowWidthCenter - 11;
             Console.WriteLine("Your input recieved: ");
-            Console.CursorLeft = leftMargin;
+            Console.CursorLeft = WindowWidthCenter - length / 2;
             printTools.DrawLine(length);
             Console.WriteLine();
+            Console.CursorLeft = WindowWidthCenter - length / 2;
             PrintQuestions();
             Console.WriteLine();
-            Console.CursorLeft = leftMargin;
+            Console.CursorLeft = WindowWidthCenter - length / 2;
             printTools.DrawLine(length);
-            Console.CursorLeft = leftMargin;
+            Console.CursorLeft = WindowWidthCenter - 14;
             printTools.PrintGrey("Enter any key to exit... ");
             Console.ReadKey(true);
         }
@@ -471,7 +470,7 @@ namespace Quiz_Console
             Console.CursorLeft = leftMargin;
             Console.WriteLine("Enter an answer: ");
             Console.CursorLeft = leftMargin;
-            printTools.DrawLine(length + 14);
+            printTools.DrawLine(16);
             Console.WriteLine();
             Console.CursorLeft = leftMargin;
         }
@@ -505,7 +504,7 @@ namespace Quiz_Console
             Console.CursorLeft = leftMargin;
             Console.WriteLine("Enter a question: ");
             Console.CursorLeft = leftMargin;
-            printTools.DrawLine(length);
+            printTools.DrawLine(17);
             Console.WriteLine();
         }
 
@@ -552,16 +551,23 @@ namespace Quiz_Console
                 GetUsers();
                 printTools.PrintGrey("New user's name: ");
                 string input = Console.ReadLine()!.ToUpper();
+                var position = Console.GetCursorPosition();
                 if (!string.IsNullOrWhiteSpace(input))
                 {
                     users.AddUser(input);
+                    Console.CursorTop = position.Top - 1;
+                    Console.WriteLine(new string(' ', Console.WindowWidth));
+                    Console.CursorLeft = leftMargin;
+                    Console.WriteLine($"You added \"{input.Trim().ToUpperInvariant()}\"");
+                    Console.CursorLeft = leftMargin;
+                    printTools.AnyKey();
                     break;
                 }
                 else
                 {
                     Console.CursorLeft = leftMargin;
                     printTools.DrawLine(30);
-                    if (EnterAtLeastSomething(leftMargin))
+                    if (PrintEnterAtLeastSomething(leftMargin))
                     {
                         break;
                     }
@@ -573,7 +579,7 @@ namespace Quiz_Console
         /// Prints "You need to enter at least something message"
         /// </summary>
         /// <returns>returns "true" if ESC key pressed</returns>
-        public static bool EnterAtLeastSomething(int leftMargin)
+        public static bool PrintEnterAtLeastSomething(int leftMargin)
         {
             Console.CursorLeft = leftMargin;
             Console.WriteLine("You need to enter at least something");
@@ -869,7 +875,12 @@ namespace Quiz_Console
                 if (!roundUsers.GetUserNames().Contains(users.GetUserNames()[Convert.ToInt32(input) - 1]))
                 {
                     int index = Convert.ToInt32(input) - 1;
+                    int usernameLength = users.GetUserNames()[index].Length;
                     roundUsers.AddUser(users.GetUserNames()[index], index);
+                    var cursorPosition = Console.GetCursorPosition();
+                    Console.CursorTop = cursorPosition.Top - 1;
+                    Console.WriteLine(new string(' ', WindowWidth));
+                    Console.CursorLeft = WindowWidthCenter - (18 + usernameLength + 28) / 2;
                     Console.Write($"You have entered {users.GetUserNames()[index]}. ");
                 }
                 else
@@ -893,8 +904,6 @@ namespace Quiz_Console
             GetUsers();
             Console.CursorLeft = WindowWidthCenter - 15;
             Console.WriteLine($"Users Picked: {roundUsers.GetAllUsers().Count}");
-            Console.CursorLeft = WindowWidthCenter - 15;
-            printTools.DrawLine(30);
             foreach (string item in roundUsers.GetUserNames())
             {
                 Console.CursorLeft = WindowWidthCenter - 15;
@@ -911,7 +920,7 @@ namespace Quiz_Console
         /// </summary>
         public void SaveData()
         {
-            questions.SaveQuestionsToCSV("questions.csv");
+            questions.SaveToCSV("questions.csv");
             users.SaveToCSV("user-score.csv");
         }
 
@@ -920,7 +929,7 @@ namespace Quiz_Console
         /// </summary>
         public void LoadData()
         {
-            questions.ReadQuestionsFromCSV("questions.csv");
+            questions.ReadFromCSV("questions.csv");
             users.ReadFromCSV("user-score.csv");
         }
     }
