@@ -60,6 +60,7 @@
         /// <summary>
         /// Gets user's wins total
         /// </summary>
+        /// <returns>returns an int with user's wins</returns>
         public int GetWinsTotal()
         {
             return winsTotal;
@@ -68,6 +69,7 @@
         /// <summary>
         /// Returns user's index
         /// </summary>
+        /// <returns>returns in with user's index</returns>
         public int GetIndex()
         {
             return index;
@@ -97,6 +99,7 @@
         {
             this.index = index;
         }
+
 
         /// <summary>
         /// Increments user score

@@ -27,7 +27,7 @@ namespace QuizLibrary
                 throw new ArgumentException(user, nameof(user));
             }
 
-            usersList.Add(new User($"{user}", 0));
+            usersList.Add(new User(user, 0));
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace QuizLibrary
                 throw new ArgumentException(user, nameof(user));
             }
 
-            usersList.Add(new User($"{user}", 0, index));
+            usersList.Add(new User(user, 0, index));
         }
 
         /// <summary>
@@ -137,24 +137,22 @@ namespace QuizLibrary
         /// <returns>Returns an int with the index of the winner or -1 if there is no game being played yet or if there are more than 1 winner detected.</returns>
         public int GetWinner()
         {
+            if (usersList.Count == 0)
+            {
+                return -1;
+            }
+
             List<int> usersScores = new List<int>();
             foreach (User item in usersList)
             {
                 usersScores.Add(item.GetUserScore());
             }
 
-            if (usersScores.Count == 0)
-            {
-                return -1;
-            }
-
-            int maximum = usersScores.Max();
-            int i;
             int a = -1;
             int counter = 0;
-            for (i = 0; i < usersScores.Count; i++)
+            for (int i = 0; i < usersScores.Count; i++)
             {
-                if (usersScores[i] == maximum)
+                if (usersScores[i] == usersScores.Max())
                 {
                     a = i;
                     counter++;
@@ -226,24 +224,23 @@ namespace QuizLibrary
             string file = fileName;
             if (File.Exists(Path.Combine(file)))
             {
-                List<string> listA = new List<string>();
-                List<string> listB = new List<string>();
-                using (var reader = new StreamReader(file))
+                List<string> keys = new List<string>();
+                List<string> values = new List<string>();
+                using (StreamReader reader = new StreamReader(file))
                 {
                     while (!reader.EndOfStream)
                     {
-                        var line = reader.ReadLine();
-                        var values = line.Split(',');
-                        listA.Add(values[0]);
-                        listB.Add(values[1]);
+                        string[] data = reader.ReadLine().Split(',');
+                        keys.Add(data[0]);
+                        values.Add(data[1]);
                     }
                 }
 
-                if (listA.Count > 1)
+                if (keys.Count > 1)
                 {
-                    for (int i = 1; i < listA.Count; i++)
+                    for (int i = 1; i < keys.Count; i++)
                     {
-                        usersList.Add(new User(listA[i], int.Parse(listB[i])));
+                        usersList.Add(new User(keys[i], int.Parse(values[i])));
                     }
                 }
             }

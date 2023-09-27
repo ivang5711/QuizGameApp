@@ -134,9 +134,9 @@ namespace QuizLibrary
             {
                 File.WriteAllText(file, output.ToString());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.WriteLine("Data could not be written to the CSV file.");
+                Console.WriteLine($"Data could not be written to the CSV file. {ex}");
             }
 
             Console.WriteLine("The data has been successfully saved to the CSV file");
@@ -148,27 +148,25 @@ namespace QuizLibrary
         /// <param name="fileName">Provide a file name to read the data from. I.e. "data.csv"</param>
         public void ReadQuestionsFromCSV(string fileName)
         {
-            string file = fileName;
-            if (File.Exists(Path.Combine(file)))
+            if (File.Exists(Path.Combine(fileName)))
             {
-                List<string> listA = new List<string>();
-                List<string> listB = new List<string>();
-                using (var reader = new StreamReader(file))
+                List<string> keys = new List<string>();
+                List<string> values = new List<string>();
+                using (StreamReader reader = new StreamReader(fileName))
                 {
                     while (!reader.EndOfStream)
                     {
-                        var line = reader.ReadLine();
-                        var values = line.Split(',');
-                        listA.Add(values[0]);
-                        listB.Add(values[1]);
+                        string[] data = reader.ReadLine().Split(',');
+                        keys.Add(data[0]);
+                        values.Add(data[1]);
                     }
                 }
 
-                if (listA.Count > 1)
+                if (keys.Count > 1)
                 {
-                    for (int i = 1; i < listA.Count; i++)
+                    for (int i = 1; i < keys.Count; i++)
                     {
-                        questionsList.Add(new QuestionWithAnswer(listA[i], listB[i]));
+                        questionsList.Add(new QuestionWithAnswer(keys[i], values[i]));
                     }
                 }
             }

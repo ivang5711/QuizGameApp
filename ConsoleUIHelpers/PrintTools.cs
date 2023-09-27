@@ -6,59 +6,29 @@ namespace ConsoleUIHelpers
     public class PrintTools
     {
         /// <summary>
-        /// Draws a line of dash symbols of length 31.
-        /// </summary>
-        public void DrawLine()
-        {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-            {
-                Process p = Process.GetCurrentProcess();
-                PerformanceCounter parent = new PerformanceCounter("Process", "Creating Process ID", p.ProcessName);
-                int ppid = (int)parent.NextValue();
-
-                if (Process.GetProcessById(ppid).ProcessName == "powershell")
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                }
-            }
-
-            string tmp = new string('-', 31);
-            Console.WriteLine(tmp);
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-
-        /// <summary>
         /// draws a line of dash symbols of a specified length
         /// </summary>
         /// <param name="length">returns nothing if the length is null</param>
         public void DrawLine(int? length)
         {
-            int size;
             if (length == null)
             {
                 return;
             }
-            else
-            {
-                size = Convert.ToInt32(length);
-            }
 
-            string tmp = new string('-', size);
+            int size = (int)length;
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
-                Process p = Process.GetCurrentProcess();
-                PerformanceCounter parent = new PerformanceCounter("Process", "Creating Process ID", p.ProcessName);
+                PerformanceCounter parent = new PerformanceCounter("Process", "Creating Process ID", Process.GetCurrentProcess().ProcessName);
                 int ppid = (int)parent.NextValue();
-
                 if (Process.GetProcessById(ppid).ProcessName == "powershell")
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 }
             }
 
-            Console.WriteLine(tmp);
+            Console.WriteLine(new string('-', size));
             Console.ForegroundColor = ConsoleColor.White;
         }
 
@@ -99,8 +69,7 @@ namespace ConsoleUIHelpers
         /// </summary>
         public void AnyKey()
         {
-            string text = "Press any key to continue...";
-            PrintGrey(text);
+            PrintGrey("Press any key to continue...");
             Console.ReadKey();
         }
 
@@ -114,6 +83,7 @@ namespace ConsoleUIHelpers
             {
                 return;
             }
+
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write(text);
             Console.ForegroundColor = ConsoleColor.White;
