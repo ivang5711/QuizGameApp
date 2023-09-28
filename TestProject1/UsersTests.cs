@@ -1,5 +1,4 @@
 ﻿using ModelsLibrary;
-using System;
 
 namespace ModelsLibraryTests
 {
@@ -24,7 +23,7 @@ namespace ModelsLibraryTests
         [Fact]
         public void AddWithIndexTest()
         {
-            Users users = new Users();
+            Users users = new();
             users.Add("JOHN", 78);
             int expected = 78;
             int actual = users.GetAllUsers()[0].GetIndex();

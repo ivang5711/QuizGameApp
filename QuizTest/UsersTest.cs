@@ -12,7 +12,7 @@ namespace QuizTest
             string user = "Adam";
             try
             {
-                users.AddUser(user);
+                users.Add(user);
             }
             catch (Exception ex)
             {
@@ -20,7 +20,7 @@ namespace QuizTest
             }
 
             int expected = 1;
-            int actual = users.GetUsersCount();
+            int actual = users.GetCount();
             Assert.AreEqual(expected, actual);
         }
 
@@ -32,7 +32,7 @@ namespace QuizTest
             int index = 5;
             try
             {
-                users.AddUser(user, index);
+                users.Add(user, index);
             }
             catch (Exception ex)
             {
@@ -40,7 +40,7 @@ namespace QuizTest
             }
 
             int countExpected = 1;
-            int actualCount = users.GetUsersCount();
+            int actualCount = users.GetCount();
             if (countExpected != actualCount)
             {
                 Assert.Fail($"Number of users in result is {actualCount}, number of users expected is {countExpected}");
@@ -48,8 +48,8 @@ namespace QuizTest
 
             bool expected = true;
             bool actual = true;
-            User user1 = users.GetUserObject(0);
-            if (user1.GetUserName() != user.Trim().ToUpperInvariant() || user1.GetWinsTotal() != 0 || user1.GetIndex() != index)
+            User user1 = users.GetObject(0);
+            if (user1.GetName() != user.Trim().ToUpperInvariant() || user1.GetWinsTotal() != 0 || user1.GetIndex() != index)
             {
                 actual = false;
             }
@@ -61,12 +61,12 @@ namespace QuizTest
         public void GetUserNamesTest()
         {
             Users users = new();
-            users.AddUser("Adam");
-            users.AddUser("Eve");
-            users.AddUser("Mark");
+            users.Add("Adam");
+            users.Add("Eve");
+            users.Add("Mark");
 
             List<string> expected = new() { "ADAM", "EVE", "MARK" };
-            List<string> actual = users.GetUserNames();
+            List<string> actual = users.GetNames();
             bool check = true;
             if (actual.Count != expected.Count)
             {
@@ -90,12 +90,12 @@ namespace QuizTest
         public void GetScoresTest()
         {
             Users users = new();
-            users.AddUser("Adam");
-            users.AddUser("Eve");
-            users.AddUser("Mark");
-            users.GetUserObject(0).IncrementScore();
-            users.GetUserObject(2).IncrementScore();
-            users.GetUserObject(2).IncrementScore();
+            users.Add("Adam");
+            users.Add("Eve");
+            users.Add("Mark");
+            users.GetObject(0).IncrementScore();
+            users.GetObject(2).IncrementScore();
+            users.GetObject(2).IncrementScore();
             List<int> expectedList = new() { 1, 0, 2 };
             List<int> result = new();
             try
@@ -114,9 +114,9 @@ namespace QuizTest
         public void AddScoreTest()
         {
             Users users = new();
-            users.AddUser("Adam");
-            users.AddUser("Eve");
-            users.AddUser("Mark");
+            users.Add("Adam");
+            users.Add("Eve");
+            users.Add("Mark");
             try
             {
                 users.AddScore(0);
@@ -137,9 +137,9 @@ namespace QuizTest
         public void AddWinTest()
         {
             Users users = new();
-            users.AddUser("Adam");
-            users.AddUser("Eve");
-            users.AddUser("Mark");
+            users.Add("Adam");
+            users.Add("Eve");
+            users.Add("Mark");
 
             List<int> expectedList = new() { 2, 0, 1 };
             List<int> result = new();
@@ -167,13 +167,13 @@ namespace QuizTest
         public void GetScoreTest()
         {
             Users users = new();
-            users.AddUser("Adam");
-            users.AddUser("Eve");
-            users.AddUser("Mark");
-            users.GetUserObject(0).IncrementScore();
-            users.GetUserObject(0).IncrementScore();
-            users.GetUserObject(0).IncrementScore();
-            users.GetUserObject(1).IncrementScore();
+            users.Add("Adam");
+            users.Add("Eve");
+            users.Add("Mark");
+            users.GetObject(0).IncrementScore();
+            users.GetObject(0).IncrementScore();
+            users.GetObject(0).IncrementScore();
+            users.GetObject(1).IncrementScore();
 
             List<int> expected = new() { 3, 1, 0 };
             List<int> result = new()
@@ -190,11 +190,11 @@ namespace QuizTest
         public void GetUsersCountTest()
         {
             Users users = new();
-            users.AddUser("Adam");
-            users.AddUser("Eve");
-            users.AddUser("Mark");
+            users.Add("Adam");
+            users.Add("Eve");
+            users.Add("Mark");
             int expected = 3;
-            int actual = users.GetUsersCount();
+            int actual = users.GetCount();
             Assert.AreEqual(expected, actual);
         }
 
@@ -202,9 +202,9 @@ namespace QuizTest
         public void GetWinnerNoWinnerTest()
         {
             Users users = new();
-            users.AddUser("Adam");
-            users.AddUser("Eve");
-            users.AddUser("Mark");
+            users.Add("Adam");
+            users.Add("Eve");
+            users.Add("Mark");
             int expected = -1;
             int actual = users.GetWinner();
             Assert.AreEqual(expected, actual);
@@ -214,10 +214,10 @@ namespace QuizTest
         public void GetWinnerTest()
         {
             Users users = new();
-            users.AddUser("Adam");
-            users.AddUser("Eve");
-            users.AddUser("Mark");
-            users.GetUserObject(0).IncrementScore();
+            users.Add("Adam");
+            users.Add("Eve");
+            users.Add("Mark");
+            users.GetObject(0).IncrementScore();
             int expected = 0;
             int actual = users.GetWinner();
             Assert.AreEqual(expected, actual);
@@ -227,15 +227,15 @@ namespace QuizTest
         public void GetUserObjectTest()
         {
             Users users = new();
-            users.AddUser("Adam");
-            users.AddUser("Eve");
-            users.AddUser("Mark");
+            users.Add("Adam");
+            users.Add("Eve");
+            users.Add("Mark");
 
             User expectedUser = new("Eve");
             User actualUser = new();
             try
             {
-                actualUser = users.GetUserObject(1);
+                actualUser = users.GetObject(1);
             }
             catch (Exception ex)
             {
@@ -244,7 +244,7 @@ namespace QuizTest
 
             bool expected = true;
             bool actual = true;
-            if (actualUser == null || actualUser.GetUserName() != expectedUser.GetUserName())
+            if (actualUser == null || actualUser.GetName() != expectedUser.GetName())
             {
                 actual = false;
             }
@@ -256,9 +256,9 @@ namespace QuizTest
         public void GetAllUsersTest()
         {
             Users users = new();
-            users.AddUser("Adam");
-            users.AddUser("Eve");
-            users.AddUser("Mark");
+            users.Add("Adam");
+            users.Add("Eve");
+            users.Add("Mark");
 
             List<User> expectedUsers = new()
             {
@@ -278,7 +278,7 @@ namespace QuizTest
             {
                 for (int i = 0; i < expectedUsers.Count; i++)
                 {
-                    if (expectedUsers[i].GetUserName() != actualList[i].GetUserName())
+                    if (expectedUsers[i].GetName() != actualList[i].GetName())
                     {
                         actual = false;
                         break;
@@ -293,9 +293,9 @@ namespace QuizTest
         public void SaveToCSVTest()
         {
             Users users = new();
-            users.AddUser("Adam");
-            users.AddUser("Eve");
-            users.AddUser("Mark");
+            users.Add("Adam");
+            users.Add("Eve");
+            users.Add("Mark");
 
             string file = "user-score-test.csv";
 
@@ -360,8 +360,8 @@ namespace QuizTest
         public void ReadFromCSVTest()
         {
             Users initial = new();
-            initial.AddUser("Tom");
-            initial.AddUser("Bob");
+            initial.Add("Tom");
+            initial.Add("Bob");
             List<User> expectedList = initial.GetAllUsers();
             initial.SaveToCSV("user-score-test.csv");
             Users temp = new();
@@ -382,7 +382,7 @@ namespace QuizTest
 
             for (int i = 0; i < expectedList.Count; i++)
             {
-                if (expectedList[i].GetUserName() != actualList[i].GetUserName() || expectedList[i].GetWinsTotal() != actualList[i].GetWinsTotal())
+                if (expectedList[i].GetName() != actualList[i].GetName() || expectedList[i].GetWinsTotal() != actualList[i].GetWinsTotal())
                 {
                     Assert.Fail();
                 }

@@ -10,7 +10,7 @@ namespace QuizTest
         {
             User user = new("Adam");
             string expected = "ADAM";
-            string actual = user.GetUserName();
+            string actual = user.GetName();
             Assert.AreEqual(expected, actual);
         }
 
@@ -22,7 +22,7 @@ namespace QuizTest
             int actual = -1;
             try
             {
-                actual = user.GetUserScore();
+                actual = user.GetScore();
             }
             catch (Exception ex)
             {
@@ -45,7 +45,7 @@ namespace QuizTest
             }
 
             int expected = 1;
-            int actual = user.GetUserScore();
+            int actual = user.GetScore();
             Assert.AreEqual(expected, actual);
         }
 
