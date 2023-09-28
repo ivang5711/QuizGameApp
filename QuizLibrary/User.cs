@@ -1,4 +1,4 @@
-﻿namespace QuizLibrary
+﻿namespace ModelsLibrary
 {
     public class User
     {

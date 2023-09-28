@@ -1,4 +1,4 @@
-﻿using QuizLibrary;
+﻿using ModelsLibrary;
 
 namespace QuizTest
 {

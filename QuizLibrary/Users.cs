@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace QuizLibrary
+namespace ModelsLibrary
 {
     public class Users
     {

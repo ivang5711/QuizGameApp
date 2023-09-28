@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConsoleUIHelpers\UIHelpers.csproj" />
-    <ProjectReference Include="..\QuizLibrary\Models.csproj" />
+    <ProjectReference Include="..\QuizLibrary\ModelsLibrary.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 ﻿using ConsoleUIHelpers;
-using QuizLibrary;
+using ModelsLibrary;
 
 namespace Quiz_Console
 {
