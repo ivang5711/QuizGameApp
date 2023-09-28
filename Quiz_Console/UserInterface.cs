@@ -235,14 +235,14 @@ namespace Quiz_Console
             WindowHeight = Console.WindowHeight;
             int leftMargin = WindowWidthCenter - 15;
             printTools.Fullscreen();
-            Console.CursorTop = WindowHeightCenter - (4 + users.GetUsersCount() / 2);
+            Console.CursorTop = WindowHeightCenter - (4 + users.GetCount() / 2);
             Console.CursorLeft = leftMargin;
             Console.WriteLine("Enter users: ");
             Console.CursorLeft = leftMargin;
             printTools.DrawLine(31);
-            Console.CursorTop = WindowHeightCenter - (1 + users.GetUsersCount() / 2);
+            Console.CursorTop = WindowHeightCenter - (1 + users.GetCount() / 2);
             Console.CursorLeft = leftMargin;
-            if (users.GetUsersCount() != 0)
+            if (users.GetCount() != 0)
             {
                 Console.CursorLeft = leftMargin;
                 PrintUsers();
@@ -294,10 +294,10 @@ namespace Quiz_Console
         {
             int windowWidth = Console.WindowWidth;
             int leftMargin = windowWidth / 2 - 15;
-            if (users.GetUsersCount() != 0)
+            if (users.GetCount() != 0)
             {
                 int counter = 0;
-                foreach (var user in users.GetUserNames())
+                foreach (var user in users.GetNames())
                 {
                     counter++;
                     Console.CursorLeft = leftMargin;
@@ -318,7 +318,7 @@ namespace Quiz_Console
         {
             int windowWidth = Console.WindowWidth;
             int leftMargin = windowWidth / 2 - 21;
-            if (users.GetUsersCount() != 0)
+            if (users.GetCount() != 0)
             {
                 int counter = 0;
                 foreach (var item in users.GetAllUsers())
@@ -328,7 +328,7 @@ namespace Quiz_Console
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.Write($"User {counter}".PadRight(9));
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write($"{item.GetUserName()}".PadRight(21, '.'));
+                    Console.Write($"{item.GetName()}".PadRight(21, '.'));
                     Console.CursorLeft = (windowWidth / 2) + 2;
                     Console.WriteLine($"{item.GetWinsTotal()}".PadLeft(18, '.'));
                 }
@@ -554,7 +554,7 @@ namespace Quiz_Console
                 var position = Console.GetCursorPosition();
                 if (!string.IsNullOrWhiteSpace(input))
                 {
-                    users.AddUser(input);
+                    users.Add(input);
                     Console.CursorTop = position.Top - 1;
                     Console.WriteLine(new string(' ', Console.WindowWidth));
                     Console.CursorLeft = leftMargin;
@@ -604,7 +604,7 @@ namespace Quiz_Console
             Console.Clear();
             Console.Title = "Quiz";
             int leftMargin = WindowWidthCenter - 50;
-            if (users.GetUsersCount() > 0 && questions.GetQuestionsCount() > 0 && roundUsers.GetUsersCount() > 0)
+            if (users.GetCount() > 0 && questions.GetQuestionsCount() > 0 && roundUsers.GetCount() > 0)
             {
                 int user = 0;
                 for (int i = 0; i < questions.GetQuestionsCount(); i++)
@@ -613,7 +613,7 @@ namespace Quiz_Console
                     ProcessAnswer(user, i);
                     Console.CursorVisible = true;
                     Console.CursorLeft = leftMargin;
-                    if (user < roundUsers.GetUsersCount() - 1)
+                    if (user < roundUsers.GetCount() - 1)
                     {
                         user++;
                     }
@@ -633,7 +633,7 @@ namespace Quiz_Console
                 Console.CursorLeft = WindowWidthCenter - 22;
                 if (roundUsers.GetWinner() >= 0)
                 {
-                    string winner = roundUsers.GetUserNames()[roundUsers.GetWinner()];
+                    string winner = roundUsers.GetNames()[roundUsers.GetWinner()];
                     int userIndex = roundUsers.GetAllUsers()[roundUsers.GetWinner()].GetIndex();
                     users.AddWin(userIndex);
                     Console.WriteLine($"THE WINNER IS {winner}. Congrats!");
@@ -667,7 +667,7 @@ namespace Quiz_Console
                 {
                     message = "Oops... You need to add at least 1 question first";
                 }
-                else if (roundUsers.GetUsersCount() == 0)
+                else if (roundUsers.GetCount() == 0)
                 {
                     message = "Oops... You need to pick at least 1 user first";
                 }
@@ -697,12 +697,12 @@ namespace Quiz_Console
             Console.CursorLeft = leftMargin;
             string text = $"User {user + 1}: ";
             printTools.PrintGrey(text);
-            Console.WriteLine($"{roundUsers.GetUserNames()[user]}");
+            Console.WriteLine($"{roundUsers.GetNames()[user]}");
             Console.CursorLeft = leftMargin;
             string temp = roundUsers.GetScore(user).ToString();
             Console.WriteLine("Current user score is: " + temp);
             Console.CursorLeft = leftMargin;
-            printTools.DrawLine(roundUsers.GetUserNames()[user]!.ToString()!.Length + 9);
+            printTools.DrawLine(roundUsers.GetNames()[user]!.ToString()!.Length + 9);
             Console.WriteLine();
             Console.CursorLeft = leftMargin;
             text = $"Question {i + 1}: ";
@@ -786,7 +786,7 @@ namespace Quiz_Console
             printTools.Fullscreen();
             Console.CursorTop = heightCenter - 8;
             Console.CursorLeft = leftMargin;
-            if (users.GetUsersCount() != 0 && questions.GetQuestionsCount() != 0)
+            if (users.GetCount() != 0 && questions.GetQuestionsCount() != 0)
             {
                 Console.CursorLeft = leftMargin;
                 Console.WriteLine("High scores:");
@@ -811,7 +811,7 @@ namespace Quiz_Console
         {
             Console.Clear();
             Console.Title = "Quiz - Pick users";
-            if (users.GetUsersCount() == 0)
+            if (users.GetCount() == 0)
             {
                 WindowWidth = Console.WindowWidth;
                 WindowHeight = Console.WindowHeight;
@@ -870,18 +870,18 @@ namespace Quiz_Console
         /// <param name="input"></param>
         public void CheckPickedUser(string input)
         {
-            if (!string.IsNullOrEmpty(input) && int.TryParse(input, out int _) && users.GetUsersCount() >= int.Parse(input) && int.Parse(input) > 0)
+            if (!string.IsNullOrEmpty(input) && int.TryParse(input, out int _) && users.GetCount() >= int.Parse(input) && int.Parse(input) > 0)
             {
-                if (!roundUsers.GetUserNames().Contains(users.GetUserNames()[Convert.ToInt32(input) - 1]))
+                if (!roundUsers.GetNames().Contains(users.GetNames()[Convert.ToInt32(input) - 1]))
                 {
                     int index = Convert.ToInt32(input) - 1;
-                    int usernameLength = users.GetUserNames()[index].Length;
-                    roundUsers.AddUser(users.GetUserNames()[index], index);
+                    int usernameLength = users.GetNames()[index].Length;
+                    roundUsers.Add(users.GetNames()[index], index);
                     var cursorPosition = Console.GetCursorPosition();
                     Console.CursorTop = cursorPosition.Top - 1;
                     Console.WriteLine(new string(' ', WindowWidth));
                     Console.CursorLeft = WindowWidthCenter - (18 + usernameLength + 28) / 2;
-                    Console.Write($"You have entered {users.GetUserNames()[index]}. ");
+                    Console.Write($"You have entered {users.GetNames()[index]}. ");
                 }
                 else
                 {
@@ -904,7 +904,7 @@ namespace Quiz_Console
             GetUsers();
             Console.CursorLeft = WindowWidthCenter - 15;
             Console.WriteLine($"Users Picked: {roundUsers.GetAllUsers().Count}");
-            foreach (string item in roundUsers.GetUserNames())
+            foreach (string item in roundUsers.GetNames())
             {
                 Console.CursorLeft = WindowWidthCenter - 15;
                 Console.WriteLine(item);

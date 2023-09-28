@@ -52,7 +52,7 @@
         /// Gets user name.
         /// </summary>
         /// <returns>A string with user name.</returns>
-        public string GetUserName()
+        public string GetName()
         {
             return name;
         }
@@ -79,7 +79,7 @@
         /// Gets user score.
         /// </summary>
         /// <returns>returns an integer with user score.</returns>
-        public int GetUserScore()
+        public int GetScore()
         {
             return score;
         }
@@ -99,7 +99,6 @@
         {
             this.index = index;
         }
-
 
         /// <summary>
         /// Increments user score

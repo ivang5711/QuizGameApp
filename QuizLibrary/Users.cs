@@ -20,7 +20,7 @@ namespace ModelsLibrary
         /// </summary>
         /// <param name="user">Gets string "user" as an input</param>
         /// <exception cref="ArgumentException">Throws an exception if the user string is null, empty or Whitespace.</exception>
-        public void AddUser(string user)
+        public void Add(string user)
         {
             if (string.IsNullOrWhiteSpace(user))
             {
@@ -36,7 +36,7 @@ namespace ModelsLibrary
         /// <param name="user"></param>
         /// <param name="index"></param>
         /// <exception cref="ArgumentException"></exception>
-        public void AddUser(string user, int index)
+        public void Add(string user, int index)
         {
             if (string.IsNullOrWhiteSpace(user))
             {
@@ -50,12 +50,12 @@ namespace ModelsLibrary
         /// Gets Users List from the Users property.
         /// </summary>
         /// <returns>Return Users List.</returns>
-        public List<string> GetUserNames()
+        public List<string> GetNames()
         {
             List<string> usersTemp = new List<string>();
             foreach (User item in usersList)
             {
-                usersTemp.Add(item.GetUserName());
+                usersTemp.Add(item.GetName());
             }
 
             return usersTemp;
@@ -70,7 +70,7 @@ namespace ModelsLibrary
             List<int> usersScores = new List<int>();
             foreach (User item in usersList)
             {
-                usersScores.Add(item.GetUserScore());
+                usersScores.Add(item.GetScore());
             }
 
             return usersScores;
@@ -119,14 +119,14 @@ namespace ModelsLibrary
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            return usersList[index].GetUserScore();
+            return usersList[index].GetScore();
         }
 
         /// <summary>
         /// Gets users count from the Users property.
         /// </summary>
         /// <returns>Return Users count.</returns>
-        public int GetUsersCount()
+        public int GetCount()
         {
             return usersList.Count;
         }
@@ -145,7 +145,7 @@ namespace ModelsLibrary
             List<int> usersScores = new List<int>();
             foreach (User item in usersList)
             {
-                usersScores.Add(item.GetUserScore());
+                usersScores.Add(item.GetScore());
             }
 
             int a = -1;
@@ -172,7 +172,7 @@ namespace ModelsLibrary
         /// </summary>
         /// <param name="index">integer index of a particular user.</param>
         /// <returns>returns an object of type User.</returns>
-        public User GetUserObject(int index)
+        public User GetObject(int index)
         {
             return usersList[index];
         }
@@ -199,7 +199,7 @@ namespace ModelsLibrary
             output.AppendLine(string.Join(separator, headings));
             foreach (User user in usersList)
             {
-                string[] newLine = { user.GetUserName(), user.GetWinsTotal().ToString() };
+                string[] newLine = { user.GetName(), user.GetWinsTotal().ToString() };
                 output.AppendLine(string.Join(separator, newLine));
             }
 
