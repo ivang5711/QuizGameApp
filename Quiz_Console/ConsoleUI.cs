@@ -1,9 +1,9 @@
 ﻿using ConsoleUIHelpers;
 using ModelsLibrary;
 
-namespace Quiz_Console
+namespace Quiz
 {
-    public class UserInterface
+    public class ConsoleUI : IUserInterface
     {
         private int WindowWidth { get; set; }
         private int WindowHeight { get; set; }
@@ -13,52 +13,10 @@ namespace Quiz_Console
         { get { return WindowHeight / 2; } }
         private readonly Users users = new();
         private readonly Questions questions = new();
-        private readonly PrintTools printTools = new();
         private Users roundUsers = new();
-
-        /// <summary>
-        /// Prints out the welcome screen with welcome message.
-        /// </summary>
         public void WelcomeScreen(string message)
         {
-            Console.Clear();
-            Console.Title = "Quiz - Welcome!";
-            if (OperatingSystem.IsWindows())
-            {
-                Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-                Console.BufferHeight = Console.LargestWindowHeight;
-            }
-
-            WindowWidth = Console.WindowWidth;
-            WindowHeight = Console.WindowHeight;
-            printTools.Fullscreen();
-            Console.CursorTop = WindowHeightCenter - 2;
-            string welcome = "Hello and welcome to the \"Quiz\"";
-            int leftMargin = WindowWidthCenter - welcome.Length / 2;
-            Console.CursorLeft = leftMargin;
-            Console.WriteLine(welcome);
-            Console.CursorTop = WindowHeightCenter - 1;
-            if (message.Length > welcome.Length)
-            {
-                Console.CursorLeft = WindowWidthCenter - message.Length / 2;
-                printTools.DrawLine(message.Length);
-            }
-            else
-            {
-                Console.CursorLeft = leftMargin;
-                printTools.DrawLine(30);
-            }
-
-            Console.CursorLeft = WindowWidthCenter - message.Length / 2;
-            Console.BackgroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine(message);
-            Console.ResetColor();
-            Console.CursorTop = WindowHeightCenter + 2;
-            Console.CursorLeft = leftMargin + 1;
-            printTools.HelloBeep();
-            printTools.AnyKey();
-            Console.ResetColor();
-            Console.Clear();
+            PrintTools.WelcomeScreen(message);
         }
 
         /// <summary>
@@ -66,133 +24,21 @@ namespace Quiz_Console
         /// </summary>
         public void PrintHelp()
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            string welcomeText = "Welcome to the Quiz help page!";
-            Console.WriteLine(welcomeText);
-            printTools.DrawLine(welcomeText.Length);
-            string helpMessage;
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-            {
-                helpMessage = "The path to an application .exe file to execute.";
-            }
-            else
-            {
-                helpMessage = "The path to an application .dll file to execute.";
-            }
-
-            printTools.PrintGrey("Usage: [path-to-application] [arguments]\n\n");
-            printTools.PrintGrey("Execute application.\n\n");
-            printTools.PrintGrey("path-to-application:\n\t");
-            printTools.PrintGrey(helpMessage + "\n");
-            Console.WriteLine();
-            Console.WriteLine();
-            string arguments = "Arguments:";
-            Console.WriteLine(arguments);
-            printTools.DrawLine(arguments.Length);
-            Console.WriteLine();
-            Console.Write("--help".PadRight(12));
-            printTools.PrintGrey("shows \"help page\"\n");
-            Console.Write("-p".PadRight(12));
-            printTools.PrintGrey("allows to run the app in persistent mode, so the user data can be loaded and saved\n");
-            Console.WriteLine();
-            Console.WriteLine();
-            printTools.DrawLine(28);
-            printTools.AnyKey();
-            Console.ResetColor();
+            PrintTools.PrintHelp();
         }
 
         /// <summary>
         /// Prints out the menu screen with options to choose from and waits for the user input.
         /// </summary>
         /// <returns>Returns user's menu item choice as an integer value.</returns>
-        public int Menu()
-        {
-            Console.Clear();
-            Console.Title = "Quiz - Main menu";
-            WindowWidth = Console.WindowWidth;
-            WindowHeight = Console.WindowHeight;
-            int leftMargin = WindowWidthCenter - 15;
-            int menuNumber;
-            printTools.Fullscreen();
-            Console.CursorTop = WindowHeightCenter - 8;
-            Console.CursorLeft = leftMargin;
-            Console.WriteLine($"The \"Quiz\" menu:");
-            Console.CursorLeft = leftMargin;
-            printTools.DrawLine(31);
-            Console.CursorLeft = leftMargin;
-            printTools.MenuItem(1);
-            Console.WriteLine(" Enter users");
-            Console.CursorLeft = leftMargin;
-            printTools.MenuItem(2);
-            Console.WriteLine(" Enter questions");
-            Console.CursorLeft = leftMargin;
-            printTools.MenuItem(3);
-            Console.WriteLine(" Pick user");
-            Console.CursorLeft = leftMargin;
-            printTools.MenuItem(4);
-            Console.WriteLine(" Start quiz");
-            Console.CursorLeft = leftMargin;
-            printTools.MenuItem(5);
-            Console.WriteLine(" About");
-            Console.CursorLeft = leftMargin;
-            printTools.MenuItem(6);
-            Console.WriteLine(" To welcome screen");
-            Console.CursorLeft = leftMargin;
-            printTools.MenuItem(7);
-            Console.WriteLine(" Exit");
-            Console.CursorLeft = leftMargin;
-            printTools.DrawLine(31);
-            Console.WriteLine();
-            Console.CursorLeft = leftMargin;
-            printTools.PrintGrey("Enter menu number: ");
-            try
-            {
-                menuNumber = Convert.ToInt32(Console.ReadLine());
-            }
-            catch (FormatException)
-            {
-                return 0;
-            }
-
-            Console.ResetColor();
-            Console.Clear();
-            return menuNumber;
-        }
+        public int Menu() => PrintTools.Menu();
 
         /// <summary>
         /// Prints out credits page with some information about the app and authors.
         /// </summary>
         public void Credits()
         {
-            Console.Clear();
-            Console.Title = "Quiz - About";
-            WindowWidth = Console.WindowWidth;
-            WindowHeight = Console.WindowHeight;
-            int leftMargin = WindowWidthCenter - 36;
-            printTools.Fullscreen();
-            Console.CursorTop = WindowHeightCenter - 8;
-            Console.CursorLeft = leftMargin;
-            Console.WriteLine("This app designed to automate the quiz game.\n");
-            Console.CursorLeft = leftMargin;
-            Console.WriteLine("You can add as many users and questions as you want.\n");
-            Console.CursorLeft = leftMargin;
-            Console.WriteLine("The app defines a winner by comparing the overall score of each player.\n");
-            Console.CursorLeft = leftMargin;
-            Console.WriteLine("To load and save your game results as well as users and questions ");
-            Console.CursorLeft = leftMargin;
-            Console.WriteLine("you can use persistent mode by providing \"-p\" command line argument on start.\n\n");
-            Console.CursorLeft = leftMargin;
-            Console.WriteLine("You can also get help with \"--help\" command line argument.\n\n");
-            Console.CursorLeft = leftMargin;
-            Console.WriteLine("Have a nice Quiz!");
-            Console.CursorLeft = leftMargin;
-            printTools.DrawLine(77);
-            Console.CursorTop = WindowHeightCenter + 6;
-            leftMargin = WindowWidthCenter - 15;
-            Console.CursorLeft = leftMargin;
-            printTools.AnyKey();
-            Console.ResetColor();
-            Console.Clear();
+            PrintTools.Credits();
         }
 
         /// <summary>
@@ -200,30 +46,34 @@ namespace Quiz_Console
         /// </summary>
         public void Goodbuy()
         {
-            Console.Clear();
-            Console.Title = "Quiz - see you soon!";
-            ConsoleKeyInfo c;
-            do
-            {
-                WindowWidth = Console.WindowWidth;
-                WindowHeight = Console.WindowHeight;
-                Console.Clear();
-                printTools.Fullscreen();
-                Console.CursorTop = WindowHeightCenter - 2;
-                Console.CursorLeft = WindowWidthCenter - 14;
-                Console.WriteLine("This was Quiz. See you soon!");
-                Console.CursorTop = WindowHeightCenter - 1;
-                Console.CursorLeft = WindowWidthCenter - 15;
-                printTools.DrawLine(31);
-                Console.CursorTop = WindowHeightCenter + 1;
-                Console.CursorLeft = WindowWidthCenter - 13;
-                printTools.PrintGrey("press Esc key to close...");
-                c = Console.ReadKey(true);
-            } while (c.Key != ConsoleKey.Escape);
-            printTools.BuyBeep();
-            Console.ResetColor();
-            Console.Clear();
+            PrintTools.Goodbuy();
         }
+
+        /// <summary>
+        /// Asks for an answer
+        /// </summary>
+        /// <param name="length">length of the longest question</param>
+        /// <param name="leftMargin">Cursor Left position</param>
+        public void AskForAnswer()
+        {
+            PrintTools.AskForAnswer();
+        }
+
+        /// <summary>
+        /// Prints a message to ask user to enter at least 1 item
+        /// </summary>
+        /// <param name="message">The message to print</param>
+        /// <param name="leftMargin">cursor left position</param>
+        public void PrintEnterAtLeastOneItem(string message, int leftMargin)
+        {
+            PrintTools.PrintEnterAtLeastOneItem(message, leftMargin);
+        }
+
+        /// <summary>
+        /// Prints "You need to enter at least something message"
+        /// </summary>
+        /// <returns>returns "true" if ESC key pressed</returns>
+        public bool PrintEnterAtLeastSomething(int leftMargin) => PrintTools.PrintEnterAtLeastSomething(leftMargin);
 
         /// <summary>
         /// Prints out the GetUsers screen and collects user input.
@@ -234,12 +84,12 @@ namespace Quiz_Console
             WindowWidth = Console.WindowWidth;
             WindowHeight = Console.WindowHeight;
             int leftMargin = WindowWidthCenter - 15;
-            printTools.Fullscreen();
+            PrintTools.Fullscreen();
             Console.CursorTop = WindowHeightCenter - (4 + users.GetCount() / 2);
             Console.CursorLeft = leftMargin;
             Console.WriteLine("Enter users: ");
             Console.CursorLeft = leftMargin;
-            printTools.DrawLine(31);
+            PrintTools.DrawLine(35);
             Console.CursorTop = WindowHeightCenter - (1 + users.GetCount() / 2);
             Console.CursorLeft = leftMargin;
             if (users.GetCount() != 0)
@@ -248,7 +98,7 @@ namespace Quiz_Console
                 PrintUsers();
                 Console.WriteLine();
                 Console.CursorLeft = leftMargin;
-                printTools.DrawLine(31);
+                PrintTools.DrawLine(35);
             }
 
             Console.CursorLeft = leftMargin;
@@ -267,10 +117,10 @@ namespace Quiz_Console
                 Console.CursorLeft = WindowWidthCenter - 11;
                 Console.WriteLine("No games being played");
                 Console.CursorLeft = leftMargin;
-                printTools.DrawLine(41);
+                PrintTools.DrawLine(41);
                 Console.WriteLine();
                 Console.CursorLeft = WindowWidthCenter - 15;
-                printTools.AnyKey();
+                PrintTools.AnyKey();
             }
             else
             {
@@ -283,7 +133,7 @@ namespace Quiz_Console
                 }
 
                 Console.CursorLeft = WindowWidthCenter - 15;
-                printTools.AnyKey();
+                PrintTools.AnyKey();
             }
         }
 
@@ -304,7 +154,7 @@ namespace Quiz_Console
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.Write($"User {counter}: ".PadRight(11, '.'));
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine($"{user}".PadLeft(19, '.'));
+                    Console.WriteLine($"{user}".PadLeft(24, '.'));
                 }
 
                 Console.CursorLeft = leftMargin;
@@ -390,7 +240,7 @@ namespace Quiz_Console
                     WindowHeight = Console.WindowHeight;
                     while (string.IsNullOrWhiteSpace(answerString))
                     {
-                        AskForAnswer(length, leftMargin);
+                        AskForAnswer();
                         answerString = Console.ReadLine()!.ToUpper();
                         if (string.IsNullOrWhiteSpace(answerString) && PrintEnterAtLeastSomething(leftMargin))
                         {
@@ -438,41 +288,27 @@ namespace Quiz_Console
         public void PrintInputRecieved(int length, int leftMargin)
         {
             length += 14;
+            if (length < 20)
+            {
+                length = 20;
+            }
+
             Console.Clear();
-            printTools.Fullscreen();
+            PrintTools.Fullscreen();
             Console.CursorTop = WindowHeightCenter - (8 + questions.GetQuestionsCount() / 2);
-            Console.CursorLeft = WindowWidthCenter - 11;
+            Console.CursorLeft = WindowWidthCenter - 10;
             Console.WriteLine("Your input recieved: ");
             Console.CursorLeft = WindowWidthCenter - length / 2;
-            printTools.DrawLine(length);
+            PrintTools.DrawLine(length);
             Console.WriteLine();
             Console.CursorLeft = WindowWidthCenter - length / 2;
             PrintQuestions();
             Console.WriteLine();
             Console.CursorLeft = WindowWidthCenter - length / 2;
-            printTools.DrawLine(length);
-            Console.CursorLeft = WindowWidthCenter - 14;
-            printTools.PrintGrey("Enter any key to exit... ");
+            PrintTools.DrawLine(length);
+            Console.CursorLeft = WindowWidthCenter - 12;
+            PrintTools.PrintGrey("Enter any key to exit... ");
             Console.ReadKey(true);
-        }
-
-        /// <summary>
-        /// Asks for an answer
-        /// </summary>
-        /// <param name="length">length of the longest question</param>
-        /// <param name="leftMargin">Cursor Left position</param>
-        public void AskForAnswer(int length, int leftMargin)
-        {
-            Console.Clear();
-            printTools.Fullscreen();
-            Console.CursorTop = WindowHeightCenter - 4;
-            Console.WriteLine();
-            Console.CursorLeft = leftMargin;
-            Console.WriteLine("Enter an answer: ");
-            Console.CursorLeft = leftMargin;
-            printTools.DrawLine(16);
-            Console.WriteLine();
-            Console.CursorLeft = leftMargin;
         }
 
         /// <summary>
@@ -483,28 +319,34 @@ namespace Quiz_Console
         public void AskForQuestion(int length, int leftMargin)
         {
             length += 14;
+            if (length < 20)
+            {
+                length = 20;
+            }
+
+            leftMargin = (Console.WindowWidth / 2) - 7;
             Console.Clear();
-            printTools.Fullscreen();
+            PrintTools.Fullscreen();
             Console.CursorTop = WindowHeightCenter - (4 + questions.GetQuestions().Count / 2);
             if (questions.GetQuestionsCount() != 0)
             {
                 Console.CursorLeft = leftMargin;
                 Console.WriteLine("Quiz questions");
-                Console.CursorLeft = leftMargin;
-                printTools.DrawLine(length);
+                Console.CursorLeft = (Console.WindowWidth - length) / 2;
+                PrintTools.DrawLine(length);
                 Console.WriteLine();
                 Console.CursorLeft = leftMargin;
                 PrintQuestions();
                 Console.WriteLine();
-                Console.CursorLeft = leftMargin;
-                printTools.DrawLine(length);
+                Console.CursorLeft = (Console.WindowWidth - length) / 2;
+                PrintTools.DrawLine(length);
             }
 
             Console.WriteLine();
-            Console.CursorLeft = leftMargin;
+            Console.CursorLeft = (Console.WindowWidth - 16) / 2;
             Console.WriteLine("Enter a question: ");
-            Console.CursorLeft = leftMargin;
-            printTools.DrawLine(17);
+            Console.CursorLeft = (Console.WindowWidth - 16) / 2;
+            PrintTools.DrawLine(17);
             Console.WriteLine();
         }
 
@@ -522,7 +364,7 @@ namespace Quiz_Console
                 while (true)
                 {
                     GetUsers();
-                    printTools.PrintGrey("Do you want to add new user?[Y/n] ");
+                    PrintTools.PrintGrey("Do you want to add new user?[Y/n] ");
                     ConsoleKeyInfo c = Console.ReadKey(true);
                     if (c.Key == ConsoleKey.Y || c.Key == ConsoleKey.Enter)
                     {
@@ -545,54 +387,35 @@ namespace Quiz_Console
         /// </summary>
         public void EnterUserName()
         {
-            int leftMargin = WindowWidthCenter - 15;
+            
             while (true)
             {
                 GetUsers();
-                printTools.PrintGrey("New user's name: ");
+                PrintTools.PrintGrey("New user's name: ");
                 string input = Console.ReadLine()!.ToUpper();
-                var position = Console.GetCursorPosition();
+                int positionTop = Console.GetCursorPosition().Top;
                 if (!string.IsNullOrWhiteSpace(input))
                 {
                     users.Add(input);
-                    Console.CursorTop = position.Top - 1;
+                    Console.CursorTop = positionTop - 1;
                     Console.WriteLine(new string(' ', Console.WindowWidth));
+                    int leftMargin = WindowWidthCenter - 15;
                     Console.CursorLeft = leftMargin;
                     Console.WriteLine($"You added \"{input.Trim().ToUpperInvariant()}\"");
                     Console.CursorLeft = leftMargin;
-                    printTools.AnyKey();
+                    PrintTools.AnyKey();
                     break;
                 }
                 else
                 {
+                    int leftMargin = WindowWidthCenter - 15;
                     Console.CursorLeft = leftMargin;
-                    printTools.DrawLine(30);
+                    PrintTools.DrawLine(30);
                     if (PrintEnterAtLeastSomething(leftMargin))
                     {
                         break;
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Prints "You need to enter at least something message"
-        /// </summary>
-        /// <returns>returns "true" if ESC key pressed</returns>
-        public static bool PrintEnterAtLeastSomething(int leftMargin)
-        {
-            Console.CursorLeft = leftMargin;
-            Console.WriteLine("You need to enter at least something");
-            Console.CursorLeft = leftMargin;
-            Console.Write("Press Esc to exit or Enter to try again...");
-            ConsoleKeyInfo c = Console.ReadKey();
-            if (c.Key == ConsoleKey.Escape)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
             }
         }
 
@@ -628,7 +451,7 @@ namespace Quiz_Console
                 leftMargin = WindowWidthCenter - 15;
                 Console.CursorLeft = leftMargin;
                 Console.Clear();
-                printTools.Fullscreen();
+                PrintTools.Fullscreen();
                 Console.CursorTop = WindowHeightCenter - 3;
                 Console.CursorLeft = WindowWidthCenter - 22;
                 if (roundUsers.GetWinner() >= 0)
@@ -646,10 +469,10 @@ namespace Quiz_Console
                 Console.CursorLeft = WindowWidthCenter - 22;
                 Console.WriteLine("That's all questions! Thank you for the Quiz");
                 Console.CursorLeft = leftMargin - 7;
-                printTools.DrawLine(44);
+                PrintTools.DrawLine(44);
                 Console.WriteLine();
                 Console.CursorLeft = leftMargin;
-                printTools.AnyKey();
+                PrintTools.AnyKey();
                 Console.CursorLeft = leftMargin;
                 Console.ResetColor();
                 Console.Clear();
@@ -660,7 +483,7 @@ namespace Quiz_Console
                 leftMargin = WindowWidthCenter - 15;
                 Console.CursorLeft = leftMargin;
                 Console.Clear();
-                printTools.Fullscreen();
+                PrintTools.Fullscreen();
                 Console.CursorTop = WindowHeightCenter - 3;
                 string message = string.Empty;
                 if (questions.GetQuestionsCount() == 0)
@@ -687,26 +510,26 @@ namespace Quiz_Console
             WindowHeight = Console.WindowHeight;
             int leftMargin = WindowWidthCenter - 50;
             Console.Clear();
-            printTools.Fullscreen();
+            PrintTools.Fullscreen();
             Console.CursorTop = WindowHeightCenter - 6;
             Console.CursorLeft = leftMargin;
             Console.WriteLine("Answer the Quiz question:");
             Console.CursorLeft = leftMargin;
-            printTools.DrawLine(100);
+            PrintTools.DrawLine(100);
             Console.CursorTop = WindowHeightCenter - 3;
             Console.CursorLeft = leftMargin;
             string text = $"User {user + 1}: ";
-            printTools.PrintGrey(text);
+            PrintTools.PrintGrey(text);
             Console.WriteLine($"{roundUsers.GetNames()[user]}");
             Console.CursorLeft = leftMargin;
             string temp = roundUsers.GetScore(user).ToString();
             Console.WriteLine("Current user score is: " + temp);
             Console.CursorLeft = leftMargin;
-            printTools.DrawLine(roundUsers.GetNames()[user]!.ToString()!.Length + 9);
+            PrintTools.DrawLine(roundUsers.GetNames()[user]!.ToString()!.Length + 9);
             Console.WriteLine();
             Console.CursorLeft = leftMargin;
             text = $"Question {i + 1}: ";
-            printTools.PrintGrey(text);
+            PrintTools.PrintGrey(text);
             Console.WriteLine($"{questions.GetQuestions()[i]}");
             Console.WriteLine();
             Console.WriteLine();
@@ -720,7 +543,7 @@ namespace Quiz_Console
         public void ProcessAnswer(int user, int i)
         {
             Console.CursorLeft = WindowWidthCenter - 15;
-            printTools.PrintGrey("Enter your answer: ");
+            PrintTools.PrintGrey("Enter your answer: ");
             int left = Console.GetCursorPosition().Left;
             int top = Console.GetCursorPosition().Top;
             string? input;
@@ -749,27 +572,8 @@ namespace Quiz_Console
 
             Console.WriteLine();
             Console.CursorLeft = WindowWidthCenter - 14;
-            printTools.PrintGrey("Press any key to continue...");
+            PrintTools.PrintGrey("Press any key to continue...");
             Console.ReadKey();
-        }
-
-        /// <summary>
-        /// Prints a message to ask user to enter at least 1 item
-        /// </summary>
-        /// <param name="message">The message to print</param>
-        /// <param name="leftMargin">cursor left position</param>
-        public void PrintEnterAtLeastOneItem(string message, int leftMargin)
-        {
-            Console.CursorLeft = (WindowWidth - message.Length) / 2;
-            Console.WriteLine(message);
-            Console.CursorLeft = (WindowWidth - message.Length) / 2;
-            printTools.DrawLine(message.Length);
-            Console.WriteLine();
-            Console.CursorLeft = leftMargin;
-            printTools.AnyKey();
-            Console.CursorLeft = leftMargin;
-            Console.ResetColor();
-            Console.Clear();
         }
 
         /// <summary>
@@ -783,7 +587,7 @@ namespace Quiz_Console
             int windowHeight = Console.WindowHeight;
             int heightCenter = windowHeight / 2;
             int leftMargin = windowWidth / 2 - 21;
-            printTools.Fullscreen();
+            PrintTools.Fullscreen();
             Console.CursorTop = heightCenter - 8;
             Console.CursorLeft = leftMargin;
             if (users.GetCount() != 0 && questions.GetQuestionsCount() != 0)
@@ -791,10 +595,10 @@ namespace Quiz_Console
                 Console.CursorLeft = leftMargin;
                 Console.WriteLine("High scores:");
                 Console.CursorLeft = leftMargin;
-                printTools.DrawLine(41);
+                PrintTools.DrawLine(41);
                 PrintUsersWithScores();
                 Console.CursorLeft = leftMargin;
-                printTools.DrawLine(41);
+                PrintTools.DrawLine(41);
                 Console.CursorLeft = leftMargin;
                 return 0;
             }
@@ -818,7 +622,7 @@ namespace Quiz_Console
                 int leftMargin = WindowWidthCenter - 15;
                 Console.CursorLeft = leftMargin;
                 Console.Clear();
-                printTools.Fullscreen();
+                PrintTools.Fullscreen();
                 Console.CursorTop = WindowHeightCenter - 3;
                 string message = "You need to add at least 1 user first... ";
                 PrintEnterAtLeastOneItem(message, leftMargin);
@@ -830,7 +634,7 @@ namespace Quiz_Console
             {
                 string input = string.Empty;
                 PrintUsersPicked();
-                printTools.PrintGrey("Pick a user for the game: ");
+                PrintTools.PrintGrey("Pick a user for the game: ");
                 input += Console.ReadLine();
                 Console.CursorLeft = WindowWidthCenter - 30;
                 CheckPickedUser(input);
@@ -851,7 +655,7 @@ namespace Quiz_Console
                 ConsoleKeyInfo c;
                 PrintUsersPicked();
                 string message = "Do you want to pick a new user?[Y/n] ";
-                printTools.PrintGrey(message);
+                PrintTools.PrintGrey(message);
                 c = Console.ReadKey(true);
                 if (c.Key == ConsoleKey.Y || c.Key == ConsoleKey.Enter)
                 {
@@ -877,8 +681,8 @@ namespace Quiz_Console
                     int index = Convert.ToInt32(input) - 1;
                     int usernameLength = users.GetNames()[index].Length;
                     roundUsers.Add(users.GetNames()[index], index);
-                    var cursorPosition = Console.GetCursorPosition();
-                    Console.CursorTop = cursorPosition.Top - 1;
+                    int positionTop = Console.GetCursorPosition().Top;
+                    Console.CursorTop = positionTop - 1;
                     Console.WriteLine(new string(' ', WindowWidth));
                     Console.CursorLeft = WindowWidthCenter - (18 + usernameLength + 28) / 2;
                     Console.Write($"You have entered {users.GetNames()[index]}. ");
@@ -893,7 +697,7 @@ namespace Quiz_Console
                 Console.Write($"Incorrect input. Try again. ");
             }
 
-            printTools.AnyKey();
+            PrintTools.AnyKey();
         }
 
         /// <summary>
@@ -911,7 +715,7 @@ namespace Quiz_Console
             }
 
             Console.CursorLeft = WindowWidthCenter - 15;
-            printTools.DrawLine(30);
+            PrintTools.DrawLine(35);
             Console.CursorLeft = WindowWidthCenter - 15;
         }
 

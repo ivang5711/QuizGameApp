@@ -1,8 +1,10 @@
-﻿namespace Quiz_Console
+﻿using ConsoleUIHelpers;
+
+namespace Quiz
 {
     internal static class Program
     {
-        public static UserInterface Ui { get; set; } = new UserInterface();
+        public static ModelsLibrary.IUserInterface Ui { get; set; } = new ConsoleUI();
         public static void Main(string[] args)
         {
             Console.Title = "Quiz";
@@ -24,7 +26,7 @@
 
             Console.ResetColor();
             Console.Clear();
-            Ui.WelcomeScreen(modeMessage);
+            PrintTools.WelcomeScreen(modeMessage);
             MenuSwitch(modeMessage);
             Ui.PrintArgs(args);
             Ui.Goodbuy();
@@ -82,7 +84,7 @@
 
                     case 6:
                         {
-                            Ui.WelcomeScreen(modeMessage);
+                            PrintTools.WelcomeScreen(modeMessage);
                             break;
                         }
 
