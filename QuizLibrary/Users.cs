@@ -13,27 +13,12 @@ namespace ModelsLibrary
         public Users() => usersList = new List<User>();
 
         /// <summary>
-        /// Adds a user to the Users property.
-        /// </summary>
-        /// <param name="user">Gets string "user" as an input</param>
-        /// <exception cref="ArgumentException">Throws an exception if the user string is null, empty or Whitespace.</exception>
-        public void Add(string user)
-        {
-            if (string.IsNullOrWhiteSpace(user))
-            {
-                throw new ArgumentException(user, nameof(user));
-            }
-
-            usersList.Add(new User(user, 0));
-        }
-
-        /// <summary>
         /// Adds a user at a picked index
         /// </summary>
         /// <param name="user"></param>
         /// <param name="index"></param>
         /// <exception cref="ArgumentException"></exception>
-        public void Add(string user, int index)
+        public void Add(string user, int index = -1)
         {
             if (string.IsNullOrWhiteSpace(user))
             {
