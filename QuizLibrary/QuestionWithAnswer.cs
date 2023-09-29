@@ -15,18 +15,12 @@
         /// Gets question.
         /// </summary>
         /// <returns>Returns a string with a question.</returns>
-        public string GetQuestion()
-        {
-            return question;
-        }
+        public string GetQuestion() => question;
 
         /// <summary>
         /// Gets answer.
         /// </summary>
         /// <returns>Returns a string with an answer to the corresponding question.</returns>
-        public string GetAnswer()
-        {
-            return answer;
-        }
+        public string GetAnswer() => answer;
     }
 }

@@ -10,10 +10,7 @@ namespace ModelsLibrary
     {
         private readonly List<User> usersList;
 
-        public Users()
-        {
-            usersList = new List<User>();
-        }
+        public Users() => usersList = new List<User>();
 
         /// <summary>
         /// Adds a user to the Users property.
@@ -126,10 +123,7 @@ namespace ModelsLibrary
         /// Gets users count from the Users property.
         /// </summary>
         /// <returns>Return Users count.</returns>
-        public int GetCount()
-        {
-            return usersList.Count;
-        }
+        public int GetCount() => usersList.Count;
 
         /// <summary>
         /// Gets winner of a game.
@@ -172,19 +166,13 @@ namespace ModelsLibrary
         /// </summary>
         /// <param name="index">integer index of a particular user.</param>
         /// <returns>returns an object of type User.</returns>
-        public User GetObject(int index)
-        {
-            return usersList[index];
-        }
+        public User GetObject(int index) => usersList[index];
 
         /// <summary>
         /// Returns all users
         /// </summary>
         /// <returns>Returns a list of Users</returns>
-        public List<User> GetAllUsers()
-        {
-            return usersList;
-        }
+        public List<User> GetAllUsers() => usersList;
 
         /// <summary>
         /// Saves users and score to CSV file.

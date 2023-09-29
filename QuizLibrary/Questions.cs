@@ -9,10 +9,7 @@ namespace ModelsLibrary
     {
         private readonly List<QuestionWithAnswer> questionsList;
 
-        public Questions()
-        {
-            questionsList = new List<QuestionWithAnswer>();
-        }
+        public Questions() => questionsList = new List<QuestionWithAnswer>();
 
         /// <summary>
         /// Gets Questions List from the Questions property.
@@ -69,10 +66,7 @@ namespace ModelsLibrary
         /// Gets the Questions property count.
         /// </summary>
         /// <returns>returns an int with Questions prperty count.</returns>
-        public int GetQuestionsCount()
-        {
-            return questionsList.Count;
-        }
+        public int GetQuestionsCount() => questionsList.Count;
 
         /// <summary>
         /// Performs a user's answer correctness check.
@@ -108,10 +102,7 @@ namespace ModelsLibrary
         /// Returns all questions with answers
         /// </summary>
         /// <returns>Questions List with Answers</returns>
-        public List<QuestionWithAnswer> GetQuestionWithAnswers()
-        {
-            return questionsList;
-        }
+        public List<QuestionWithAnswer> GetQuestionWithAnswers() => questionsList;
 
         /// <summary>
         /// Saves questions with answers to CSV file.

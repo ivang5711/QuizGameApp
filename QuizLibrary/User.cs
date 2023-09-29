@@ -19,10 +19,7 @@
         /// Creates a new User.
         /// </summary>
         /// <param name="name">string representing name.</param>
-        public User(string name)
-        {
-            this.name = name.Trim().ToUpperInvariant();
-        }
+        public User(string name) => this.name = name.Trim().ToUpperInvariant();
 
         /// <summary>
         /// Creates a new User and sets a winsTotal specified.
@@ -52,60 +49,39 @@
         /// Gets user name.
         /// </summary>
         /// <returns>A string with user name.</returns>
-        public string GetName()
-        {
-            return name;
-        }
+        public string GetName() => name;
 
         /// <summary>
         /// Gets user's wins total
         /// </summary>
         /// <returns>returns an int with user's wins</returns>
-        public int GetWinsTotal()
-        {
-            return winsTotal;
-        }
+        public int GetWinsTotal() => winsTotal;
 
         /// <summary>
         /// Returns user's index
         /// </summary>
         /// <returns>returns in with user's index</returns>
-        public int GetIndex()
-        {
-            return index;
-        }
+        public int GetIndex() => index;
 
         /// <summary>
         /// Gets user score.
         /// </summary>
         /// <returns>returns an integer with user score.</returns>
-        public int GetScore()
-        {
-            return score;
-        }
+        public int GetScore() => score;
 
         /// <summary>
         /// Increments Wins total
         /// </summary>
-        public void IncrementWinsTotal()
-        {
-            winsTotal++;
-        }
+        public void IncrementWinsTotal() => winsTotal++;
 
         /// <summary>
         /// Sets user's index
         /// </summary>
-        public void SetIndex(int index)
-        {
-            this.index = index;
-        }
+        public void SetIndex(int index) => this.index = index;
 
         /// <summary>
         /// Increments user score
         /// </summary>
-        public void IncrementScore()
-        {
-            score++;
-        }
+        public void IncrementScore() => score++;
     }
 }
