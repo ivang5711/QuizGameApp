@@ -1,15 +1,9 @@
 ﻿namespace ModelsLibrary
 {
-    public class QuestionWithAnswer
+    public class QuestionWithAnswer : IQuestionWithAnswer
     {
-        private readonly string question;
-        private readonly string answer;
-
-        public QuestionWithAnswer(string question, string answer)
-        {
-            this.question = question.Trim().ToUpperInvariant();
-            this.answer = answer.Trim().ToUpperInvariant();
-        }
+        private string question;
+        private string answer;
 
         /// <summary>
         /// Gets question.
@@ -22,5 +16,16 @@
         /// </summary>
         /// <returns>Returns a string with an answer to the corresponding question.</returns>
         public string GetAnswer() => answer;
+
+        /// <summary>
+        /// Sets both Question and answer
+        /// </summary>
+        /// <param name="question"></param>
+        /// <param name="answer"></param>
+        public void SetQuestionAndAnswer(string question, string answer)
+        {
+            this.question = question.Trim().ToUpperInvariant();
+            this.answer = answer.Trim().ToUpperInvariant();
+        }
     }
 }

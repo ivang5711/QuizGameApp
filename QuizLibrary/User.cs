@@ -1,13 +1,13 @@
 ﻿namespace ModelsLibrary
 {
-    public class User
+    public class User : IUser
     {
-        private readonly string name;
+        private string name;
         private int winsTotal;
         private int index;
         private int score;
 
-        public User()
+        public void CreateUser()
         {
             name = string.Empty;
             score = 0;
@@ -21,7 +21,7 @@
         /// <param name="name">string representing name.</param>
         /// <param name="winsTotal">integer represents initial winsTotal.</param>
         /// <param name="index">integer represents index picked</param>
-        public User(string name, int winsTotal = 0, int index = -1)
+        public void CreateUser(string name, int winsTotal = 0, int index = -1)
         {
             this.name = name.Trim().ToUpperInvariant();
             this.index = index;

@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using ModelsLibrary;
 
 namespace QuizTest
@@ -12,7 +14,8 @@ namespace QuizTest
             string answer = "J. Biden";
             string expected = "Who is the President of the US?";
 
-            QuestionWithAnswer questionWithAnswer = new(question, answer);
+            QuestionWithAnswer questionWithAnswer = new();
+            questionWithAnswer.SetQuestionAndAnswer(question, answer);
 
             string actual = questionWithAnswer.GetQuestion();
 
@@ -26,7 +29,8 @@ namespace QuizTest
             string nameOne = "Who is the President of the US?";
             string NameTwo = "J. Biden";
             string expected = "J. Biden";
-            QuestionWithAnswer questionWithAnswer = new(nameOne, NameTwo);
+            QuestionWithAnswer questionWithAnswer = new();
+            questionWithAnswer.SetQuestionAndAnswer(nameOne, NameTwo);
 
             // Act
             string actual = questionWithAnswer.GetAnswer();

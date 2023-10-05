@@ -1,12 +1,26 @@
-﻿using ModelsLibrary;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using ModelsLibrary;
 
 namespace ModelsLibraryTests
 {
     public class UsersTests
     {
-        public Users TestUser { get; set; } = new Users();
+        public IUsers TestUser { get; set; }
+
+        readonly IHost _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
+        {
+            services.AddTransient<IUsers, Users>();
+            services.AddScoped<IQuestions, Questions>();
+            services.AddTransient<IQuestionWithAnswer, QuestionWithAnswer>();
+            services.AddTransient<IUser, User>();
+        })
+    .Build();
+
+
         public UsersTests()
         {
+            TestUser = new Users(_host);
             TestUser.Add("JOHN");
             TestUser.Add("ANNA");
             TestUser.Add("EVE");
@@ -23,7 +37,7 @@ namespace ModelsLibraryTests
         [Fact]
         public void AddWithIndexTest()
         {
-            Users users = new();
+            IUsers users = _host.Services.GetRequiredService<IUsers>();
             users.Add("JOHN", 78);
             int expected = 78;
             int actual = users.GetAllUsers()[0].GetIndex();
@@ -49,7 +63,7 @@ namespace ModelsLibraryTests
         [Fact]
         public void AddScoreTest()
         {
-            Users users = new();
+            IUsers users = _host.Services.GetRequiredService<IUsers>();
             users.Add("JOHN");
             users.Add("ANNA");
             users.Add("EVE");
@@ -62,7 +76,7 @@ namespace ModelsLibraryTests
         [Fact]
         public void AddWinTest()
         {
-            Users users = new();
+            IUsers users = _host.Services.GetRequiredService<IUsers>();
             users.Add("JOHN");
             users.Add("ANNA");
             users.Add("EVE");
@@ -71,7 +85,7 @@ namespace ModelsLibraryTests
             List<int> actual = new();
             for (int i = 0; i < 3; i++)
             {
-                User user = users.GetObject(i);
+                IUser user = users.GetObject(i);
                 actual.Add(user.GetWinsTotal());
             }
 
@@ -81,7 +95,7 @@ namespace ModelsLibraryTests
         [Fact]
         public void GetScoreTest()
         {
-            Users users = new();
+            IUsers users = _host.Services.GetRequiredService<IUsers>();
             users.Add("JOHN");
             users.Add("ANNA");
             users.Add("EVE");
@@ -98,7 +112,7 @@ namespace ModelsLibraryTests
         [Fact]
         public void GetCountTest()
         {
-            Users users = new();
+            IUsers users = _host.Services.GetRequiredService<IUsers>();
             users.Add("JOHN");
             users.Add("ANNA");
             users.Add("EVE");
@@ -116,7 +130,7 @@ namespace ModelsLibraryTests
         [InlineData(2, 5, 2)]
         public void GetWinnerTest(int index, int numberOfWins, int expected)
         {
-            Users users = new();
+            IUsers users = _host.Services.GetRequiredService<IUsers>();
             users.Add("JOHN");
             users.Add("ANNA");
             users.Add("EVE");
@@ -139,7 +153,7 @@ namespace ModelsLibraryTests
         [InlineData(2, 3)]
         public void GetWinnerFailTest(int index, int numberOfWins)
         {
-            Users users = new();
+            IUsers users = _host.Services.GetRequiredService<IUsers>();
             users.Add("JOHN");
             users.Add("ANNA");
             users.Add("EVE");
@@ -161,7 +175,7 @@ namespace ModelsLibraryTests
         [Fact]
         public void GetWinnerFailNoUsersTest()
         {
-            Users users = new();
+            IUsers users = _host.Services.GetRequiredService<IUsers>();
             int expected = -1;
             int actual = users.GetWinner();
             Assert.Equal(expected, actual);
@@ -173,7 +187,7 @@ namespace ModelsLibraryTests
         [InlineData(1023)]
         public void GetWinnerFailSingleUserTest(int numberOfWins)
         {
-            Users users = new();
+            IUsers users = _host.Services.GetRequiredService<IUsers>();
             users.Add("JOHN");
             for (int i = 0; i < numberOfWins; i++)
             {
@@ -188,12 +202,13 @@ namespace ModelsLibraryTests
         [Fact]
         public void GetObjectTest()
         {
-            Users users = new();
+            IUsers users = _host.Services.GetRequiredService<IUsers>();
             users.Add("JOHN");
             users.Add("ANNA");
             users.Add("EVE");
 
-            User user = new("ANNA");
+            IUser user = _host.Services.GetRequiredService<IUser>();
+            user.CreateUser("ANNA");
             string expected = user.GetName();
             string actual = users.GetObject(1).GetName();
             Assert.Equal(expected, actual);
@@ -205,7 +220,7 @@ namespace ModelsLibraryTests
         [InlineData(1023)]
         public void GetAllUsersTest(int numberOfUsers)
         {
-            Users users = new();
+            IUsers users = _host.Services.GetRequiredService<IUsers>();
             for (int i = 0; i < numberOfUsers; i++)
             {
                 users.Add($"sampleUser{i}");

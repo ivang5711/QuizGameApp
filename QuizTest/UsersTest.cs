@@ -1,14 +1,25 @@
-﻿using ModelsLibrary;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using ModelsLibrary;
 
 namespace QuizTest
 {
     [TestClass]
     public class UsersTest
     {
+        readonly IHost _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
+        {
+            services.AddTransient<IUsers, Users>();
+            services.AddScoped<IQuestions, Questions>();
+            services.AddTransient<IQuestionWithAnswer, QuestionWithAnswer>();
+            services.AddTransient<IUser, User>();
+        })
+        .Build();
+
         [TestMethod]
         public void AddUserTest()
         {
-            Users users = new();
+            Users users = new(_host);
             string user = "Adam";
             try
             {
@@ -27,7 +38,7 @@ namespace QuizTest
         [TestMethod]
         public void AddUserPickTest()
         {
-            Users users = new();
+            Users users = new(_host);
             string user = "Adam";
             int index = 5;
             try
@@ -48,7 +59,7 @@ namespace QuizTest
 
             bool expected = true;
             bool actual = true;
-            User user1 = users.GetObject(0);
+            IUser user1 = users.GetObject(0);
             if (user1.GetName() != user.Trim().ToUpperInvariant() || user1.GetWinsTotal() != 0 || user1.GetIndex() != index)
             {
                 actual = false;
@@ -60,7 +71,7 @@ namespace QuizTest
         [TestMethod]
         public void GetUserNamesTest()
         {
-            Users users = new();
+            Users users = new(_host);
             users.Add("Adam");
             users.Add("Eve");
             users.Add("Mark");
@@ -89,7 +100,7 @@ namespace QuizTest
         [TestMethod]
         public void GetScoresTest()
         {
-            Users users = new();
+            Users users = new(_host);
             users.Add("Adam");
             users.Add("Eve");
             users.Add("Mark");
@@ -113,7 +124,7 @@ namespace QuizTest
         [TestMethod]
         public void AddScoreTest()
         {
-            Users users = new();
+            Users users = new(_host);
             users.Add("Adam");
             users.Add("Eve");
             users.Add("Mark");
@@ -136,7 +147,7 @@ namespace QuizTest
         [TestMethod]
         public void AddWinTest()
         {
-            Users users = new();
+            Users users = new(_host);
             users.Add("Adam");
             users.Add("Eve");
             users.Add("Mark");
@@ -154,8 +165,8 @@ namespace QuizTest
                 Assert.Fail(ex.Message);
             }
 
-            List<User> userList = users.GetAllUsers();
-            foreach (User user in userList)
+            List<IUser> userList = users.GetAllUsers();
+            foreach (IUser user in userList)
             {
                 result.Add(user.GetWinsTotal());
             }
@@ -166,7 +177,7 @@ namespace QuizTest
         [TestMethod]
         public void GetScoreTest()
         {
-            Users users = new();
+            Users users = new(_host);
             users.Add("Adam");
             users.Add("Eve");
             users.Add("Mark");
@@ -189,7 +200,7 @@ namespace QuizTest
         [TestMethod]
         public void GetUsersCountTest()
         {
-            Users users = new();
+            Users users = new(_host);
             users.Add("Adam");
             users.Add("Eve");
             users.Add("Mark");
@@ -201,7 +212,7 @@ namespace QuizTest
         [TestMethod]
         public void GetWinnerNoWinnerTest()
         {
-            Users users = new();
+            Users users = new(_host);
             users.Add("Adam");
             users.Add("Eve");
             users.Add("Mark");
@@ -213,7 +224,7 @@ namespace QuizTest
         [TestMethod]
         public void GetWinnerTest()
         {
-            Users users = new();
+            Users users = new(_host);
             users.Add("Adam");
             users.Add("Eve");
             users.Add("Mark");
@@ -226,16 +237,17 @@ namespace QuizTest
         [TestMethod]
         public void GetUserObjectTest()
         {
-            Users users = new();
+            Users users = new(_host);
             users.Add("Adam");
             users.Add("Eve");
             users.Add("Mark");
 
-            User expectedUser = new("Eve");
+            User expectedUser = new();
+            expectedUser.CreateUser("Eve");
             User actualUser = new();
             try
             {
-                actualUser = users.GetObject(1);
+                actualUser = (User)users.GetObject(1);
             }
             catch (Exception ex)
             {
@@ -255,19 +267,20 @@ namespace QuizTest
         [TestMethod]
         public void GetAllUsersTest()
         {
-            Users users = new();
+            Users users = new(_host);
             users.Add("Adam");
             users.Add("Eve");
             users.Add("Mark");
-
-            List<User> expectedUsers = new()
+            List<IUser> expectedUsers = new()
             {
-                new User("Adam"),
-                new User("Eve"),
-                new User("Mark")
+                new User(),
+                new User(),
+                new User()
             };
-
-            List<User> actualList = users.GetAllUsers();
+            expectedUsers[0].CreateUser("Adam");
+            expectedUsers[1].CreateUser("Eve");
+            expectedUsers[2].CreateUser("Mark");
+            List<IUser> actualList = users.GetAllUsers();
             bool expected = true;
             bool actual = true;
             if (actualList.Count != expectedUsers.Count)
@@ -292,7 +305,7 @@ namespace QuizTest
         [TestMethod]
         public void SaveToCSVTest()
         {
-            Users users = new();
+            Users users = new(_host);
             users.Add("Adam");
             users.Add("Eve");
             users.Add("Mark");
@@ -359,12 +372,12 @@ namespace QuizTest
         [TestMethod]
         public void ReadFromCSVTest()
         {
-            Users initial = new();
+            Users initial = new(_host);
             initial.Add("Tom");
             initial.Add("Bob");
-            List<User> expectedList = initial.GetAllUsers();
+            List<IUser> expectedList = initial.GetAllUsers();
             initial.SaveToCSV("user-score-test.csv");
-            Users temp = new();
+            Users temp = new(_host);
             try
             {
                 temp.ReadFromCSV("user-score-test.csv");
@@ -374,7 +387,7 @@ namespace QuizTest
                 Assert.Fail(ex.Message);
             }
 
-            List<User> actualList = temp.GetAllUsers();
+            List<IUser> actualList = temp.GetAllUsers();
             if (expectedList.Count != actualList.Count)
             {
                 Assert.Fail();

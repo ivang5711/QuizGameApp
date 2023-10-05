@@ -28,11 +28,12 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="30.0.1" />
-    <PackageReference Include="Figgle" Version="0.5.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleUIHelpers\UIHelpers.csproj" />
+    <ProjectReference Include="..\ConsoleUIHelpers\UIHelpersLibrary.csproj" />
     <ProjectReference Include="..\QuizLibrary\ModelsLibrary.csproj" />
   </ItemGroup>
 

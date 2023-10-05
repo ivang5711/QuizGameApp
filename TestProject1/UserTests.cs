@@ -1,10 +1,27 @@
-﻿using ModelsLibrary;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using ModelsLibrary;
 
 namespace ModelsLibraryTests
 {
     public class UserTests
     {
-        public static User TestUser { get; set; } = new User("JOHN", 18, 129);
+        public IUser TestUser { get; set; }
+
+        readonly IHost _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
+        {
+            services.AddTransient<IUsers, Users>();
+            services.AddScoped<IQuestions, Questions>();
+            services.AddTransient<IQuestionWithAnswer, QuestionWithAnswer>();
+            services.AddTransient<IUser, User>();
+        })
+            .Build();
+
+        public UserTests()
+        {
+            TestUser = new User();
+            TestUser.CreateUser("JOHN", 18, 129);
+        }
 
         [Fact]
         public void GetUserNameTest()
@@ -41,7 +58,8 @@ namespace ModelsLibraryTests
         [Fact]
         public void IncrementWinsTotalTest()
         {
-            User user = new("JAKE", 30);
+            IUser user = _host.Services.GetRequiredService<IUser>();
+            user.CreateUser("JAKE", 30);
             user.IncrementWinsTotal();
             user.IncrementWinsTotal();
             user.IncrementWinsTotal();
@@ -53,7 +71,8 @@ namespace ModelsLibraryTests
         [Fact]
         public void SetIndexTest()
         {
-            User user = new("JAKE", 30, 0);
+            IUser user = _host.Services.GetRequiredService<IUser>();
+            user.CreateUser("JAKE", 30, 0);
             user.SetIndex(64);
             int expected = 64;
             int actual = user.GetIndex();
@@ -63,7 +82,8 @@ namespace ModelsLibraryTests
         [Fact]
         public void IncrementScoreTest()
         {
-            User user = new("JAKE", 30, 0);
+            IUser user = _host.Services.GetRequiredService<IUser>();
+            user.CreateUser("JAKE", 30, 0);
             user.IncrementScore();
             user.IncrementScore();
             user.IncrementScore();

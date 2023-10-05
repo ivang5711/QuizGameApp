@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,11 +8,16 @@ using System.Text;
 
 namespace ModelsLibrary
 {
-    public class Users
+    public class Users : IUsers
     {
-        private readonly List<User> usersList;
+        private readonly List<IUser> usersList;
+        public IHost Host { get; set; }
 
-        public Users() => usersList = new List<User>();
+        public Users(IHost host)
+        {
+            Host = host;
+            usersList = new List<IUser>();
+        }
 
         /// <summary>
         /// Adds a user at a picked index
@@ -25,7 +32,9 @@ namespace ModelsLibrary
                 throw new ArgumentException(user, nameof(user));
             }
 
-            usersList.Add(new User(user, 0, index));
+            var userItem = Host.Services.GetRequiredService<IUser>();
+            userItem.CreateUser(user, 0, index);
+            usersList.Add(userItem);
         }
 
         /// <summary>
@@ -35,7 +44,7 @@ namespace ModelsLibrary
         public List<string> GetNames()
         {
             List<string> usersTemp = new List<string>();
-            foreach (User item in usersList)
+            foreach (IUser item in usersList)
             {
                 usersTemp.Add(item.GetName());
             }
@@ -50,7 +59,7 @@ namespace ModelsLibrary
         public List<int> GetScores()
         {
             List<int> usersScores = new List<int>();
-            foreach (User item in usersList)
+            foreach (IUser item in usersList)
             {
                 usersScores.Add(item.GetScore());
             }
@@ -122,7 +131,7 @@ namespace ModelsLibrary
             }
 
             List<int> usersScores = new List<int>();
-            foreach (User item in usersList)
+            foreach (IUser item in usersList)
             {
                 usersScores.Add(item.GetScore());
             }
@@ -151,13 +160,13 @@ namespace ModelsLibrary
         /// </summary>
         /// <param name="index">integer index of a particular user.</param>
         /// <returns>returns an object of type User.</returns>
-        public User GetObject(int index) => usersList[index];
+        public IUser GetObject(int index) => usersList[index];
 
         /// <summary>
         /// Returns all users
         /// </summary>
         /// <returns>Returns a list of Users</returns>
-        public List<User> GetAllUsers() => usersList;
+        public List<IUser> GetAllUsers() => usersList;
 
         /// <summary>
         /// Saves users and score to CSV file.
@@ -170,7 +179,7 @@ namespace ModelsLibrary
             StringBuilder output = new StringBuilder();
             string[] headings = { "name", "winsTotal" };
             output.AppendLine(string.Join(separator, headings));
-            foreach (User user in usersList)
+            foreach (IUser user in usersList)
             {
                 string[] newLine = { user.GetName(), user.GetWinsTotal().ToString() };
                 output.AppendLine(string.Join(separator, newLine));
@@ -213,7 +222,9 @@ namespace ModelsLibrary
                 {
                     for (int i = 1; i < keys.Count; i++)
                     {
-                        usersList.Add(new User(keys[i], int.Parse(values[i])));
+                        IUser userItem = Host.Services.GetService<IUser>();
+                        userItem.CreateUser(keys[i], int.Parse(values[i]));
+                        usersList.Add(userItem);
                     }
                 }
             }

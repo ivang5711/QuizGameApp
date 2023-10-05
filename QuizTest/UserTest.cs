@@ -8,7 +8,8 @@ namespace QuizTest
         [TestMethod]
         public void GetUserNameTest()
         {
-            User user = new("Adam");
+            User user = new();
+            user.CreateUser("Adam");
             string expected = "ADAM";
             string actual = user.GetName();
             Assert.AreEqual(expected, actual);
@@ -17,7 +18,8 @@ namespace QuizTest
         [TestMethod]
         public void GetUserScoreTest()
         {
-            User user = new("Adam");
+            User user = new();
+            user.CreateUser("Adam");
             int expected = 0;
             int actual = -1;
             try
@@ -34,7 +36,8 @@ namespace QuizTest
         [TestMethod]
         public void ÌncrementScoreTest()
         {
-            User user = new("Adam");
+            User user = new();
+            user.CreateUser("Adam");
             try
             {
                 user.IncrementScore();
@@ -52,7 +55,8 @@ namespace QuizTest
         [TestMethod]
         public void IncrementWinsTotalTest()
         {
-            User user = new("Adam");
+            User user = new();
+            user.CreateUser("Adam");
             try
             {
                 user.IncrementWinsTotal();
@@ -70,7 +74,8 @@ namespace QuizTest
         [TestMethod]
         public void GetWinsTotalTest()
         {
-            User user = new("Adam");
+            User user = new();
+            user.CreateUser("Adam");
             user.IncrementWinsTotal();
             user.IncrementWinsTotal();
             int expected = 2;
@@ -90,7 +95,8 @@ namespace QuizTest
         [TestMethod]
         public void SetIndexTest()
         {
-            User user = new("Adam");
+            User user = new();
+            user.CreateUser("Adam");
             try
             {
                 user.SetIndex(7);
@@ -108,7 +114,8 @@ namespace QuizTest
         [TestMethod]
         public void GetIndexTest()
         {
-            User user = new("Adam");
+            User user = new();
+            user.CreateUser("Adam");
             user.SetIndex(7);
             int expected = 7;
             int actual = -1;

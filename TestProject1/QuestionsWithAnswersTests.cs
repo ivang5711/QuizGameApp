@@ -1,10 +1,22 @@
-﻿using ModelsLibrary;
-using System.ComponentModel;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using ModelsLibrary;
 
 namespace ModelsLibraryTests
 {
     public class QuestionsWithAnswersTests
     {
+        readonly IHost _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
+        {
+            services.AddTransient<IUsers, Users>();
+            services.AddScoped<IQuestions, Questions>();
+            services.AddTransient<IQuestionWithAnswer, QuestionWithAnswer>();
+            services.AddTransient<IUser, User>();
+        })
+    .Build();
+
+
+
         [Theory]
         [InlineData("sample question", "SAMPLE QUESTION")]
         [InlineData("Sample Question", "SAMPLE QUESTION")]
@@ -13,7 +25,9 @@ namespace ModelsLibraryTests
         [InlineData("  SamplE QuestioN  ", "SAMPLE QUESTION")]
         public void GetQuestionTest(string input, string expected)
         {
-            string actual = new QuestionWithAnswer(input, "some answer").GetQuestion();
+            var temp = _host.Services.GetRequiredService<IQuestionWithAnswer>();
+            temp.SetQuestionAndAnswer(input, "some answer");
+            string actual = temp.GetQuestion();
             Assert.Equal(expected.ToUpperInvariant(), actual);
         }
 
@@ -25,7 +39,9 @@ namespace ModelsLibraryTests
         [InlineData("  SamplE AnsweR  ", "SAMPLE ANSWER")]
         public void GetAnswerTest(string input, string expected)
         {
-            string actual = new QuestionWithAnswer("some question", input).GetAnswer();
+            var temp = _host.Services.GetRequiredService<IQuestionWithAnswer>();
+            temp.SetQuestionAndAnswer("some question", input);
+            string actual = temp.GetAnswer();
             Assert.Equal(expected.ToUpperInvariant(), actual);
         }
     }

@@ -1,19 +1,31 @@
 ﻿using ConsoleUIHelpers;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using ModelsLibrary;
 
 namespace Quiz
 {
     public class ConsoleUI : IUserInterface
     {
+        public IHost Host { get; set; }
         private int WindowWidth { get; set; }
         private int WindowHeight { get; set; }
         private int WindowWidthCenter
         { get { return WindowWidth / 2; } }
         private int WindowHeightCenter
         { get { return WindowHeight / 2; } }
-        private readonly Users users = new();
-        private readonly Questions questions = new();
-        private Users roundUsers = new();
+        private readonly IUsers users;
+        private readonly IQuestions questions;
+        private IUsers roundUsers;
+
+        public ConsoleUI(IHost host)
+        {
+            Host = host;
+            users = Host.Services.GetRequiredService<IUsers>();
+            questions = Host.Services.GetRequiredService<IQuestions>();
+            roundUsers = Host.Services.GetRequiredService<IUsers>();
+
+        }
         public void WelcomeScreen(string message)
         {
             PrintTools.WelcomeScreen(message);
@@ -194,7 +206,7 @@ namespace Quiz
         {
             int windowWidth = Console.WindowWidth;
             int length = 0;
-            if (questions.GetQuestions().Count > 0)
+            if (questions.GetQuestionsCount() > 0)
             {
                 length = questions.GetQuestions().Max()!.Length;
             }
@@ -272,7 +284,7 @@ namespace Quiz
         public int GetMaxQuestionLength()
         {
             int length = 0;
-            if (questions.GetQuestions().Count > 0)
+            if (questions.GetQuestionsCount() > 0)
             {
                 length = questions.GetQuestions()!.Max()!.Length;
             }
@@ -387,7 +399,7 @@ namespace Quiz
         /// </summary>
         public void EnterUserName()
         {
-            
+
             while (true)
             {
                 GetUsers();
@@ -476,7 +488,7 @@ namespace Quiz
                 Console.CursorLeft = leftMargin;
                 Console.ResetColor();
                 Console.Clear();
-                roundUsers = new Users();
+                roundUsers = Host.Services.GetRequiredService<IUsers>();
             }
             else
             {
