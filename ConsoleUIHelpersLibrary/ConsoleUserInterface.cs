@@ -239,7 +239,7 @@ namespace ConsoleUIHelpersLibrary
         public void AddQuestions()
         {
             Console.Clear();
-            Console.Title = "Quiz - Add questions";
+            PrintTools.SetConsoleWindowTitle("Quiz - Add questions");
             string questionsString = string.Empty;
             string answerString = string.Empty;
             WindowWidth = Console.WindowWidth;
@@ -373,7 +373,7 @@ namespace ConsoleUIHelpersLibrary
         public void AddUsers()
         {
             Console.Clear();
-            Console.Title = "Quiz - Add users";
+            PrintTools.SetConsoleWindowTitle("Quiz - Add users");
             bool exitCode = true;
             while (exitCode)
             {
@@ -442,7 +442,7 @@ namespace ConsoleUIHelpersLibrary
         public void StartQuiz()
         {
             Console.Clear();
-            Console.Title = "Quiz";
+            PrintTools.SetConsoleWindowTitle("Quiz");
             int leftMargin = WindowWidthCenter - 50;
             if (users.GetCount() > 0 && questions.GetQuestionsCount() > 0 && roundUsers.GetCount() > 0)
             {
@@ -630,7 +630,7 @@ namespace ConsoleUIHelpersLibrary
         public void PickUsers()
         {
             Console.Clear();
-            Console.Title = "Quiz - Pick users";
+            PrintTools.SetConsoleWindowTitle("Quiz - Pick users");
             if (users.GetCount() == 0)
             {
                 WindowWidth = Console.WindowWidth;

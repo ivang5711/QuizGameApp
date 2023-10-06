@@ -8,6 +8,7 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <PackageIcon>favicon.ico</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <StartupObject></StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,8 +34,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleUIHelpers\ConsoleUIHelpersLibrary.csproj" />
-    <ProjectReference Include="..\QuizLibrary\ModelsLibrary.csproj" />
+    <ProjectReference Include="..\ConsoleUIHelpersLibrary\ConsoleUIHelpersLibrary.csproj" />
+    <ProjectReference Include="..\ModelsLibrary\ModelsLibrary.csproj" />
   </ItemGroup>
 
 </Project>

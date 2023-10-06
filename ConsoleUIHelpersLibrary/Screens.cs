@@ -16,7 +16,7 @@ namespace ConsoleUIHelpersLibrary
         {
             Console.Clear();
             Console.ResetColor();
-            Console.Title = "Quiz - Welcome!";
+            PrintTools.SetConsoleWindowTitle("Quiz - Welcome!");
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
                 Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
@@ -102,7 +102,7 @@ namespace ConsoleUIHelpersLibrary
         public static int Menu()
         {
             Console.Clear();
-            Console.Title = "Quiz - Main menu";
+            PrintTools.SetConsoleWindowTitle("Quiz - Main menu");
             int windowWidth = Console.WindowWidth;
             int windowHeight = Console.WindowHeight;
             int windowWidthCenter = windowWidth / 2;
@@ -161,7 +161,7 @@ namespace ConsoleUIHelpersLibrary
         public static void Goodbuy()
         {
             Console.Clear();
-            Console.Title = "Quiz - see you soon!";
+            PrintTools.SetConsoleWindowTitle("Quiz - see you soon!");
             ConsoleKeyInfo c;
             do
             {
@@ -193,7 +193,7 @@ namespace ConsoleUIHelpersLibrary
         public static void Credits()
         {
             Console.Clear();
-            Console.Title = "Quiz - About";
+            PrintTools.SetConsoleWindowTitle("Quiz - About");
             int windowWidth = Console.WindowWidth;
             int windowHeight = Console.WindowHeight;
             int windowWidthCenter = windowWidth / 2;

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Quiz_Console": {
+      "commandName": "Project",
+      "commandLineArgs": "-p"
+    }
+  }
+}
