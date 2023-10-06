@@ -25,7 +25,6 @@ namespace ConsoleUIHelpersLibrary
             users = Host.Services.GetRequiredService<IUsers>();
             questions = Host.Services.GetRequiredService<IQuestions>();
             roundUsers = Host.Services.GetRequiredService<IUsers>();
-
         }
 
         /// <summary>
@@ -34,7 +33,7 @@ namespace ConsoleUIHelpersLibrary
         /// <param name="message">Text message to print on the screen</param>
         public void WelcomeScreen(string message)
         {
-            PrintTools.WelcomeScreen(message);
+            Screens.WelcomeScreen(message);
         }
 
         /// <summary>
@@ -42,21 +41,21 @@ namespace ConsoleUIHelpersLibrary
         /// </summary>
         public void PrintHelp()
         {
-            PrintTools.PrintHelp();
+            Screens.PrintHelp();
         }
 
         /// <summary>
         /// Prints out the menu screen with options to choose from and waits for the user input.
         /// </summary>
         /// <returns>Returns user's menu item choice as an integer value.</returns>
-        public int Menu() => PrintTools.Menu();
+        public int Menu() => Screens.Menu();
 
         /// <summary>
         /// Prints out credits page with some information about the app and authors.
         /// </summary>
         public void Credits()
         {
-            PrintTools.Credits();
+            Screens.Credits();
         }
 
         /// <summary>
@@ -64,7 +63,7 @@ namespace ConsoleUIHelpersLibrary
         /// </summary>
         public void Goodbuy()
         {
-            PrintTools.Goodbuy();
+            Screens.Goodbuy();
         }
 
         /// <summary>
@@ -114,7 +113,7 @@ namespace ConsoleUIHelpersLibrary
             {
                 Console.CursorLeft = leftMargin;
                 PrintUsers();
-                Console.WriteLine();
+                Console.CursorTop++;
                 Console.CursorLeft = leftMargin;
                 PrintTools.DrawLine(35);
             }
@@ -136,7 +135,7 @@ namespace ConsoleUIHelpersLibrary
                 Console.WriteLine("No games being played");
                 Console.CursorLeft = leftMargin;
                 PrintTools.DrawLine(41);
-                Console.WriteLine();
+                Console.CursorTop++;
                 Console.CursorLeft = WindowWidthCenter - 15;
                 PrintTools.AnyKey();
             }
@@ -318,10 +317,10 @@ namespace ConsoleUIHelpersLibrary
             Console.WriteLine("Your input recieved: ");
             Console.CursorLeft = WindowWidthCenter - length / 2;
             PrintTools.DrawLine(length);
-            Console.WriteLine();
+            Console.CursorTop++;
             Console.CursorLeft = WindowWidthCenter - length / 2;
             PrintQuestions();
-            Console.WriteLine();
+            Console.CursorTop++;
             Console.CursorLeft = WindowWidthCenter - length / 2;
             PrintTools.DrawLine(length);
             Console.CursorLeft = WindowWidthCenter - 12;
@@ -352,20 +351,20 @@ namespace ConsoleUIHelpersLibrary
                 Console.WriteLine("Quiz questions");
                 Console.CursorLeft = (Console.WindowWidth - length) / 2;
                 PrintTools.DrawLine(length);
-                Console.WriteLine();
+                Console.CursorTop++;
                 Console.CursorLeft = leftMargin;
                 PrintQuestions();
-                Console.WriteLine();
+                Console.CursorTop++;
                 Console.CursorLeft = (Console.WindowWidth - length) / 2;
                 PrintTools.DrawLine(length);
             }
 
-            Console.WriteLine();
+            Console.CursorTop++;
             Console.CursorLeft = (Console.WindowWidth - 16) / 2;
             Console.WriteLine("Enter a question: ");
             Console.CursorLeft = (Console.WindowWidth - 16) / 2;
             PrintTools.DrawLine(17);
-            Console.WriteLine();
+            Console.CursorTop++;
         }
 
         /// <summary>
@@ -488,7 +487,7 @@ namespace ConsoleUIHelpersLibrary
                 Console.WriteLine("That's all questions! Thank you for the Quiz");
                 Console.CursorLeft = leftMargin - 7;
                 PrintTools.DrawLine(44);
-                Console.WriteLine();
+                Console.CursorTop++;
                 Console.CursorLeft = leftMargin;
                 PrintTools.AnyKey();
                 Console.CursorLeft = leftMargin;
@@ -544,13 +543,12 @@ namespace ConsoleUIHelpersLibrary
             Console.WriteLine("Current user score is: " + temp);
             Console.CursorLeft = leftMargin;
             PrintTools.DrawLine(roundUsers.GetNames()[user].ToString().Length + 9);
-            Console.WriteLine();
+            Console.CursorTop++;
             Console.CursorLeft = leftMargin;
             text = $"Question {i + 1}: ";
             PrintTools.PrintGrey(text);
             Console.WriteLine($"{questions.GetQuestions()[i]}");
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.CursorTop += 2;
         }
 
         /// <summary>
@@ -588,7 +586,7 @@ namespace ConsoleUIHelpersLibrary
                 roundUsers.AddScore(user);
             }
 
-            Console.WriteLine();
+            Console.CursorTop++;
             Console.CursorLeft = WindowWidthCenter - 14;
             PrintTools.PrintGrey("Press any key to continue...");
             Console.ReadKey();
