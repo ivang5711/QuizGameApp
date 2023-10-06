@@ -1,11 +1,12 @@
-﻿using ConsoleUIHelpers;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ModelsLibrary;
+using System;
+using System.Linq;
 
-namespace Quiz
+namespace ConsoleUIHelpersLibrary
 {
-    public class ConsoleUI : IUserInterface
+    public class ConsoleUserInterface : IUserInterface
     {
         public IHost Host { get; set; }
         private int WindowWidth { get; set; }
@@ -18,7 +19,7 @@ namespace Quiz
         private readonly IQuestions questions;
         private IUsers roundUsers;
 
-        public ConsoleUI(IHost host)
+        public ConsoleUserInterface(IHost host)
         {
             Host = host;
             users = Host.Services.GetRequiredService<IUsers>();
@@ -26,6 +27,11 @@ namespace Quiz
             roundUsers = Host.Services.GetRequiredService<IUsers>();
 
         }
+
+        /// <summary>
+        /// Prints out Welcome Screen
+        /// </summary>
+        /// <param name="message">Text message to print on the screen</param>
         public void WelcomeScreen(string message)
         {
             PrintTools.WelcomeScreen(message);
@@ -208,7 +214,7 @@ namespace Quiz
             int length = 0;
             if (questions.GetQuestionsCount() > 0)
             {
-                length = questions.GetQuestions().Max()!.Length;
+                length = questions.GetQuestions().Max().Length;
             }
 
             int leftMargin = windowWidth / 2 - (length + 14) / 2;
@@ -245,7 +251,7 @@ namespace Quiz
             {
                 AskForQuestion(length, leftMargin);
                 Console.CursorLeft = leftMargin;
-                questionsString = Console.ReadLine()!.ToUpper();
+                questionsString = Console.ReadLine().ToUpper();
                 if (!string.IsNullOrWhiteSpace(questionsString))
                 {
                     WindowWidth = Console.WindowWidth;
@@ -253,17 +259,17 @@ namespace Quiz
                     while (string.IsNullOrWhiteSpace(answerString))
                     {
                         AskForAnswer();
-                        answerString = Console.ReadLine()!.ToUpper();
+                        answerString = Console.ReadLine().ToUpper();
                         if (string.IsNullOrWhiteSpace(answerString) && PrintEnterAtLeastSomething(leftMargin))
                         {
                             break;
                         }
                     }
 
-                    if (questionsString.Length > 0 && answerString.Length > 0)
+                    if (questionsString.Length > 0 && answerString != null && answerString.Length > 0)
                     {
                         questions.AddQuestionAndAnswer(questionsString.Trim(), answerString.Trim());
-                        PrintInputRecieved(questions.GetQuestions().Max()!.Length, leftMargin);
+                        PrintInputRecieved(questions.GetQuestions().Max().Length, leftMargin);
                         break;
                     }
                 }
@@ -286,7 +292,7 @@ namespace Quiz
             int length = 0;
             if (questions.GetQuestionsCount() > 0)
             {
-                length = questions.GetQuestions()!.Max()!.Length;
+                length = questions.GetQuestions().Max().Length;
             }
 
             return length;
@@ -404,8 +410,8 @@ namespace Quiz
             {
                 GetUsers();
                 PrintTools.PrintGrey("New user's name: ");
-                string input = Console.ReadLine()!.ToUpper();
-                int positionTop = Console.GetCursorPosition().Top;
+                string input = Console.ReadLine().ToUpper();
+                int positionTop = Console.CursorTop;
                 if (!string.IsNullOrWhiteSpace(input))
                 {
                     users.Add(input);
@@ -537,7 +543,7 @@ namespace Quiz
             string temp = roundUsers.GetScore(user).ToString();
             Console.WriteLine("Current user score is: " + temp);
             Console.CursorLeft = leftMargin;
-            PrintTools.DrawLine(roundUsers.GetNames()[user]!.ToString()!.Length + 9);
+            PrintTools.DrawLine(roundUsers.GetNames()[user].ToString().Length + 9);
             Console.WriteLine();
             Console.CursorLeft = leftMargin;
             text = $"Question {i + 1}: ";
@@ -556,9 +562,9 @@ namespace Quiz
         {
             Console.CursorLeft = WindowWidthCenter - 15;
             PrintTools.PrintGrey("Enter your answer: ");
-            int left = Console.GetCursorPosition().Left;
-            int top = Console.GetCursorPosition().Top;
-            string? input;
+            int left = Console.CursorLeft;
+            int top = Console.CursorTop;
+            string input;
             do
             {
                 Console.CursorLeft = left;
@@ -567,7 +573,7 @@ namespace Quiz
             }
             while (string.IsNullOrWhiteSpace(input));
             Console.CursorTop = WindowHeightCenter + 3;
-            string tmp = new(' ', WindowWidth);
+            string tmp = new string(' ', WindowWidth);
             Console.WriteLine(tmp);
             Console.CursorTop = WindowHeightCenter + 3;
             Console.CursorLeft = WindowWidthCenter - 9 - (input.Length / 2);
@@ -693,7 +699,7 @@ namespace Quiz
                     int index = Convert.ToInt32(input) - 1;
                     int usernameLength = users.GetNames()[index].Length;
                     roundUsers.Add(users.GetNames()[index], index);
-                    int positionTop = Console.GetCursorPosition().Top;
+                    int positionTop = Console.CursorTop;
                     Console.CursorTop = positionTop - 1;
                     Console.WriteLine(new string(' ', WindowWidth));
                     Console.CursorLeft = WindowWidthCenter - (18 + usernameLength + 28) / 2;

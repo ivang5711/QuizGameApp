@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace ConsoleUIHelpers
+namespace ConsoleUIHelpersLibrary
 {
+    /// <summary>
+    /// Utility Class to support Console User Interface
+    /// </summary>
     public static class PrintTools
     {
         /// <summary>

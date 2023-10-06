@@ -1,4 +1,4 @@
-﻿using ConsoleUIHelpers;
+﻿using ConsoleUIHelpersLibrary;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ModelsLibrary;
@@ -11,7 +11,7 @@ namespace Quiz
         {
             IHost _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
             {
-                services.AddSingleton<IUserInterface, ConsoleUI>();
+                services.AddSingleton<IUserInterface, ConsoleUserInterface>();
                 services.AddTransient<IUsers, Users>();
                 services.AddScoped<IQuestions, Questions>();
                 services.AddTransient<IQuestionWithAnswer, QuestionWithAnswer>();
