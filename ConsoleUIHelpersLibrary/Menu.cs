@@ -5,11 +5,7 @@ namespace ConsoleUIHelpersLibrary
     public class Menu : IMenu
     {
         private readonly IUserInterface userInterface;
-
-        public Menu(IUserInterface userInterface)
-        {
-            this.userInterface = userInterface;
-        }
+        public Menu(IUserInterface userInterface) => this.userInterface = userInterface;
 
         /// <summary>
         /// Prints out menu screen and collects user input

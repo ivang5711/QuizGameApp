@@ -14,7 +14,6 @@
         int GetMaxQuestionLength();
         void GetUsers();
         void Goodbuy();
-        void LoadData();
         int Menu();
         void PickUsers();
         void PrintArgs(string[] args);
@@ -26,10 +25,11 @@
         void PrintUsersPicked();
         void PrintUsersWithScores();
         void ProcessAnswer(int user, int i);
-        void SaveData();
         void StartQuiz();
         void WelcomeScreen(string message);
         int WriteResults();
         bool PrintEnterAtLeastSomething(int leftMargin);
+        void LoadData();
+        void SaveData();
     }
 }

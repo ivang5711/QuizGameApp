@@ -18,6 +18,7 @@ namespace ConsoleUIHelpersLibrary
         private readonly IUsers users;
         private readonly IQuestions questions;
         private IUsers roundUsers;
+        private readonly IPersistentDataOperations persistentDataOperations;
 
         public ConsoleUserInterface(IHost host)
         {
@@ -25,24 +26,19 @@ namespace ConsoleUIHelpersLibrary
             users = Host.Services.GetRequiredService<IUsers>();
             questions = Host.Services.GetRequiredService<IQuestions>();
             roundUsers = Host.Services.GetRequiredService<IUsers>();
+            persistentDataOperations = Host.Services.GetRequiredService<IPersistentDataOperations>();
         }
 
         /// <summary>
         /// Prints out Welcome Screen
         /// </summary>
         /// <param name="message">Text message to print on the screen</param>
-        public void WelcomeScreen(string message)
-        {
-            Screens.WelcomeScreen(message);
-        }
+        public void WelcomeScreen(string message) => Screens.WelcomeScreen(message);
 
         /// <summary>
         /// Prints out Help page
         /// </summary>
-        public void PrintHelp()
-        {
-            Screens.PrintHelp();
-        }
+        public void PrintHelp() => Screens.PrintHelp();
 
         /// <summary>
         /// Prints out the menu screen with options to choose from and waits for the user input.
@@ -53,38 +49,26 @@ namespace ConsoleUIHelpersLibrary
         /// <summary>
         /// Prints out credits page with some information about the app and authors.
         /// </summary>
-        public void Credits()
-        {
-            Screens.Credits();
-        }
+        public void Credits() => Screens.Credits();
 
         /// <summary>
         /// Prints out the Goodbuy screen.
         /// </summary>
-        public void Goodbuy()
-        {
-            Screens.Goodbuy();
-        }
+        public void Goodbuy() => Screens.Goodbuy();
 
         /// <summary>
         /// Asks for an answer
         /// </summary>
         /// <param name="length">length of the longest question</param>
         /// <param name="leftMargin">Cursor Left position</param>
-        public void AskForAnswer()
-        {
-            PrintTools.AskForAnswer();
-        }
+        public void AskForAnswer() => PrintTools.AskForAnswer();
 
         /// <summary>
         /// Prints a message to ask user to enter at least 1 item
         /// </summary>
         /// <param name="message">The message to print</param>
         /// <param name="leftMargin">cursor left position</param>
-        public void PrintEnterAtLeastOneItem(string message, int leftMargin)
-        {
-            PrintTools.PrintEnterAtLeastOneItem(message, leftMargin);
-        }
+        public void PrintEnterAtLeastOneItem(string message, int leftMargin) => PrintTools.PrintEnterAtLeastOneItem(message, leftMargin);
 
         /// <summary>
         /// Prints "You need to enter at least something message"
@@ -736,21 +720,13 @@ namespace ConsoleUIHelpersLibrary
         }
 
         /// <summary>
-        /// Saves Questions and Answers as well as Users and High Scores to corresponding CSV files
+        /// Saves Questions and Answers as well as Users and High Scores
         /// </summary>
-        public void SaveData()
-        {
-            questions.SaveToCSV("questions.csv");
-            users.SaveToCSV("user-score.csv");
-        }
+        public void SaveData() => persistentDataOperations.SaveData(questions, users);
 
         /// <summary>
-        /// Loads Questions and Answers as well as Users and High Scores from corresponding CSV files
+        /// Loads Questions and Answers as well as Users and High Scores
         /// </summary>
-        public void LoadData()
-        {
-            questions.ReadFromCSV("questions.csv");
-            users.ReadFromCSV("user-score.csv");
-        }
+        public void LoadData() => persistentDataOperations.LoadData(questions, users);
     }
 }

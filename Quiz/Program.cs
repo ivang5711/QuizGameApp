@@ -21,9 +21,11 @@ namespace Quiz
                 services.AddTransient<IQuestionWithAnswer, QuestionWithAnswer>();
                 services.AddTransient<IUser, User>();
                 services.AddSingleton<IMenu, Menu>();
+                services.AddSingleton<IPersistentDataOperations, PersistentCsv>();
             })
             .Build();
             userInterface = _host.Services.GetRequiredService<IUserInterface>();
+
             if (!CheckCommandLineArgs())
             {
                 Screens.WelcomeScreen(modeMessage);

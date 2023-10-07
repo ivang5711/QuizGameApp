@@ -28,10 +28,7 @@ namespace ConsoleUIHelpersLibrary
         /// Sets a title of the Conole window
         /// </summary>
         /// <param name="title"></param>
-        public static void SetConsoleWindowTitle(string title)
-        {
-            Console.Title = title;
-        }
+        public static void SetConsoleWindowTitle(string title) => Console.Title = title;
 
         /// <summary>
         /// draws a line of dash symbols of a specified length
