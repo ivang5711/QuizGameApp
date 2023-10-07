@@ -16,5 +16,7 @@ namespace ModelsLibrary
         int GetWinner();
         void ReadFromCSV(string fileName);
         void SaveToCSV(string fileName);
+        void ReadFromDb();
+        void WriteToDb();
     }
 }

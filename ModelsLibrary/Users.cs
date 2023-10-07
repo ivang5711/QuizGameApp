@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -226,6 +227,57 @@ namespace ModelsLibrary
                         userItem.CreateUser(keys[i], int.Parse(values[i]));
                         usersList.Add(userItem);
                     }
+                }
+            }
+        }
+
+        public void ReadFromDb()
+        {
+            using (var connection = new SqliteConnection("Data Source=quizData.db"))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+                command.CommandText =
+                @"
+                    SELECT *
+                    FROM users
+                ";
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string userName = reader.GetString(0);
+                        int winsTotal = reader.GetInt32(1);
+                        IUser userItem = Host.Services.GetService<IUser>();
+                        userItem.CreateUser(userName, winsTotal);
+                        usersList.Add(userItem);
+                    }
+                }
+            }
+        }
+
+        public void WriteToDb()
+        {
+            using (var connection = new SqliteConnection("Data Source=quizData.db"))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+                command.CommandText =
+                @"
+                    DELETE FROM users
+                ";
+                command.ExecuteNonQuery();
+                foreach (IUser item in usersList)
+                {
+                    command = connection.CreateCommand();
+                    command.CommandText =
+                    @"
+                    INSERT INTO users (userName, winsTotal)
+                    VALUES ($userName, $winsTotal)
+                    ";
+                    command.Parameters.AddWithValue("$userName", item.GetName());
+                    command.Parameters.AddWithValue("$winsTotal", item.GetWinsTotal());
+                    command.ExecuteNonQuery();
                 }
             }
         }

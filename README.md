@@ -61,7 +61,8 @@ Assume this is Documents/Quiz in a user's home directory:\
 >dotnet Quiz_Console.dll
 >```
 
-4. (Optional) you can use "-p" console argument to enable persistent data mode
+4. (Optional) you can use "-p" console argument to enable persistent data mode for CSV\
+or "--database" for SQLite data storage
 >
 > On Windows:
 >```
@@ -90,8 +91,8 @@ The data persists during the game and deletes on exit.
 
 ## Persistent Mode
 
-In persistent mode the app reads data from 2 csv files located\
-in the same folder. If the file does not exists the app creates it.\
+In persistent mode the app reads data from 2 csv files or database\
+file located in the same folder. If the file does not exists the app creates it.\
 The app rewrites the files with new data on exit.
 
 ## How run tests

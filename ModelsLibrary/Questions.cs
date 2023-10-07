@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -166,6 +167,57 @@ namespace ModelsLibrary
                         questionWithAnswerItem.SetQuestionAndAnswer(keys[i], values[i]);
                         questionsList.Add(questionWithAnswerItem);
                     }
+                }
+            }
+        }
+
+        public void ReadFromDb()
+        {
+            using (var connection = new SqliteConnection("Data Source=quizData.db"))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+                command.CommandText =
+                @"
+                    SELECT *
+                    FROM questions
+                ";
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string question = reader.GetString(0);
+                        string answer = reader.GetString(1);
+                        IQuestionWithAnswer questionWithAnswerItem = Host.Services.GetService<IQuestionWithAnswer>();
+                        questionWithAnswerItem.SetQuestionAndAnswer(question, answer);
+                        questionsList.Add(questionWithAnswerItem);
+                    }
+                }
+            }
+        }
+
+        public void WriteToDb()
+        {
+            using (var connection = new SqliteConnection("Data Source=quizData.db"))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+                command.CommandText =
+                @"
+                    DELETE FROM questions
+                ";
+                command.ExecuteNonQuery();
+                foreach (IQuestionWithAnswer item in questionsList)
+                {
+                    command = connection.CreateCommand();
+                    command.CommandText =
+                    @"
+                    INSERT INTO questions (question, answer)
+                    VALUES ($question, $answer)
+                    ";
+                    command.Parameters.AddWithValue("$question", item.GetQuestion());
+                    command.Parameters.AddWithValue("$answer", item.GetAnswer());
+                    command.ExecuteNonQuery();
                 }
             }
         }

@@ -13,17 +13,36 @@ namespace Quiz
         public static void Main(string[] args)
         {
             arguments = args;
-            IHost _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
+            IHost _host;
+            if (arguments.Length > 0 && arguments[0] == "--database")
             {
-                services.AddSingleton<IUserInterface, ConsoleUserInterface>();
-                services.AddTransient<IUsers, Users>();
-                services.AddScoped<IQuestions, Questions>();
-                services.AddTransient<IQuestionWithAnswer, QuestionWithAnswer>();
-                services.AddTransient<IUser, User>();
-                services.AddSingleton<IMenu, Menu>();
-                services.AddSingleton<IPersistentDataOperations, PersistentCsv>();
-            })
-            .Build();
+                _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
+                {
+                    services.AddSingleton<IUserInterface, ConsoleUserInterface>();
+                    services.AddTransient<IUsers, Users>();
+                    services.AddScoped<IQuestions, Questions>();
+                    services.AddTransient<IQuestionWithAnswer, QuestionWithAnswer>();
+                    services.AddTransient<IUser, User>();
+                    services.AddSingleton<IMenu, Menu>();
+                    services.AddSingleton<IPersistentDataOperations, PersistentDb>();
+                })
+                .Build();
+            }
+            else
+            {
+                _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
+                {
+                    services.AddSingleton<IUserInterface, ConsoleUserInterface>();
+                    services.AddTransient<IUsers, Users>();
+                    services.AddScoped<IQuestions, Questions>();
+                    services.AddTransient<IQuestionWithAnswer, QuestionWithAnswer>();
+                    services.AddTransient<IUser, User>();
+                    services.AddSingleton<IMenu, Menu>();
+                    services.AddSingleton<IPersistentDataOperations, PersistentCsv>();
+                })
+                .Build();
+            }
+
             userInterface = _host.Services.GetRequiredService<IUserInterface>();
 
             if (!CheckCommandLineArgs())
@@ -43,7 +62,7 @@ namespace Quiz
         /// <param name="args"></param>
         private static bool CheckCommandLineArgs()
         {
-            if (arguments.Length > 0 && arguments[0] == "-p")
+            if (arguments.Length > 0 && (arguments[0] == "-p" || arguments[0] == "--database"))
             {
                 modeMessage = "Persistent mode";
                 userInterface!.LoadData();
@@ -68,7 +87,7 @@ namespace Quiz
         {
             userInterface!.PrintArgs(arguments);
             userInterface.Goodbuy();
-            if (arguments.Length > 0 && arguments[0] == "-p")
+            if (arguments.Length > 0 && (arguments[0] == "-p" || arguments[0] == "--database"))
             {
                 userInterface.SaveData();
             }

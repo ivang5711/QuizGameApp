@@ -12,5 +12,8 @@ namespace ModelsLibrary
         List<IQuestionWithAnswer> GetQuestionWithAnswers();
         void ReadFromCSV(string fileName);
         void SaveToCSV(string fileName);
+        void ReadFromDb();
+        void WriteToDb();
+
     }
 }

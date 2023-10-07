@@ -86,7 +86,9 @@ namespace ConsoleUIHelpersLibrary
             Console.Write("--help".PadRight(12));
             PrintTools.PrintGrey("shows \"help page\"\n");
             Console.Write("-p".PadRight(12));
-            PrintTools.PrintGrey("allows to run the app in persistent mode, so the user data can be loaded and saved\n");
+            PrintTools.PrintGrey("allows to run the app in persistent mode, so the user data can be loaded and saved to CSV\n");
+            Console.Write("--database".PadRight(12));
+            PrintTools.PrintGrey("allows to run the app in persistent mode, so the user data can be loaded and saved in a Database\n");
             Console.CursorTop += 2;
             PrintTools.DrawLine(28);
             PrintTools.AnyKey();
@@ -208,7 +210,9 @@ namespace ConsoleUIHelpersLibrary
             Console.CursorLeft = leftMargin;
             Console.WriteLine("To load and save your game results as well as users and questions ");
             Console.CursorLeft = leftMargin;
-            Console.WriteLine("you can use persistent mode by providing \"-p\" command line argument on start.\n\n");
+            Console.WriteLine("you can use CSV persistent mode by providing \"-p\" command line argument on start,");
+            Console.CursorLeft = leftMargin;
+            Console.WriteLine("or database persistent mode by providing \"--database\" command line argument on start.\n\n");
             Console.CursorLeft = leftMargin;
             Console.WriteLine("You can also get help with \"--help\" command line argument.\n\n");
             Console.CursorLeft = leftMargin;
