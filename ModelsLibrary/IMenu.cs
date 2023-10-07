@@ -1,6 +1,4 @@
-﻿using ModelsLibrary;
-
-namespace ModelsLibrary
+﻿namespace ModelsLibrary
 {
     public interface IMenu
     {

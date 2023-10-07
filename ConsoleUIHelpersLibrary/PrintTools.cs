@@ -9,7 +9,8 @@ namespace ConsoleUIHelpersLibrary
     public static class PrintTools
     {
         private static readonly ConsoleColor consoleColor = InitPrintTools();
-        static ConsoleColor InitPrintTools()
+
+        private static ConsoleColor InitPrintTools()
         {
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
@@ -42,7 +43,7 @@ namespace ConsoleUIHelpersLibrary
             }
 
             int size = length;
-            
+
             Console.ForegroundColor = consoleColor;
             Console.WriteLine(new string('-', size));
             Console.ForegroundColor = ConsoleColor.White;

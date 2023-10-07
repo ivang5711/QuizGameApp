@@ -11,10 +11,13 @@ namespace ConsoleUIHelpersLibrary
         public IHost Host { get; set; }
         private int WindowWidth { get; set; }
         private int WindowHeight { get; set; }
+
         private int WindowWidthCenter
         { get { return WindowWidth / 2; } }
+
         private int WindowHeightCenter
         { get { return WindowHeight / 2; } }
+
         private readonly IUsers users;
         private readonly IQuestions questions;
         private IUsers roundUsers;
@@ -388,7 +391,6 @@ namespace ConsoleUIHelpersLibrary
         /// </summary>
         public void EnterUserName()
         {
-
             while (true)
             {
                 GetUsers();

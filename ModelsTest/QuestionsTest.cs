@@ -7,7 +7,7 @@ namespace QuizTest
     [TestClass]
     public class QuestionsTest
     {
-        readonly IHost _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
+        private readonly IHost _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
         {
             services.AddTransient<IUsers, Users>();
             services.AddScoped<IQuestions, Questions>();
@@ -15,7 +15,6 @@ namespace QuizTest
             services.AddTransient<IUser, User>();
         })
         .Build();
-
 
         [TestMethod]
         public void GetQuestionsEmptyTest()

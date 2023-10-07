@@ -10,6 +10,7 @@ namespace Quiz
         private static IUserInterface? userInterface;
         private static string modeMessage = string.Empty;
         private static string[] arguments = new string[] { "" };
+
         public static void Main(string[] args)
         {
             arguments = args;

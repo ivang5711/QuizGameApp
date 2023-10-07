@@ -5,6 +5,7 @@ namespace ConsoleUIHelpersLibrary
     public class Menu : IMenu
     {
         private readonly IUserInterface userInterface;
+
         public Menu(IUserInterface userInterface) => this.userInterface = userInterface;
 
         /// <summary>

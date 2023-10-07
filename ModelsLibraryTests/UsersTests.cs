@@ -8,7 +8,7 @@ namespace ModelsLibraryTests
     {
         public IUsers TestUser { get; set; }
 
-        readonly IHost _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
+        private readonly IHost _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
         {
             services.AddTransient<IUsers, Users>();
             services.AddScoped<IQuestions, Questions>();
@@ -16,7 +16,6 @@ namespace ModelsLibraryTests
             services.AddTransient<IUser, User>();
         })
     .Build();
-
 
         public UsersTests()
         {

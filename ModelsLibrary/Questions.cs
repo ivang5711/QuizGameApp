@@ -13,11 +13,12 @@ namespace ModelsLibrary
         public IHost Host { get; set; }
 
         private readonly List<IQuestionWithAnswer> questionsList = new List<IQuestionWithAnswer>();
+
         public Questions(IHost host) => Host = host;
 
         /// <summary>
         /// Gets Questions List from the Questions property.
-        /// </summary>  
+        /// </summary>
         /// <returns>Returns Questions List</returns>
         public List<string> GetQuestions()
         {
