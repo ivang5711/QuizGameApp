@@ -1,6 +1,6 @@
 ﻿namespace ModelsLibrary
 {
-    public class QuestionWithAnswer : IQuestionWithAnswer
+    public class QuestionWithAnswer
     {
         private string question;
         private string answer;

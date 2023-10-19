@@ -31,13 +31,13 @@ namespace ModelsLibrary
             }
         }
 
-        public void LoadData(IQuestions questions, IUsers users)
+        public void LoadData(IGameQuestions questions, IGameUsers users)
         {
             questions.ReadFromDb();
             users.ReadFromDb();
         }
 
-        public void SaveData(IQuestions questions, IUsers users)
+        public void SaveData(IGameQuestions questions, IGameUsers users)
         {
             questions.WriteToDb();
             users.WriteToDb();

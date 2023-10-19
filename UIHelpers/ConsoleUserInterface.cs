@@ -18,17 +18,17 @@ namespace ConsoleUIHelpersLibrary
         private int WindowHeightCenter
         { get { return WindowHeight / 2; } }
 
-        private readonly IUsers users;
-        private readonly IQuestions questions;
-        private IUsers roundUsers;
+        private readonly IGameUsers users;
+        private readonly IGameQuestions questions;
+        private IGameUsers roundUsers;
         private readonly IPersistentDataOperations persistentDataOperations;
 
         public ConsoleUserInterface(IHost host)
         {
             Host = host;
-            users = Host.Services.GetRequiredService<IUsers>();
-            questions = Host.Services.GetRequiredService<IQuestions>();
-            roundUsers = Host.Services.GetRequiredService<IUsers>();
+            users = Host.Services.GetRequiredService<IGameUsers>();
+            questions = Host.Services.GetRequiredService<IGameQuestions>();
+            roundUsers = Host.Services.GetRequiredService<IGameUsers>();
             persistentDataOperations = Host.Services.GetRequiredService<IPersistentDataOperations>();
         }
 
@@ -479,7 +479,7 @@ namespace ConsoleUIHelpersLibrary
                 Console.CursorLeft = leftMargin;
                 Console.ResetColor();
                 Console.Clear();
-                roundUsers = Host.Services.GetRequiredService<IUsers>();
+                roundUsers = Host.Services.GetRequiredService<IGameUsers>();
             }
             else
             {

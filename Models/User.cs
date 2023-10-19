@@ -1,6 +1,6 @@
 ﻿namespace ModelsLibrary
 {
-    public class User : IUser
+    public class User
     {
         private string name;
         private int winsTotal;

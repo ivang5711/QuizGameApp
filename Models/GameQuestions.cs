@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.Sqlite;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -8,13 +7,13 @@ using System.Text;
 
 namespace ModelsLibrary
 {
-    public class Questions : IQuestions
+    public class GameQuestions : IGameQuestions
     {
         public IHost Host { get; set; }
 
-        private readonly List<IQuestionWithAnswer> questionsList = new List<IQuestionWithAnswer>();
+        private readonly List<QuestionWithAnswer> questionsList = new List<QuestionWithAnswer>();
 
-        public Questions(IHost host) => Host = host;
+        public GameQuestions(IHost host) => Host = host;
 
         /// <summary>
         /// Gets Questions List from the Questions property.
@@ -23,7 +22,7 @@ namespace ModelsLibrary
         public List<string> GetQuestions()
         {
             List<string> questions = new List<string>();
-            foreach (IQuestionWithAnswer item in questionsList)
+            foreach (QuestionWithAnswer item in questionsList)
             {
                 questions.Add(item.GetQuestion());
             }
@@ -38,7 +37,7 @@ namespace ModelsLibrary
         public List<string> GetAnswers()
         {
             List<string> answers = new List<string>();
-            foreach (IQuestionWithAnswer item in questionsList)
+            foreach (QuestionWithAnswer item in questionsList)
             {
                 answers.Add(item.GetAnswer());
             }
@@ -64,7 +63,7 @@ namespace ModelsLibrary
                 throw new ArgumentException(answer, nameof(answer));
             }
 
-            IQuestionWithAnswer questionWithAnswerItem = Host.Services.GetService<IQuestionWithAnswer>();
+            QuestionWithAnswer questionWithAnswerItem = new QuestionWithAnswer();
             questionWithAnswerItem.SetQuestionAndAnswer(question, answer);
             questionsList.Add(questionWithAnswerItem);
         }
@@ -94,7 +93,7 @@ namespace ModelsLibrary
                 throw new ArgumentException(question, nameof(question));
             }
 
-            foreach (IQuestionWithAnswer item in questionsList)
+            foreach (QuestionWithAnswer item in questionsList)
             {
                 if (question.Trim().ToUpperInvariant() == item.GetQuestion() && answer.Trim().ToUpperInvariant() == item.GetAnswer())
                 {
@@ -109,7 +108,7 @@ namespace ModelsLibrary
         /// Returns all questions with answers
         /// </summary>
         /// <returns>Questions List with Answers</returns>
-        public List<IQuestionWithAnswer> GetQuestionWithAnswers() => questionsList;
+        public List<QuestionWithAnswer> GetQuestionWithAnswers() => questionsList;
 
         /// <summary>
         /// Saves questions with answers to CSV file.
@@ -122,7 +121,7 @@ namespace ModelsLibrary
             StringBuilder output = new StringBuilder();
             string[] headings = { "question", "answer" };
             output.AppendLine(string.Join(separator, headings));
-            foreach (IQuestionWithAnswer item in questionsList)
+            foreach (QuestionWithAnswer item in questionsList)
             {
                 string[] newLine = { item.GetQuestion(), item.GetAnswer() };
                 output.AppendLine(string.Join(separator, newLine));
@@ -164,7 +163,7 @@ namespace ModelsLibrary
                 {
                     for (int i = 1; i < keys.Count; i++)
                     {
-                        IQuestionWithAnswer questionWithAnswerItem = Host.Services.GetService<IQuestionWithAnswer>();
+                        QuestionWithAnswer questionWithAnswerItem = new QuestionWithAnswer();
                         questionWithAnswerItem.SetQuestionAndAnswer(keys[i], values[i]);
                         questionsList.Add(questionWithAnswerItem);
                     }
@@ -189,7 +188,7 @@ namespace ModelsLibrary
                     {
                         string question = reader.GetString(0);
                         string answer = reader.GetString(1);
-                        IQuestionWithAnswer questionWithAnswerItem = Host.Services.GetService<IQuestionWithAnswer>();
+                        QuestionWithAnswer questionWithAnswerItem = new QuestionWithAnswer();
                         questionWithAnswerItem.SetQuestionAndAnswer(question, answer);
                         questionsList.Add(questionWithAnswerItem);
                     }
@@ -208,7 +207,7 @@ namespace ModelsLibrary
                     DELETE FROM questions
                 ";
                 command.ExecuteNonQuery();
-                foreach (IQuestionWithAnswer item in questionsList)
+                foreach (QuestionWithAnswer item in questionsList)
                 {
                     command = connection.CreateCommand();
                     command.CommandText =

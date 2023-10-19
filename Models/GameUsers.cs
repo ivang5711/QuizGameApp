@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.Sqlite;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -9,15 +8,15 @@ using System.Text;
 
 namespace ModelsLibrary
 {
-    public class Users : IUsers
+    public class GameUsers : IGameUsers
     {
-        private readonly List<IUser> usersList;
+        private readonly List<User> usersList;
         public IHost Host { get; set; }
 
-        public Users(IHost host)
+        public GameUsers(IHost host)
         {
             Host = host;
-            usersList = new List<IUser>();
+            usersList = new List<User>();
         }
 
         /// <summary>
@@ -33,7 +32,7 @@ namespace ModelsLibrary
                 throw new ArgumentException(user, nameof(user));
             }
 
-            var userItem = Host.Services.GetRequiredService<IUser>();
+            var userItem = new User();
             userItem.CreateUser(user, 0, index);
             usersList.Add(userItem);
         }
@@ -45,7 +44,7 @@ namespace ModelsLibrary
         public List<string> GetNames()
         {
             List<string> usersTemp = new List<string>();
-            foreach (IUser item in usersList)
+            foreach (User item in usersList)
             {
                 usersTemp.Add(item.GetName());
             }
@@ -60,7 +59,7 @@ namespace ModelsLibrary
         public List<int> GetScores()
         {
             List<int> usersScores = new List<int>();
-            foreach (IUser item in usersList)
+            foreach (User item in usersList)
             {
                 usersScores.Add(item.GetScore());
             }
@@ -132,7 +131,7 @@ namespace ModelsLibrary
             }
 
             List<int> usersScores = new List<int>();
-            foreach (IUser item in usersList)
+            foreach (User item in usersList)
             {
                 usersScores.Add(item.GetScore());
             }
@@ -161,13 +160,13 @@ namespace ModelsLibrary
         /// </summary>
         /// <param name="index">integer index of a particular user.</param>
         /// <returns>returns an object of type User.</returns>
-        public IUser GetObject(int index) => usersList[index];
+        public User GetObject(int index) => usersList[index];
 
         /// <summary>
         /// Returns all users
         /// </summary>
         /// <returns>Returns a list of Users</returns>
-        public List<IUser> GetAllUsers() => usersList;
+        public List<User> GetAllUsers() => usersList;
 
         /// <summary>
         /// Saves users and score to CSV file.
@@ -180,7 +179,7 @@ namespace ModelsLibrary
             StringBuilder output = new StringBuilder();
             string[] headings = { "name", "winsTotal" };
             output.AppendLine(string.Join(separator, headings));
-            foreach (IUser user in usersList)
+            foreach (User user in usersList)
             {
                 string[] newLine = { user.GetName(), user.GetWinsTotal().ToString() };
                 output.AppendLine(string.Join(separator, newLine));
@@ -223,7 +222,7 @@ namespace ModelsLibrary
                 {
                     for (int i = 1; i < keys.Count; i++)
                     {
-                        IUser userItem = Host.Services.GetService<IUser>();
+                        User userItem = new User();
                         userItem.CreateUser(keys[i], int.Parse(values[i]));
                         usersList.Add(userItem);
                     }
@@ -248,7 +247,7 @@ namespace ModelsLibrary
                     {
                         string userName = reader.GetString(0);
                         int winsTotal = reader.GetInt32(1);
-                        IUser userItem = Host.Services.GetService<IUser>();
+                        User userItem = new User();
                         userItem.CreateUser(userName, winsTotal);
                         usersList.Add(userItem);
                     }
@@ -267,7 +266,7 @@ namespace ModelsLibrary
                     DELETE FROM users
                 ";
                 command.ExecuteNonQuery();
-                foreach (IUser item in usersList)
+                foreach (User item in usersList)
                 {
                     command = connection.CreateCommand();
                     command.CommandText =

@@ -2,7 +2,7 @@
 
 namespace ModelsLibrary
 {
-    public interface IQuestions
+    public interface IGameQuestions
     {
         void AddQuestionAndAnswer(string question, string answer);
 
@@ -14,7 +14,7 @@ namespace ModelsLibrary
 
         int GetQuestionsCount();
 
-        List<IQuestionWithAnswer> GetQuestionWithAnswers();
+        List<QuestionWithAnswer> GetQuestionWithAnswers();
 
         void ReadFromCSV(string fileName);
 

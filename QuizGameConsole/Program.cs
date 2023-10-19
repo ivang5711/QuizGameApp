@@ -20,10 +20,8 @@ namespace Quiz
                 _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
                 {
                     services.AddSingleton<IUserInterface, ConsoleUserInterface>();
-                    services.AddTransient<IUsers, Users>();
-                    services.AddScoped<IQuestions, Questions>();
-                    services.AddTransient<IQuestionWithAnswer, QuestionWithAnswer>();
-                    services.AddTransient<IUser, User>();
+                    services.AddTransient<IGameUsers, GameUsers>();
+                    services.AddScoped<IGameQuestions, GameQuestions>();
                     services.AddSingleton<IMenu, Menu>();
                     services.AddSingleton<IPersistentDataOperations, PersistentDb>();
                 })
@@ -34,10 +32,8 @@ namespace Quiz
                 _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
                 {
                     services.AddSingleton<IUserInterface, ConsoleUserInterface>();
-                    services.AddTransient<IUsers, Users>();
-                    services.AddScoped<IQuestions, Questions>();
-                    services.AddTransient<IQuestionWithAnswer, QuestionWithAnswer>();
-                    services.AddTransient<IUser, User>();
+                    services.AddTransient<IGameUsers, GameUsers>();
+                    services.AddScoped<IGameQuestions, GameQuestions>();
                     services.AddSingleton<IMenu, Menu>();
                     services.AddSingleton<IPersistentDataOperations, PersistentCsv>();
                 })

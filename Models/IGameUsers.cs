@@ -2,7 +2,7 @@
 
 namespace ModelsLibrary
 {
-    public interface IUsers
+    public interface IGameUsers
     {
         void Add(string user, int index = -1);
 
@@ -10,13 +10,13 @@ namespace ModelsLibrary
 
         void AddWin(int index);
 
-        List<IUser> GetAllUsers();
+        List<User> GetAllUsers();
 
         int GetCount();
 
         List<string> GetNames();
 
-        IUser GetObject(int index);
+        User GetObject(int index);
 
         int GetScore(int index);
 
